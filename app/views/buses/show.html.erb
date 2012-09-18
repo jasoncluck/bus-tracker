@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to buses_path, :class => 'btn' do %>
+    <i class="icon-list-alt"></i>
+    Back
+  <% end %>
+  <%= link_to edit_bus_path(@bus), :class => 'btn btn-primary' do %>
+    <i class="icon-pencil icon-white"></i>
+    Edit
+  <% end %>
+  <h1>Listing buses</h1>
+</div>
+
+<dl>
+  <dt>Name:</dt>
+  <dd><%= @bus.name %></dd>
+
+  <dt>Location:</dt>
+  <dd><%= @bus.location %></dd>
+
+</dl>

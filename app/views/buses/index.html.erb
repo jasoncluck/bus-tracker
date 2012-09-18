@@ -1,0 +1,31 @@
+<div class="page-header">
+  <%= link_to new_bus_path, :class => 'btn btn-primary' do %>
+    <i class="icon-plus icon-white"></i>
+    New Bus
+  <% end %>
+  <h1>Listing buses</h1>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% @buses.each do |bus| %>
+    <tr>
+      <td><%= bus.name %></td>
+      <td><%= bus.location %></td>
+      <td><%= link_to 'Show', bus %></td>
+      <td><%= link_to 'Edit', edit_bus_path(bus) %></td>
+      <td><%= link_to 'Destroy', bus, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

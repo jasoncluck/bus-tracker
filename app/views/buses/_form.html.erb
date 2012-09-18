@@ -1,0 +1,12 @@
+<%= simple_form_for(@bus, :defaults => { :input_html => { :class => 'input-xlarge' } }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :location %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class => "btn-primary" %>
+  </div>
+<% end %>

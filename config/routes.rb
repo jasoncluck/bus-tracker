@@ -1,4 +1,6 @@
 BusTracker::Application.routes.draw do
+  resources :buses
+  root :to => 'buses#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
