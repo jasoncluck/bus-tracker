@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001221822) do
+ActiveRecord::Schema.define(:version => 20121001225906) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
@@ -22,12 +22,34 @@ ActiveRecord::Schema.define(:version => 20121001221822) do
     t.float    "lon"
     t.float    "dev"
     t.string   "wmataid"
+    t.integer  "busid"
+    t.string   "direction"
   end
 
   create_table "maps", :force => true do |t|
     t.string   "Buses"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "routes", :force => true do |t|
+    t.integer "routeid"
+    t.string  "name"
+  end
+
+  create_table "stop_route", :force => true do |t|
+    t.integer "stopid"
+    t.integer "routeid"
+    t.string  "direction"
+    t.integer "seqno"
+  end
+
+  create_table "stops", :force => true do |t|
+    t.integer "stopid"
+    t.string  "name"
+    t.string  "wmataid"
+    t.float   "lat"
+    t.float   "lon"
   end
 
 end
