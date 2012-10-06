@@ -1,3 +1,9 @@
+== Bus Tracker Intro
+
+The bus tracker shows bus position and route information from WMATA.  It uses rails, but has to do a lot with javascript both for google maps integration and for live updates of bus positions without requiring an entire reload.  This kind of edges us away from the 'rails way.'
+
+For now it just uses one route - /buses.  Theoretically in the future it could use other URLs for specific things -- different map configurations, or focusing on specific routes.
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
