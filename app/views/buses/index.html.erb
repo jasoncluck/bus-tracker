@@ -38,6 +38,7 @@
           var bus=busLocations.BusPositions[i];
           if(bus.RouteID == RouteDetails.RouteID)
           {
+            alert(bus.RouteID)
             var myLatlng = new google.maps.LatLng(bus.Lat, bus.Lon);
             var marker = new google.maps.Marker({
                position: myLatlng,
