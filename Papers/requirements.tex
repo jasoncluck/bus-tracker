@@ -14,27 +14,61 @@
 \begin{document}
 \maketitle
 
+\section*{Introduction}
+Public transporation in the District of Columbia (DC) is managed by the Washington Metropolitan Area Transit Authority (WMATA) and consists of rail and buses.  The rail system covers many imporant parts of the city, but leaves some areas unserved (such a Georgetown and Anacostia).  Bus routes cover a broader area, but the bus system can be challenging to navigate and frusturating.  Routes aren't easily discoverable--there's no comprehensive map showing all bus routes like there is for the rail system.  Buses often aren't evenly spaced on a route, leading to long wait times in between arrivals.  For the rail system, WMATA shows expected wait times until the next arriving train, including its line.  There are no such countdowns for bus stops.  Third party smart phone applications (such as NextBus) will show expected wait times for buses, but they don't use a map based interface which limits system discoverability.     
+
+The goal of the Live Map of the DC Bus System is to alleviate some of the pain caused by these issues through a web-based map application.  The application will show all WMATA bus routes on a map--providing an overview of the available routes.  It will also show bus locations updated in real time based on data provided by WMATA.  Combining these two pieces of information on a map will improve bus route discovery and provide visibility into expected wait times.
+
+\section*{Use Cases}
+
+The application is intended for use by those considering or planning to travel on the WMATA bus system.  The primary use case is a smart phone user considering how to catch a bus to an intended destination.  Someone in that situation wonders how long they will be waiting for a bus to arrive at the nearest stop.  They may like to consider alternatives to the bus system such as rail, taxi, or alternate bus route depending on how long they will need to wait for a bus.  They may also like to use Google's traffic overlay to estimate how long the bus will be delayed.
+
+The application will help by showing the anticipated time until the next bus arrives, showing where the next arriving bus is going, and showing nearby stops and routes that may be equally suitable for the intended destination.  This person will probably make location information available to the application through their browser.  The web application may use this information to filter routes and buses that are display to improve performance.  It may also use the location to suggest alternate routes with more promptly ariving buses. 
+
+A second use case is someone at their home or desk computer considering when to leave to minimize wait time at a stop without missing a bus.  The concerns in this case will be similar to to the concerns of the smart-phone user, but location data may not be available.  The person may want a reminder when they need to leave in order to catch their bus.
+	
 
 \section*{Threshold Requirements}
+Threshold requirements describe the minimal set of functionality for a usable product.  These are the requirements that we plan to accomplish.
 \begin{enumerate}
-\item Show a map of the DC metro region in a web browser
-\item Show all WMATA bus routes on the map
-\item Show all WMATA bus positions on a map
-\item Move bus markers at five second intervals
-\item Draw bus stops on a route
-\item Tap on a bus stop to see the predicted time until the next bus arrives at that stop
-\item Indicate bus direction with each bus marker
-\item Show bus route and headsign with each bus marker
+\item Display a map of the DC metro region in a web browser
+\item Display the browser's reported location on the map if current location is available from the browser
+\item Display all WMATA bus routes on the map
+\item Display the current locations of all WMATA buses on the map
+\item Visually indicate bus direction along with bus position displays
+\item Display bus routes using different colors to visually differentiate routes
+\item Display bus positions using the same color used for its route
+\item Update bus position markers with current positions at five second intervals
+\item Display bus stop locations on the map
+\item Display the following detail information about a bus stop by clicking on the stop marker
+\begin{enumerate}
+\item Display the anticipated wait time for the next bus for each route that intersects a given stop
+\end{enumerate}
+\item Display the following detail information about a bus by clicking on the bus marker
+\begin{enumerate}
+\item Bus route name (e.g. ``5A'')
+\item Bus headsign (e.g. ``DULLES AIRPORT'')
+\item Bus direction (e.g. ``WEST'')
+\item Positional uncertainty circle around the bus marker
+\end{enumerate}
+\item Allow overlay of current Google traffic on the map in conjunction with other overlays
+\item Traffic and bus route overlays should both be visually clear and distinct when displayed simultaneously
 \end{enumerate}
 
+
 \section*{Objective Requirements}
+Objective requirements describe functionality that would improve the quality or usefulness of the application, but are not strictly necessary for a useful product.  These are things we would like to accomplish, but are unsure if time will allow.
 \begin{enumerate}
-\item Draw bus routes using colors visually differentiate routes
-\item Draw bus positions using the same color used for its route
-\item Filter displayed buses and routes by route name
-\item Filter displayed buses and routes by proximity to current location
-\item Filter displayed buses and routes by proximity to an arbitraty location 
-\item Draw DC Circulator bus positions and routes
+\item Draw DC Circulator bus positions and routes (DC Circulator is not part of the WMATA system)
+\item Provide filtering to limit the displayed buses and routes
+\begin{enumerate}
+\item Filter by only showing routes, stops, and buses matching a route name
+\item Filter by only showing routes, stops, and buses matching a headsign
+\item Filter by only showing routes with stops wihtin some proximity to the device's current location 
+\item Filter by only showing routes with stops wihtin some proximity to an arbitrary location
+\item Combine filters using boolean logic, for example only showing routes with stops near current location and some arbitrary location
+\end{enumerate}
+\item Send a text message or email reminder when a bus is some number of minutes away from a stop
 \end{enumerate}
 \end{document}
 
