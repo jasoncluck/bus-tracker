@@ -1,31 +1,59 @@
-<div class="page-header">
-  <%= link_to new_bus_path, :class => 'btn btn-primary' do %>
-    <i class="icon-plus icon-white"></i>
-    New Bus
-  <% end %>
-  <h1>Listing buses</h1>
-</div>
+<script type="text/javascript">
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(38.89, -77.03),
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
 
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+    //RouteDetails.Direction0.Shape[i].Lat
+    //RouteDetails.Direction0.Shape[i].Lon
+    var routes=['32', '5A', '25A', 'A5', 'A4'];
+    for(var rIdx=0; rIdx < routes.length; rIdx++)
+    {
+      $.getScript("routes/busroute"+routes[rIdx]+".json", function(){
+          //load the given route and plot it....
+          var routeCoordinates=[];
+          //Sometimes direction0 is null....
+          if(RouteDetails.Direction0 == null)
+          {
+            return;
+          }
+          var shape = RouteDetails.Direction0.Shape;
+          for (var i=0; i<shape.length; i++)
+          {
+            routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
+          }
+          var routePath = new google.maps.Polyline({
+            path: routeCoordinates,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.7,
+            strokeWeight: 2
+          });
+          routePath.setMap(map);
 
-  <tbody>
-<% @buses.each do |bus| %>
-    <tr>
-      <td><%= bus.name %></td>
-      <td><%= bus.location %></td>
-      <td><%= link_to 'Show', bus %></td>
-      <td><%= link_to 'Edit', edit_bus_path(bus) %></td>
-      <td><%= link_to 'Destroy', bus, confirm: 'Are you sure?', method: :delete %></td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+          for (var i = 0; i < busLocations.BusPositions.length; i++) { 
+          var bus=busLocations.BusPositions[i];
+          if(bus.RouteID == RouteDetails.RouteID)
+          {
+            var myLatlng = new google.maps.LatLng(bus.Lat, bus.Lon);
+            var marker = new google.maps.Marker({
+               position: myLatlng,
+               title:bus.RouteID+": "+bus.TripHeadsign
+            });
+            marker.setMap(map);
+          }
+        }
+      });
+    }
+  }
+  window.onload = initialize; 
+</script>
+
+
+
+
+<div id="map_canvas" style="width:100%; height:100%"></div>
+
