@@ -1,11 +1,87 @@
 <script type="text/javascript">
+
+  var map;
+
+  function get_random_color() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
+
+  function drawRoute() {
+//load the given route and plot it....
+    var routeCoordinates=[];
+    //Sometimes direction0 is null....
+    if(RouteDetails.Direction0 == null)
+    {
+      return;
+    }
+    var shape = RouteDetails.Direction0.Shape;
+    for (var i=0; i<shape.length; i++)
+    {
+      routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
+    }
+    var color = get_random_color();
+    var routePath = new google.maps.Polyline({
+      path: routeCoordinates,
+      strokeColor: '#'+color,
+      strokeOpacity: 0.5,
+      strokeWeight: 2
+    });
+    routePath.setMap(map);
+
+    for (var i = 0; i < busLocations.BusPositions.length; i++) { 
+      drawBus(color, busLocations.BusPositions[i]) ;
+    }
+  }
+
+  function drawBus(pinColor, bus){
+    if(bus.RouteID == RouteDetails.RouteID)
+    {
+      var myLatlng = new google.maps.LatLng(bus.Lat, bus.Lon);
+      var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
+      var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+        new google.maps.Size(40, 37),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(12, 35));
+      var marker = new google.maps.Marker({
+         position: myLatlng,
+         map: map,
+         title:bus.RouteID+": "+bus.TripHeadsign+" ("+bus.VehicleID+")",
+         icon: pinImage,
+         shadow: pinShadow
+      });
+
+      var content = "<h3>"+bus.RouteID+": "+bus.TripHeadsign+"</h3><br/><div>Minutes late: "+bus.Deviation+"</div><br/>"
+      +"<div>Direction: "+bus.DirectionText+"</div><br/>"
+      +"<div>Vehicle: "+bus.VehicleID+"</div><br/>"
+      +"<a href='#' class='btn btn-large'>Watch</a>"
+
+      var infowindow = new google.maps.InfoWindow({
+         content: content
+      });
+
+      marker.setMap(map);
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+    }
+  }
+
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(38.89, -77.03),
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
+    map = new google.maps.Map(document.getElementById("map_canvas"),
         mapOptions);
 
 //    var trafficLayer = new google.maps.TrafficLayer();
@@ -19,40 +95,7 @@
     var routes=<%=raw insert_routes %>;
     for(var rIdx=0; rIdx < routes.length; rIdx++)
     {
-      $.getScript("routes/busroute"+routes[rIdx]+".json", function(){
-          //load the given route and plot it....
-          var routeCoordinates=[];
-          //Sometimes direction0 is null....
-          if(RouteDetails.Direction0 == null)
-          {
-            return;
-          }
-          var shape = RouteDetails.Direction0.Shape;
-          for (var i=0; i<shape.length; i++)
-          {
-            routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
-          }
-          var routePath = new google.maps.Polyline({
-            path: routeCoordinates,
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.7,
-            strokeWeight: 2
-          });
-          routePath.setMap(map);
-
-          for (var i = 0; i < busLocations.BusPositions.length; i++) { 
-          var bus=busLocations.BusPositions[i];
-          if(bus.RouteID == RouteDetails.RouteID)
-          {
-            var myLatlng = new google.maps.LatLng(bus.Lat, bus.Lon);
-            var marker = new google.maps.Marker({
-               position: myLatlng,
-               title:bus.RouteID+": "+bus.TripHeadsign
-            });
-            marker.setMap(map);
-          }
-        }
-      });
+      $.getScript("routes/busroute"+routes[rIdx]+".json", drawRoute);
     }
   }
   window.onload = initialize; 

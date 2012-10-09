@@ -7,4 +7,8 @@ module BusesHelper
 		route_ids=routar.map{|r| r["RouteID"]}
 		"['#{route_ids.join("','")}']"
 	end
+
+	def next_route_color
+		"%06x" % (rand * 0xffffff)
+	end
 end
