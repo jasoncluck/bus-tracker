@@ -1,0 +1,38 @@
+Bus:
+RouteID (parent - fk)
+Location: (lat / lon)
+? Direction: (East / West / North / South)
+Last update: (date)
+Headsign: (text)
+Deviation: (real)
+? VehicleID: (string) 
+
+
+Route:
+  - Name (String), Route id (string / fk)
+
+Route details:
+ - Direction (fk)
+
+ Route Direction
+  - Direction (text)
+  - Shape (sequence of lat/lons) ... maybe kml path?
+  - Stops (sequence of stops...)
+  - Trip headsign (text)
+
+Stop
+ - lat / lon
+ - Name (text)
+ - List of route ids
+ - Stop id
+
+
+Account:
+ Favorite routes?
+ Alerts?
+
+
+URLs:  
+
+/bus/1 - Shows a map with the current position of bus 1
+/route/1 - Shows a map with the route details of route 1
