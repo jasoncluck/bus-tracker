@@ -4,6 +4,7 @@ gem 'rails', '3.2.8'
 gem 'bootstrap-generators', '~> 2.1'
 gem 'factory_girl_rails'
 gem 'simple_form'
+gem 'json'
 
 
 # Bundle edge Rails instead:

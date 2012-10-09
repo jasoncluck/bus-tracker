@@ -8,9 +8,15 @@
     var map = new google.maps.Map(document.getElementById("map_canvas"),
         mapOptions);
 
+//    var trafficLayer = new google.maps.TrafficLayer();
+//    trafficLayer.setMap(map);
+
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
     //RouteDetails.Direction0.Shape[i].Lat
     //RouteDetails.Direction0.Shape[i].Lon
-    var routes=['32', '5A', '25A', 'A5', 'A4'];
+
+    var routes=<%=raw insert_routes %>;
     for(var rIdx=0; rIdx < routes.length; rIdx++)
     {
       $.getScript("routes/busroute"+routes[rIdx]+".json", function(){
