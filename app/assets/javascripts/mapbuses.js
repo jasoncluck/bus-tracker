@@ -5,6 +5,7 @@
 */
 var routeColors = {};
 var markers = {};
+var openinfo;
 
   function drawRoute() {
 //load the given route and plot it....
@@ -39,45 +40,64 @@ var markers = {};
         col=get_random_color();
         routeColors[bus.wmataid]=col;
       }
-      drawBus(col, bus)
+      drawBus(col, bus);
+      //Thanks google...
+      //https://developers.google.com/maps/documentation/javascript/overlays#MarkerAnimations
+      /*
+      setTimeout(function(){
+        drawBus(col, bus)
+      }, i*20);
+    */
     }
   }
 
   function drawBus(pinColor, bus){
     var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+   
+   //Update marker position if it already exists...
+    if(markers[bus.busid] != null){
+      if(!markers[bus.busid].getPosition().equals(myLatlng)){
+        markers[bus.busid].setPosition(myLatlng);
+        markers[bus.busid].setAnimation(google.maps.Animation.BOUNCE);
+        //Turn off the bouncing in 3 seconds...
+        setTimeout(function(){
+          var myMarker = markers[bus.busid];
+          myMarker.setAnimation(null);
+        }, 2500);
+      }
+
+      
+    }else{
+      //Or create a new marker if it doesnt
+       var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
       new google.maps.Size(21, 34),
       new google.maps.Point(0,0),
       new google.maps.Point(10, 34));
-    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-      new google.maps.Size(40, 37),
-      new google.maps.Point(0, 0),
-      new google.maps.Point(12, 35));
-    var marker = new google.maps.Marker({
-       position: myLatlng,
-       map: map,
-       title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
-       icon: pinImage
-    });
 
-    var content = "<h3>"+bus.wmataid+": "+bus.headsign+"</h3><br/><div>Minutes late: "+bus.dev+"</div><br/>"
+      var marker = new google.maps.Marker({
+         position: myLatlng,
+         map: map,
+         title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
+         icon: pinImage
+      });
+      markers[bus.busid] = marker;
+      marker.setMap(map);
+          var content = "<h3>"+bus.wmataid+": "+bus.headsign+"</h3><br/><div>Schedule deviation: "+bus.dev+"</div><br/>"
     +"<div>Direction: "+bus.direction+"</div><br/>"
     +"<div>Vehicle: "+bus.busid+"</div><br/>"
     +"<a href='#' class='btn btn-large'>Watch</a>"
 
-    var infowindow = new google.maps.InfoWindow({
-       content: content
-    });
-    if(markers[bus.busid] != null){
-      markers[bus.busid].setMap(null);
+      var infowindow = new google.maps.InfoWindow({
+         content: content
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        if(openinfo != null){
+          openinfo.close();
+        }
+        infowindow.open(map,marker);
+        openinfo=infowindow;
+      });
     }
-
-    markers[bus.busid] = marker;
-    marker.setMap(map);
-
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map,marker);
-    });
   }
 
   function initialize() {
