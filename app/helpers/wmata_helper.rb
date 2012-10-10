@@ -42,8 +42,13 @@ module WmataHelper
 	  	# "TripStartTime"=>"2012-10-09T19:38:00",
 	  	# "VehicleID"=>"7136"} 
 	  	posarray.each do |buspos|
-  			b=Bus.new name: buspos["VehicleID"], headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"]
-  			b.save
+	  		b=Bus.where(busid: buspos["VehicleID"]).first
+	  		if b.nil?
+	  			b=Bus.new headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"]
+	  			b.save
+	  		else
+	  			Bus.update b.id, headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"]
+  			end
 		end
 	end
 

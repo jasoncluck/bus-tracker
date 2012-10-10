@@ -4,6 +4,7 @@
 * google api:  AIzaSyAAQDOZpCb33qnlU5xcBmf_n8CQ4p_qg6s
 */
 var routeColors = {};
+var markers = {};
 
   function drawRoute() {
 //load the given route and plot it....
@@ -67,7 +68,11 @@ var routeColors = {};
     var infowindow = new google.maps.InfoWindow({
        content: content
     });
+    if(markers[bus.busid] != null){
+      markers[bus.busid].setMap(null);
+    }
 
+    markers[bus.busid] = marker;
     marker.setMap(map);
 
     google.maps.event.addListener(marker, 'click', function() {

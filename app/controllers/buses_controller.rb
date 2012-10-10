@@ -1,7 +1,10 @@
+include WmataHelper
+
 class BusesController < ApplicationController
   # GET /buses
   # GET /buses.json
   def index
+    updateBusTable
     @buses = Bus.all
 
     respond_to do |format|

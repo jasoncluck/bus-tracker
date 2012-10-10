@@ -35,6 +35,6 @@ function newpositions()
         }else{
             //alert("HTTP status: "+request.status);
         }
-        setTimeout(poll, 6000);
+        setTimeout(poll, 10000);
     }
 }

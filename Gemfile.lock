@@ -142,6 +142,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   factory_girl_rails
   jquery-rails
+  json
   pg
   rails (= 3.2.8)
   rspec-rails (~> 2.0)
