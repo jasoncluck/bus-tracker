@@ -11,19 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001225906) do
+ActiveRecord::Schema.define(:version => 20121011005904) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
     t.string   "headsign"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.float    "lat"
     t.float    "lon"
     t.float    "dev"
     t.string   "wmataid"
     t.integer  "busid"
     t.string   "direction"
+    t.datetime "last_update"
   end
 
   create_table "maps", :force => true do |t|

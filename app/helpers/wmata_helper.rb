@@ -41,13 +41,15 @@ module WmataHelper
 	  	# "TripID"=>"20896_31",
 	  	# "TripStartTime"=>"2012-10-09T19:38:00",
 	  	# "VehicleID"=>"7136"} 
+
 	  	posarray.each do |buspos|
+		  	dt=DateTime.strptime(buspos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
 	  		b=Bus.where(busid: buspos["VehicleID"]).first
 	  		if b.nil?
-	  			b=Bus.new headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"]
+	  			b=Bus.new headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"], last_update: dt
 	  			b.save
 	  		else
-	  			Bus.update b.id, headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"]
+	  			Bus.update b.id, headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"], last_update: dt
   			end
 		end
 	end

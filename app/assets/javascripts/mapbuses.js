@@ -53,7 +53,7 @@ var openinfo;
 
   function drawBus(pinColor, bus){
     var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
-   
+   busTime=parseISO8601(bus.last_update);
    //Update marker position if it already exists...
     if(markers[bus.busid] != null){
       if(!markers[bus.busid].getPosition().equals(myLatlng)){
@@ -63,11 +63,13 @@ var openinfo;
         setTimeout(function(){
           var myMarker = markers[bus.busid];
           myMarker.setAnimation(null);
-        }, 2500);
+        }, 3000);
+      }else if (isStale(busTime)){
+        
+        markers[bus.busid].setMap(null);
+        markers[bus.busid] = null;
       }
-
-      
-    }else{
+    }else if(!isStale(busTime)){
       //Or create a new marker if it doesnt
        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
       new google.maps.Size(21, 34),
@@ -78,14 +80,19 @@ var openinfo;
          position: myLatlng,
          map: map,
          title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
-         icon: pinImage
+         icon: pinImage,
+         optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
       });
       markers[bus.busid] = marker;
       marker.setMap(map);
           var content = "<h3>"+bus.wmataid+": "+bus.headsign+"</h3><br/><div>Schedule deviation: "+bus.dev+"</div><br/>"
     +"<div>Direction: "+bus.direction+"</div><br/>"
     +"<div>Vehicle: "+bus.busid+"</div><br/>"
-    +"<a href='#' class='btn btn-large'>Watch</a>"
+
+    if(bus.last_update != null){
+      content = content+"<div>Last update: "+busTime.toLocaleString()+"</div><br/>"
+    }
+    content = content+"<a href='#' class='btn btn-large'>Watch</a>"
 
       var infowindow = new google.maps.InfoWindow({
          content: content
