@@ -64,23 +64,37 @@ var openinfo;
           var myMarker = markers[bus.busid];
           myMarker.setAnimation(null);
         }, 3000);
-      }else if (isStale(busTime)){
-        
-        markers[bus.busid].setMap(null);
-        markers[bus.busid] = null;
       }
-    }else if(!isStale(busTime)){
+      if (isStale(busTime)){
+        markers[bus.busid].setIcon(new google.maps.MarkerImage('stale.png'),
+          new google.maps.Size(21, 34),
+          new google.maps.Point(0,0),
+          new google.maps.Point(10, 34)
+          );
+      }else{
+         markers[bus.busid].setIcon(new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0,0),
+      new google.maps.Point(10, 34)));
+      }
+    }else{
       //Or create a new marker if it doesnt
-       var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+      var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
       new google.maps.Size(21, 34),
       new google.maps.Point(0,0),
       new google.maps.Point(10, 34));
+
+      if(!isStale(busTime)){ pinImage = new google.maps.MarkerImage('stale.png',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0,0),
+      new google.maps.Point(10, 34)); }
 
       var marker = new google.maps.Marker({
          position: myLatlng,
          map: map,
          title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
          icon: pinImage,
+         title:bus.headsign,
          optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
       });
       markers[bus.busid] = marker;
