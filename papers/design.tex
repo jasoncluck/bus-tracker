@@ -26,15 +26,34 @@ We will use the WMATA developer API to retrieve route details and bus positions 
 
 \section*{Task Breakdown}
 \begin{enumerate}
-\item [Cluck] Initial rails setup 
-\item Display map on index page
-\item Fetch bus positions from WMATA
-\item Draw markers on map for bus locations
-\item Draw lines on map for bus routes
-\item Display map on index page
-\item Show info window when bus marker is clicked
+\item Initial rails setup [Cluck]
+\item CSS styling using twitter bootstrap [Cluck]
+\item Display map on index page [Cluck]
+\item Fetch bus positions from WMATA servers [Will]
+\item Store WMATA response in database [Will]
+\item Draw markers on map for bus locations [Will]
+\item Draw lines on map for bus routes [Will]
+\item Show info window when bus marker is clicked, including the following
+\begin{enumerate}
+\item Route name
+\item Schedule deviation (lateness)
+\item Time of last position update (data staleness)
+\item Headsign
+\item Direction
+\end{enumerate}
 \item Display stops on map
-
+\item Control WMATA polling to avoid exceeding usage limits
+\item Display bus stops with markers on map
+\item Show info window when stop marker is clicked
+	\begin{enumerate}
+		\item Show which routes and directions the use the stop
+		\item Show next bus wait time projections for each route that uses the stop
+	\end{enumerate}
+\item Fetch routes from WMATA servers
+\item Store routes in database
+\item Fetch stops from WMATA servers
+\item Store stops in database
+\item Layer toggle widget that shows Google traffic overlay, bus markers, and stop markers
 \end{enumerate}
 
 \section*{Diagrams}
