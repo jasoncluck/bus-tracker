@@ -1,0 +1,366 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=pdflatex 2012.10.27)  29 OCT 2012 16:57
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**design.tex
+(./design.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
+ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
+rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
+kurmanji, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk,
+ polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbianc, s
+lovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, 
+welsh, loaded.
+(c:/texlive/2012/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(c:/texlive/2012/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(c:/texlive/2012/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/texlive/2012/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(c:/texlive/2012/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/texlive/2012/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(c:/texlive/2012/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(c:/texlive/2012/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(c:/texlive/2012/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
+\@enLab=\toks15
+)
+(c:/texlive/2012/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count88
+\lst@gtempboxa=\box26
+\lst@token=\toks16
+\lst@length=\count89
+\lst@currlwidth=\dimen105
+\lst@column=\count90
+\lst@pos=\count91
+\lst@lostspace=\dimen106
+\lst@width=\dimen107
+\lst@newlines=\count92
+\lst@lineno=\count93
+\lst@maxwidth=\dimen108
+
+(c:/texlive/2012/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count94
+\lst@skipnumbers=\count95
+\lst@framebox=\box27
+)
+(c:/texlive/2012/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+(c:/texlive/2012/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
+\c@tracingmulticols=\count96
+\mult@box=\box28
+\multicol@leftmargin=\dimen109
+\c@unbalance=\count97
+\c@collectmore=\count98
+\doublecol@number=\count99
+\multicoltolerance=\count100
+\multicolpretolerance=\count101
+\full@width=\dimen110
+\page@free=\dimen111
+\premulticols=\dimen112
+\postmulticols=\dimen113
+\multicolsep=\skip43
+\multicolbaselineskip=\skip44
+\partial@page=\box29
+\last@line=\box30
+\mult@rightbox=\box31
+\mult@grightbox=\box32
+\mult@gfirstbox=\box33
+\mult@firstbox=\box34
+\@tempa=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\@tempa=\box51
+\c@columnbadness=\count102
+\c@finalcolumnbadness=\count103
+\last@try=\dimen114
+\multicolovershoot=\dimen115
+\multicolundershoot=\dimen116
+\mult@nat@firstbox=\box52
+\colbreak@box=\box53
+\multicol@sort@counter=\count104
+) (./design.aux)
+\openout1 = `design.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+
+(c:/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count105
+\scratchdimen=\dimen117
+\scratchbox=\box54
+\nofMPsegments=\count106
+\nofMParguments=\count107
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count108
+\MPscratchDim=\dimen118
+\MPnumerator=\count109
+\makeMPintoPDFobject=\count110
+\everyMPtoPDFconversion=\toks18
+) (c:/texlive/2012/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/texlive/2012/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(c:/texlive/2012/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(c:/texlive/2012/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(c:/texlive/2012/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(c:/texlive/2012/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count111
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 17.
+ [1
+
+{c:/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+Package epstopdf Info: Source file: <design.eps>
+(epstopdf)                    date: 2012-10-29 16:53:45
+(epstopdf)                    size: 386580 bytes
+(epstopdf)             Output file: <design-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-10-29 16:57:32
+(epstopdf)                    size: 95622 bytes
+(epstopdf)             Command: <repstopdf --outfile=design-eps-converted-to.pd
+f design.eps>
+(epstopdf)             \includegraphics on input line 64.
+Package epstopdf Info: Output file is already uptodate.
+
+<design-eps-converted-to.pdf, id=14, 424.58624pt x 330.23375pt>
+File: design-eps-converted-to.pdf Graphic file (type pdf)
+
+<use design-eps-converted-to.pdf>
+Package pdftex.def Info: design-eps-converted-to.pdf used on input line 64.
+(pdftex.def)             Requested size: 390.0pt x 303.34506pt.
+
+<busTrackerUML.png, id=15, 898.35625pt x 366.36874pt>
+File: busTrackerUML.png Graphic file (type png)
+ <use busTrackerUML.png>
+Package pdftex.def Info: busTrackerUML.png used on input line 70.
+(pdftex.def)             Requested size: 390.0pt x 159.05046pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <bus-entity-rel.eps>
+(epstopdf)                    date: 2012-10-29 16:53:45
+(epstopdf)                    size: 71906 bytes
+(epstopdf)             Output file: <bus-entity-rel-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-10-29 16:57:38
+(epstopdf)                    size: 18445 bytes
+(epstopdf)             Command: <repstopdf --outfile=bus-entity-rel-eps-convert
+ed-to.pdf bus-entity-rel.eps>
+(epstopdf)             \includegraphics on input line 76.
+Package epstopdf Info: Output file is already uptodate.
+<bus-entity-rel-eps-converted-to.pdf, id=16, 580.1675pt x 569.12625pt>
+File: bus-entity-rel-eps-converted-to.pdf Graphic file (type pdf)
+
+<use bus-entity-rel-eps-converted-to.pdf>
+Package pdftex.def Info: bus-entity-rel-eps-converted-to.pdf used on input line
+ 76.
+(pdftex.def)             Requested size: 390.0pt x 382.58049pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <bus-schema.eps>
+(epstopdf)                    date: 2012-10-29 16:53:45
+(epstopdf)                    size: 403271 bytes
+(epstopdf)             Output file: <bus-schema-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-10-29 16:57:44
+(epstopdf)                    size: 75177 bytes
+(epstopdf)             Command: <repstopdf --outfile=bus-schema-eps-converted-t
+o.pdf bus-schema.eps>
+(epstopdf)             \includegraphics on input line 83.
+Package epstopdf Info: Output file is already uptodate.
+<bus-schema-eps-converted-to.pdf, id=17, 503.8825pt x 366.36874pt>
+File: bus-schema-eps-converted-to.pdf Graphic file (type pdf)
+
+<use bus-schema-eps-converted-to.pdf>
+Package pdftex.def Info: bus-schema-eps-converted-to.pdf used on input line 83.
+
+(pdftex.def)             Requested size: 390.0pt x 283.56387pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <sequence-diagram.eps>
+(epstopdf)                    date: 2012-10-29 16:53:46
+(epstopdf)                    size: 250377 bytes
+(epstopdf)             Output file: <sequence-diagram-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-10-29 16:57:47
+(epstopdf)                    size: 24786 bytes
+(epstopdf)             Command: <repstopdf --outfile=sequence-diagram-eps-conve
+rted-to.pdf sequence-diagram.eps>
+(epstopdf)             \includegraphics on input line 90.
+Package epstopdf Info: Output file is already uptodate.
+<sequence-diagram-eps-converted-to.pdf, id=18, 226.8475pt x 341.275pt>
+File: sequence-diagram-eps-converted-to.pdf Graphic file (type pdf)
+
+<use sequence-diagram-eps-converted-to.pdf>
+Package pdftex.def Info: sequence-diagram-eps-converted-to.pdf used on input li
+ne 90.
+(pdftex.def)             Requested size: 390.0pt x 586.73158pt.
+
+
+LaTeX Warning: Float too large for page by 59.7649pt on input line 91.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package epstopdf Info: Source file: <rails-sequence.eps>
+(epstopdf)                    date: 2012-10-29 16:53:46
+(epstopdf)                    size: 1479840 bytes
+(epstopdf)             Output file: <rails-sequence-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-10-29 16:57:52
+(epstopdf)                    size: 112369 bytes
+(epstopdf)             Command: <repstopdf --outfile=rails-sequence-eps-convert
+ed-to.pdf rails-sequence.eps>
+(epstopdf)             \includegraphics on input line 96.
+Package epstopdf Info: Output file is already uptodate.
+<rails-sequence-eps-converted-to.pdf, id=19, 878.28125pt x 532.99126pt>
+File: rails-sequence-eps-converted-to.pdf Graphic file (type pdf)
+
+<use rails-sequence-eps-converted-to.pdf>
+Package pdftex.def Info: rails-sequence-eps-converted-to.pdf used on input line
+ 96.
+(pdftex.def)             Requested size: 390.0pt x 236.68019pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[3 <./design-eps-converted-to.pdf>] [4 <./busTrackerUML.png (PNG copy)>]
+[5 <./bus-entity-rel-eps-converted-to.pdf>] [6 <./bus-schema-eps-converted-to.p
+df>] [7 <./sequence-diagram-eps-converted-to.pdf>] [8 <./rails-sequence-eps-con
+verted-to.pdf>] (./design.aux) ) 
+Here is how much of TeX's memory you used:
+ 2799 strings out of 493488
+ 40956 string characters out of 3144747
+ 100896 words of memory out of 3000000
+ 6098 multiletter control sequences out of 15000+200000
+ 6364 words of font info for 23 fonts, out of 3000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,6n,32p,886b,228s stack positions out of 5000i,500n,10000p,200000b,50000s
+<c:/texlive/2012/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb><c:/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb><c:/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><c:/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/te
+xlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on design.pdf (8 pages, 395810 bytes).
+PDF statistics:
+ 158 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+
