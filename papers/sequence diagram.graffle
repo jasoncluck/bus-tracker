@@ -44,7 +44,7 @@
 	<key>Creator</key>
 	<string>Jason Cluck</string>
 	<key>DisplayScale</key>
-	<string>1 0/72 in = 1 0/72 in</string>
+	<string>1 0/72 in = 1.0000 in</string>
 	<key>GraphDocumentVersion</key>
 	<integer>8</integer>
 	<key>GraphicsList</key>
@@ -115,8 +115,8 @@
 			<integer>10</integer>
 			<key>Points</key>
 			<array>
-				<string>{295.17206, 292.45105}</string>
-				<string>{279.17334, 328.51767}</string>
+				<string>{295.5914, 292.45291}</string>
+				<string>{279.99118, 328.52115}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -337,7 +337,7 @@
 		<key>ExpandedCanvases</key>
 		<array/>
 		<key>Frame</key>
-		<string>{{353, 70}, {573, 708}}</string>
+		<string>{{353, 72}, {573, 706}}</string>
 		<key>ListView</key>
 		<false/>
 		<key>OutlineWidth</key>
@@ -349,7 +349,7 @@
 		<key>SidebarWidth</key>
 		<integer>138</integer>
 		<key>VisibleRegion</key>
-		<string>{{2, 93}, {573, 598}}</string>
+		<string>{{2, 93}, {573, 596}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>
