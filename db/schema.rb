@@ -27,12 +27,6 @@ ActiveRecord::Schema.define(:version => 20121011005904) do
     t.datetime "last_update"
   end
 
-  create_table "maps", :force => true do |t|
-    t.string   "Buses"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "routes", :force => true do |t|
     t.integer "routeid"
     t.string  "name"
