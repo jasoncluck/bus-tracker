@@ -22,12 +22,17 @@ module WmataHelper
 		return result
 	end
 
-	def fetchPositions
+	def fetchBusPositions
 		fetchUri("http://api.wmata.com/Bus.svc/json/JBusPositions?&includingVariations=true&api_key=#{@@apiKey}")
 	end
+	#TODO: do these api queries need to alternate?
+	def fetchStopPositions
+		fetchUri("http://api.wmata.com/Bus.svc/Stops?lat=38.878586&lon=-76.989626&radius=500&api_key=#{@@apiKey}")
+	end
+
 
 	def updateBusTable
-		pos=fetchPositions
+		pos=fetchBusPositions
 	  	posarray=pos["BusPositions"]
 	  	#{"DateTime"=>"2012-10-09T21:05:22",
 	  	# "Deviation"=>"2.25",
@@ -50,6 +55,22 @@ module WmataHelper
 	  			b.save
 	  		else
 	  			Bus.update b.id, headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"], last_update: dt
+  			end
+		end
+	end
+
+	def updateStopTable
+		pos=fetchStopPositions
+	  	posarray=pos["Stops"]
+
+	  	posarray.each do |stoppos|
+		  	#dt=DateTime.strptime(stoppos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
+	  		s=Stop.where(stopid: stoppos["StopID"]).first
+	  		if s.nil?
+	  			s=Stop.new lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"], routes: stoppos["Routes"]
+	  			b.save
+	  		else
+	  			Stop.update s.id, lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"], routes: stoppos["Routes"]
   			end
 		end
 	end
