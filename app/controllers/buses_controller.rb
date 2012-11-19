@@ -4,9 +4,10 @@ class BusesController < ApplicationController
   # GET /buses
   # GET /buses.json
   def index
+    #everytime the site index is accessed update the bus and stop table
     updateBusTable
-    @buses = Bus.all
 
+    @buses = Bus.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @buses }
