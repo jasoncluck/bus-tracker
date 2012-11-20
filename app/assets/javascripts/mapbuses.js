@@ -31,16 +31,18 @@ function drawRoute() {
   routePath.setMap(map);
 }
 
-function updateMarkers(buses){
+function updateMarkers(buses, stops){
   for(var i=0; i<buses.length; i++)
   {
     bus=buses[i];
+    stop = stops[i]
     col=routeColors[bus.wmataid]
     if(col == undefined){
       col=get_random_color();
       routeColors[bus.wmataid]=col;
     }
     drawBus(col, bus);
+    //drawStop(col,stop);
     //Thanks google...
     //https://developers.google.com/maps/documentation/javascript/overlays#MarkerAnimations
     /*
@@ -175,21 +177,6 @@ function showError(error)
   {
     lat = 38.89;
     lon = -77.03; 
-  switch(error.code) 
-    {
-    case error.PERMISSION_DENIED:
-      alert("User denied the request for Geolocation.");
-      break;
-    case error.POSITION_UNAVAILABLE:
-      alert("Location information is unavailable.");
-      break;
-    case error.TIMEOUT:
-      alert("The request to get user location timed out.");
-      break;
-    case error.UNKNOWN_ERROR:
-      alert("An unknown error occurred.");
-      break;
-    }
   } 
 window.onload = initialize;
 
