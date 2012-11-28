@@ -58,6 +58,7 @@ function updateMarkers(buses){
   }
 }
 
+
 function drawBus(pinColor, bus){
   //show_debug("in draw bus with id "+bus.busid+"...");
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
@@ -65,7 +66,32 @@ function drawBus(pinColor, bus){
  //Update marker position if it already exists...
   if(markers[bus.busid] != null){
     show_debug("markers["+bus.busid+"] does exist");
-    if(!markers[bus.busid].getPosition().equals(myLatlng)){
+    makeNewMarker(pinColor, bus);
+  }else{
+    //Or create a new marker if it doesnt
+    show_debug('new marker, polling google...');
+    updateExistingMarker();
+  }//end else
+}
+
+function makeMarker(pinColor, bus){
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+  new google.maps.Size(21, 34),
+  new google.maps.Point(0,0),
+  new google.maps.Point(10, 34));
+  show_debug('done with google poll.');
+
+  if(!isStale(busTime)){ 
+    pinImage = new google.maps.MarkerImage('stale.png',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0,0),
+      new google.maps.Point(10, 34)); 
+  }
+  return pinImage;
+}
+
+function makeNewMarker(pinColor, bus){
+  if(!markers[bus.busid].getPosition().equals(myLatlng)){
       show_debug('new position...');
       markers[bus.busid].setPosition(myLatlng);
       markers[bus.busid].setAnimation(google.maps.Animation.BOUNCE);
@@ -75,6 +101,7 @@ function drawBus(pinColor, bus){
         myMarker.setAnimation(null);
       }, 3000);
     }
+    var mkImg = makeMarker(pinColor, bus);
     if (isStale(busTime)){
       show_debug('stale...');
       markers[bus.busid].setIcon(new google.maps.MarkerImage('stale.png'),
@@ -89,48 +116,38 @@ function drawBus(pinColor, bus){
     new google.maps.Point(0,0),
     new google.maps.Point(10, 34)));
     }
-  }else{
-    //Or create a new marker if it doesnt
-    show_debug('new marker, polling google...');
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34));
-    show_debug('done with google poll.');
-
-    if(!isStale(busTime)){ pinImage = new google.maps.MarkerImage('stale.png',
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34)); }
-
-    var marker = new google.maps.Marker({
-       position: myLatlng,
-       map: map,
-       title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
-       icon: pinImage,
-       title:bus.headsign,
-       optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
-    });
-    markers[bus.busid] = marker;
-    show_debug("adding "+bus.busid+" to map");
-    marker.setMap(map);
-    
-    show_debug("making info window for "+bus.busid);
-    
-    show_debug("adding maps listener for "+bus.busid);
-    google.maps.event.addListener(marker, 'click', function() {
-      var busid = bus.id;
-      pollPath("/buses/"+busid+"/", function(){
-        if(openinfo != null){
-          openinfo.close();
-        }
-        var infowindow = new google.maps.InfoWindow({ content: request.responseText });
-        infowindow.open(map,marker);
-        openinfo=infowindow;
-      });
-  }); 
-  }//end else
 }
+
+function updateExistingMarker(pinColor, bus){
+  var pinImage=makeMarker(pinColor,bus);
+  var marker = new google.maps.Marker({
+     position: myLatlng,
+     map: map,
+     title:bus.wmataid+": "+bus.headsign+" ("+bus.busid+")",
+     icon: pinImage,
+     title:bus.headsign,
+     optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
+  });
+  markers[bus.busid] = marker;
+  show_debug("adding "+bus.busid+" to map");
+  marker.setMap(map);
+  
+  show_debug("making info window for "+bus.busid);
+  
+  show_debug("adding maps listener for "+bus.busid);
+  google.maps.event.addListener(marker, 'click', function() {
+    var busid = bus.id;
+    pollPath("/buses/"+busid+"/", function(){
+      if(openinfo != null){
+        openinfo.close();
+      }
+      var infowindow = new google.maps.InfoWindow({ content: request.responseText });
+      infowindow.open(map,marker);
+      openinfo=infowindow;
+    });
+  }); 
+}
+
 
 function initialize() {
   navigator.geolocation.getCurrentPosition(showPosition,showError);
@@ -146,8 +163,6 @@ function initialize() {
 // //We'd like this to be toggleable, it's too much with everything else
 // //    var trafficLayer = new google.maps.TrafficLayer();
 // //    trafficLayer.setMap(map);
-  
-  
 }
 
 function showPosition(position)
