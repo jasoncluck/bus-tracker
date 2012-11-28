@@ -48,11 +48,10 @@ function newpositions()
         }else{
             //alert("HTTP status: "+request.status);
         }
-        show_debug("resetting timeout... ");
+        show_debug("waiting 10 seconds... ");
         setTimeout(poll, 10000);
     }
 }
-
 function newStopPositions()
 {   
     if (request.readyState == 4) {
