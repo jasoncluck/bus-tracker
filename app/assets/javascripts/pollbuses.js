@@ -43,7 +43,7 @@ function newpositions()
         }else{
             //alert("HTTP status: "+request.status);
         }
-        show_debug("waiting 10 seconds... ");
-        setTimeout(poll, 10000);
+        show_debug("waiting 4 seconds... ");
+        setTimeout(poll, 4000);
     }
 }

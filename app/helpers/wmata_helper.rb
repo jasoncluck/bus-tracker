@@ -9,9 +9,9 @@ require 'json'
 
 module WmataHelper
 	@@apiKey = '7ksbn5vbbxqanrmgg9jczkag'
+	@@lastUpdate = curTime=DateTime.now()
 
 	def fetchUri(uristr)
-
 		uri=URI.parse(uristr)
 		response = Net::HTTP.get_response uri
 		result=JSON.parse(response.body)
@@ -33,8 +33,17 @@ module WmataHelper
 
 
 	def updateBusTable
+		# subtractions result in fractions of days...
+		# convert to seconds...
+		n=DateTime.now
+		secs=(n - @@lastUpdate)*24*60*60
+		if secs < 4
+			logger.info "Skipping update step because only #{secs.to_f} seconds since last update"
+			return
+		end
 		# File.open('api-dump.txt', 'a') {|f| f.write("fetching bus positions at #{DateTime.now}...\n") }
 		pos=fetchBusPositions
+		@@lastUpdate=DateTime.now
 	  	posarray=pos["BusPositions"]
 	  	# File.open('api-dump.txt', 'a') {|f| f.write("fetched #{posarray.length} finished at #{DateTime.now}...\n") }
 	  	#{"DateTime"=>"2012-10-09T21:05:22",
