@@ -1,6 +1,7 @@
 include WmataHelper
 @bus_checkbox = false
 class BusesController < ApplicationController
+
   # GET /buses
   # GET /buses.json
   def index
@@ -33,9 +34,8 @@ class BusesController < ApplicationController
   # GET /buses/1.json
   def show
     @bus = Bus.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :show, :layout => false }
       format.json { render json: @bus }
     end
   end

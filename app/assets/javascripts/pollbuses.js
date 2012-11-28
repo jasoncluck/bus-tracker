@@ -19,20 +19,19 @@ if (!request)
  alert("Error initializing XMLHttpRequest!");
 
 function poll(){
-    show_debug('polling...');
-    var url = "/buses.json"
-    request.onreadystatechange = newBusPositions
-    request.open("GET", url, true);
+    pollPath("/buses.json", newpositions);
+}
+
+function pollPath(path, callback){
+    show_debug("polling "+path+"...");
+    request.onreadystatechange = callback;
+    request.open("GET", path, true);
     request.send(null);
     show_debug('sent request..');
 }
 
 function pollStops(){
-    //stops
-    var url = "/stops.json"
-    request.onreadystatechange = newStopPositions
-    request.open("GET", url, true);
-    request.send(null);
+    pollPath("/stops.json", newStopPositions);
 }
 
 function newpositions()

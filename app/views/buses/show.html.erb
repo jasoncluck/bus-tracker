@@ -1,20 +1,17 @@
-<div class="page-header">
-  <%= link_to buses_path, :class => 'btn' do %>
-    <i class="icon-list-alt"></i>
-    Back
-  <% end %>
-  <%= link_to edit_bus_path(@bus), :class => 'btn btn-primary' do %>
-    <i class="icon-pencil icon-white"></i>
-    Edit
-  <% end %>
-  <h1>Listing buses</h1>
-</div>
+<h3><%= @bus.wmataid %> (<%= @bus.direction %>)</h3>
+  <p>
+<div>
+  To <%= @bus.headsign %> <br/>
+  As of <%= @bus.last_update.strftime("%l:%M %P on %b %d, %Y" ) %><br/>
+  Running 
+  <% if @bus.dev > 0 %>
+  <%= @bus.dev %> minutes late
+  <% else %>
+  <%= -1 * @bus.dev %> minutes early
+ <% end %>
+ </div>
+<div>Vehicle: <%= @bus.busid %></div><br/>
 
-<dl>
-  <dt>Name:</dt>
-  <dd><%= @bus.name %></dd>
+<a href='#' class='btn btn-large'>Watch</a>
+</p>
 
-  <dt>Location:</dt>
-  <dd><%= @bus.location %></dd>
-
-</dl>
