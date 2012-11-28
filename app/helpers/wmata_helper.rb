@@ -16,6 +16,7 @@ module WmataHelper
 		response = Net::HTTP.get_response uri
 		result=JSON.parse(response.body)
 		# if the hash has 'Error' as a key, we raise an error
+		# File.open('busjson-dump.txt', 'a') {|f| f.write(response.body) }
 		if result.has_key? 'Error'
 		   raise "JSON error"
 		end
@@ -23,7 +24,7 @@ module WmataHelper
 	end
 
 	def fetchBusPositions
-		fetchUri("http://api.wmata.com/Bus.svc/json/JBusPositions?&includingVariations=true&api_key=#{@@apiKey}")
+		fetchUri("http://api.wmata.com/Bus.svc/json/JBusPositions?&includingVariations=false&api_key=#{@@apiKey}")
 	end
 	#TODO: do these api queries need to alternate?
 	def fetchStopPositions
@@ -32,8 +33,10 @@ module WmataHelper
 
 
 	def updateBusTable
+		# File.open('api-dump.txt', 'a') {|f| f.write("fetching bus positions at #{DateTime.now}...\n") }
 		pos=fetchBusPositions
 	  	posarray=pos["BusPositions"]
+	  	# File.open('api-dump.txt', 'a') {|f| f.write("fetched #{posarray.length} finished at #{DateTime.now}...\n") }
 	  	#{"DateTime"=>"2012-10-09T21:05:22",
 	  	# "Deviation"=>"2.25",
 	  	# "DirectionNum"=>"1",
@@ -47,15 +50,38 @@ module WmataHelper
 	  	# "TripStartTime"=>"2012-10-09T19:38:00",
 	  	# "VehicleID"=>"7136"} 
 
+	  	
+
 	  	posarray.each do |buspos|
-		  	dt=DateTime.strptime(buspos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
-	  		b=Bus.where(busid: buspos["VehicleID"]).first
-	  		if b.nil?
-	  			b=Bus.new headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"], last_update: dt
-	  			b.save
+		  	dt=DateTime.strptime(buspos["DateTime"]+" EST", '%Y-%m-%dT%H:%M:%S %Z')
+		  	bus=Bus.new headsign: buspos["TripHeadsign"], 
+	  			lat: buspos["Lat"], 
+	  			lon: buspos["Lon"], 
+	  			dev: buspos["Deviation"], 
+	  			wmataid: buspos["RouteID"], 
+	  			busid: buspos["VehicleID"], 
+	  			direction: buspos["DirectionText"], 
+	  			last_update: dt
+	  		if bus.valid?
+	  			b=Bus.where(busid: buspos["VehicleID"]).first
+	  			if b.nil?
+	  				bus.save
+	  			else
+	  				#File.open('api-dump.txt', 'a') {|f| f.write("\tupdating bus with id #{b.id}, datetime #{dt}\n") }
+	  				Bus.update b.id, 
+	  				headsign: bus.headsign, 
+	  				lat: bus.lat,
+	  				lon: bus.lon,
+	  				dev: bus.dev,
+	  				wmataid: bus.wmataid,
+	  				busid: bus.busid,
+	  				direction: bus.direction,
+	  				last_update: bus.last_update
+	  			end
 	  		else
-	  			Bus.update b.id, headsign: buspos["TripHeadsign"], lat: buspos["Lat"], lon: buspos["Lon"], dev: buspos["Deviation"], wmataid: buspos["RouteID"], busid: buspos["VehicleID"], direction: buspos["DirectionText"], last_update: dt
-  			end
+	  			#File.open('api-dump.txt', 'a') {|f| f.write("\tskipped bus #{bus.id}, datetime #{dt} because it was invalid\n") }
+	  		end
+	  		
 		end
 	end
 
