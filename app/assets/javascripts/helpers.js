@@ -29,3 +29,14 @@ function isStale(date){
 	var staleness = (now-date)/1000;
 	return staleness > 120;
 }
+
+//Returns true if the date is stale
+//Stale is anything older than 30 minutes...
+function isAncient(date){
+  if(date == null){
+    return true;
+  }
+  var now = Date.now();
+  var staleness = (now-date)/1000;
+  return staleness > 5*60;
+}

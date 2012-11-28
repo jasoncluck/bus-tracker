@@ -42,7 +42,15 @@ function updateMarkers(buses){
         col=get_random_color();
         routeColors[bus.wmataid]=col;
       }
-      drawBus(col, bus);
+      busTime=parseISO8601(bus.last_update);
+      if(isAncient(busTime)){
+        //remove bus
+        if(markers[bus.busid] != null){
+          markers[bus.busid].setMap(null);
+        }
+      }else{
+        drawBus(col, bus);  
+      }
     }
     
     //Thanks google...
@@ -57,10 +65,8 @@ function updateMarkers(buses){
 }
 
 function drawBus(pinColor, bus){
-  
-  
  //Update marker position if it already exists...
-  if(markers[bus.busid] != null){
+ if(markers[bus.busid] != null){
     updateExistingMarker(pinColor, bus);
   }else{
     //Or create a new marker if it doesnt
