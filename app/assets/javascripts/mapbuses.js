@@ -36,14 +36,21 @@ function updateBusMarkers(buses){
   {
     //buses
     bus=buses[i];
-    col=routeColors[bus.wmataid]
-    if(col == undefined){
-      col=get_random_color();
-      routeColors[bus.wmataid]=col;
+    
+    if(bus != null){
+      
+      col=routeColors[bus.wmataid]
+      if(col == undefined){
+        col=get_random_color();
+        routeColors[bus.wmataid]=col;
+      }
+      show_debug("drawing pin "+i+" for id: "+bus.id+", busid: "+bus.busid+", wmataid: "+bus.wmataid+"...");
+	  if(bus.draw == true){
+        drawBus(col, bus);
+	  }
+      show_debug('(done)');
     }
-    if(bus.draw == true){
-      drawBus(col, bus);
-    }
+    
     //Thanks google...
     //https://developers.google.com/maps/documentation/javascript/overlays#MarkerAnimations
     /*
@@ -72,11 +79,14 @@ function updateStopMarkers(stops){
 }
 
 function drawBus(pinColor, bus){
+  //show_debug("in draw bus with id "+bus.busid+"...");
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
- busTime=parseISO8601(bus.last_update);
+  busTime=parseISO8601(bus.last_update);
  //Update marker position if it already exists...
   if(markers[bus.busid] != null){
+    show_debug("markers["+bus.busid+"] does exist");
     if(!markers[bus.busid].getPosition().equals(myLatlng)){
+      show_debug('new position...');
       markers[bus.busid].setPosition(myLatlng);
       markers[bus.busid].setAnimation(google.maps.Animation.BOUNCE);
       //Turn off the bouncing in 3 seconds...
@@ -86,12 +96,14 @@ function drawBus(pinColor, bus){
       }, 3000);
     }
     if (isStale(busTime)){
+      show_debug('stale...');
       markers[bus.busid].setIcon(new google.maps.MarkerImage('stale.png'),
         new google.maps.Size(21, 34),
         new google.maps.Point(0,0),
         new google.maps.Point(10, 34)
         );
     }else{
+      show_debug('not stale, polling google...');
        markers[bus.busid].setIcon(new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
     new google.maps.Size(21, 34),
     new google.maps.Point(0,0),
@@ -99,10 +111,12 @@ function drawBus(pinColor, bus){
     }
   }else{
     //Or create a new marker if it doesnt
+    show_debug('new marker, polling google...');
     var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
     new google.maps.Size(21, 34),
     new google.maps.Point(0,0),
     new google.maps.Point(10, 34));
+    show_debug('done with google poll.');
 
     if(!isStale(busTime)){ pinImage = new google.maps.MarkerImage('stale.png',
     new google.maps.Size(21, 34),
@@ -118,19 +132,23 @@ function drawBus(pinColor, bus){
        optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
     });
     markers[bus.busid] = marker;
+    show_debug("adding "+bus.busid+" to map");
     marker.setMap(map);
+    
+
         var content = "<h3>"+bus.wmataid+": "+bus.headsign+"</h3><br/><div>Schedule deviation: "+bus.dev+"</div><br/>"
   +"<div>Direction: "+bus.direction+"</div><br/>"
   +"<div>Vehicle: "+bus.busid+"</div><br/>"
 
-  if(bus.last_update != null){
+  if(bus.last_update != null && busTime != null){
     content = content+"<div>Last update: "+busTime.toLocaleString()+"</div><br/>"
   }
   content = content+"<a href='#' class='btn btn-large'>Watch</a>"
-
+  show_debug("making info window for "+bus.busid);
     var infowindow = new google.maps.InfoWindow({
        content: content
     });
+    show_debug("adding maps listener for "+bus.busid);
     google.maps.event.addListener(marker, 'click', function() {
       if(openinfo != null){
         openinfo.close();
@@ -139,6 +157,7 @@ function drawBus(pinColor, bus){
       openinfo=infowindow;
     });
   }
+  
 }
 
 function drawStop(pinColor, stop){
