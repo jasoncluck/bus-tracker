@@ -37,15 +37,12 @@ function updateMarkers(buses){
     bus=buses[i];
     
     if(bus != null){
-      
       col=routeColors[bus.wmataid]
       if(col == undefined){
         col=get_random_color();
         routeColors[bus.wmataid]=col;
       }
-      show_debug("drawing pin "+i+" for id: "+bus.id+", busid: "+bus.busid+", wmataid: "+bus.wmataid+"...");
       drawBus(col, bus);
-      show_debug('(done)');
     }
     
     //Thanks google...
@@ -56,43 +53,38 @@ function updateMarkers(buses){
     }, i*20);
   */
   }
+  show_debug("updated "+buses.length+" markers");
 }
 
-
 function drawBus(pinColor, bus){
-  //show_debug("in draw bus with id "+bus.busid+"...");
-  var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
-  busTime=parseISO8601(bus.last_update);
+  
+  
  //Update marker position if it already exists...
   if(markers[bus.busid] != null){
-    show_debug("markers["+bus.busid+"] does exist");
-    makeNewMarker(pinColor, bus);
+    updateExistingMarker(pinColor, bus);
   }else{
     //Or create a new marker if it doesnt
-    show_debug('new marker, polling google...');
-    updateExistingMarker();
+    makeNewMarker(pinColor, bus);
   }//end else
 }
 
 function makeMarker(pinColor, bus){
-  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-  new google.maps.Size(21, 34),
-  new google.maps.Point(0,0),
-  new google.maps.Point(10, 34));
-  show_debug('done with google poll.');
-
+  busTime=parseISO8601(bus.last_update);
   if(!isStale(busTime)){ 
-    pinImage = new google.maps.MarkerImage('stale.png',
+    return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
       new google.maps.Size(21, 34),
       new google.maps.Point(0,0),
-      new google.maps.Point(10, 34)); 
+      new google.maps.Point(10, 34));
   }
-  return pinImage;
+  return new google.maps.MarkerImage('stale.png',
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34)); 
 }
 
-function makeNewMarker(pinColor, bus){
+function updateExistingMarker(pinColor, bus){
+  var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
   if(!markers[bus.busid].getPosition().equals(myLatlng)){
-      show_debug('new position...');
       markers[bus.busid].setPosition(myLatlng);
       markers[bus.busid].setAnimation(google.maps.Animation.BOUNCE);
       //Turn off the bouncing in 3 seconds...
@@ -102,23 +94,11 @@ function makeNewMarker(pinColor, bus){
       }, 3000);
     }
     var mkImg = makeMarker(pinColor, bus);
-    if (isStale(busTime)){
-      show_debug('stale...');
-      markers[bus.busid].setIcon(new google.maps.MarkerImage('stale.png'),
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34)
-        );
-    }else{
-      show_debug('not stale, polling google...');
-       markers[bus.busid].setIcon(new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34)));
-    }
+    markers[bus.busid].setIcon(mkImg);
 }
 
-function updateExistingMarker(pinColor, bus){
+function makeNewMarker(pinColor, bus){
+  var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
   var pinImage=makeMarker(pinColor,bus);
   var marker = new google.maps.Marker({
      position: myLatlng,
@@ -129,12 +109,8 @@ function updateExistingMarker(pinColor, bus){
      optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
   });
   markers[bus.busid] = marker;
-  show_debug("adding "+bus.busid+" to map");
   marker.setMap(map);
   
-  show_debug("making info window for "+bus.busid);
-  
-  show_debug("adding maps listener for "+bus.busid);
   google.maps.event.addListener(marker, 'click', function() {
     var busid = bus.id;
     pollPath("/buses/"+busid+"/", function(){
@@ -189,7 +165,8 @@ function showPosition(position)
     $.getScript("routes/busroute"+routes[rIdx]+".json", drawRoute);
   }
   //Starts a cycle of polling for bus positions
-  poll();
+  //every four seconds
+  setInterval(poll, 15000);
 }
 
 
