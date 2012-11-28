@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/schleyfox/ruby_kml
+  revision: 0d6b4d076e1ee155893f7d8e82b7055644e024b8
+  specs:
+    ruby_kml (0.1.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -139,6 +145,7 @@ DEPENDENCIES
   pg
   rails (= 3.2.8)
   rspec-rails (~> 2.0)
+  ruby_kml!
   sass-rails (~> 3.2.3)
   simple_form
   sqlite3
