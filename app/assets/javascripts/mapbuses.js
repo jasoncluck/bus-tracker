@@ -115,37 +115,25 @@ function drawBus(pinColor, bus){
     show_debug("adding "+bus.busid+" to map");
     marker.setMap(map);
     
-
-        var content = "<h3>"+bus.wmataid+": "+bus.headsign+"</h3><br/><div>Schedule deviation: "+bus.dev+"</div><br/>"
-  +"<div>Direction: "+bus.direction+"</div><br/>"
-  +"<div>Vehicle: "+bus.busid+"</div><br/>"
-
-  if(bus.last_update != null && busTime != null){
-    content = content+"<div>Last update: "+busTime.toLocaleString()+"</div><br/>"
-  }
-  content = content+"<a href='#' class='btn btn-large'>Watch</a>"
-  show_debug("making info window for "+bus.busid);
-    var infowindow = new google.maps.InfoWindow({
-       content: content
-    });
+    show_debug("making info window for "+bus.busid);
+    
     show_debug("adding maps listener for "+bus.busid);
     google.maps.event.addListener(marker, 'click', function() {
-      if(openinfo != null){
-        openinfo.close();
-      }
-      infowindow.open(map,marker);
-      openinfo=infowindow;
-    });
-  }
-  
+      var busid = bus.id;
+      pollPath("/buses/"+busid+"/", function(){
+        if(openinfo != null){
+          openinfo.close();
+        }
+        var infowindow = new google.maps.InfoWindow({ content: request.responseText });
+        infowindow.open(map,marker);
+        openinfo=infowindow;
+      });
+  }); 
+  }//end else
 }
 
 function initialize() {
-  
-
   navigator.geolocation.getCurrentPosition(showPosition,showError);
-  
-  
 
   // var mapOptions = {
   //   center: new google.maps.LatLng(lat, lon),

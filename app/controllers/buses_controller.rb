@@ -1,12 +1,12 @@
 include WmataHelper
 
 class BusesController < ApplicationController
+
   # GET /buses
   # GET /buses.json
   def index
     #everytime the site index is accessed update the bus and stop table
     updateBusTable
-
     @buses = Bus.all
     respond_to do |format|
       format.html # index.html.erb
@@ -18,9 +18,8 @@ class BusesController < ApplicationController
   # GET /buses/1.json
   def show
     @bus = Bus.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :show, :layout => false }
       format.json { render json: @bus }
     end
   end
