@@ -16,7 +16,7 @@ function show_debug(msg){
 //Note: Some other valid ISO-8601 timestamps are not accepted by this function
 function parseISO8601(timestamp)
 {
-  return new Date(timestamp);//.strftime('%Y-%m-%dT%H:%M:%S%z', true);
+  return new Date(timestamp);
 }
 
 //Returns true if the date is stale
