@@ -1,0 +1,33 @@
+<div class="page-header">
+  <%= link_to new_route_path, :class => 'btn btn-primary' do %>
+    <i class="icon-plus icon-white"></i>
+    New Route
+  <% end %>
+  <h1>Listing routes</h1>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Routeid</th>
+      <th>Direction</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% @routes.each do |route| %>
+    <tr>
+      <td><%= route.routeid %></td>
+      <td><%= route.direction %></td>
+      <td><%= route.name %></td>
+      <td><%= link_to 'Show', route %></td>
+      <td><%= link_to 'Edit', edit_route_path(route) %></td>
+      <td><%= link_to 'Destroy', route, confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

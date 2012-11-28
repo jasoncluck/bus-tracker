@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to routes_path, :class => 'btn' do %>
+    <i class="icon-list-alt"></i>
+    Back
+  <% end %>
+  <%= link_to edit_route_path(@route), :class => 'btn btn-primary' do %>
+    <i class="icon-pencil icon-white"></i>
+    Edit
+  <% end %>
+  <h1>Listing routes</h1>
+</div>
+
+<dl>
+  <dt>Routeid:</dt>
+  <dd><%= @route.routeid %></dd>
+
+  <dt>Direction:</dt>
+  <dd><%= @route.direction %></dd>
+
+  <dt>Name:</dt>
+  <dd><%= @route.name %></dd>
+
+</dl>
