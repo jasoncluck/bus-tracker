@@ -1,4 +1,6 @@
 
+var busy=false;
+var pollCount=0;
 var request = false;
 
 try {
@@ -15,19 +17,21 @@ try {
  }
 }
 
-if (!request)
- alert("Error initializing XMLHttpRequest!");
+if (!request){
+    alert("Error initializing XMLHttpRequest!");
+}
 
 function pollBuses(){
     pollPath("/buses.json", newpositions);
 }
 
 function pollPath(path, callback){
-    show_debug("polling "+path+"...");
     request.onreadystatechange = callback;
     request.open("GET", path, true);
     request.send(null);
-    show_debug('sent request..');
+    busy=true;
+    var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+    show_debug("sent request at "+myDate+"...");
 }
 
 function pollStops(){
@@ -36,19 +40,19 @@ function pollStops(){
 
 function newpositions()
 {
-    show_debug("received response, state "+request.readyState);
     if (request.readyState == 4) {
+        busy=false;
+        pollCount = pollCount+1;
+        var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+
         if(request.status == 200){
+            show_debug("request came back good at "+myDate);
             var positionsJSON = jQuery.parseJSON(request.responseText);
             //updateMarkeres is defined in mapbuses.js
-            show_debug("updating markers... ");
             updateMarkers(positionsJSON);
-            show_debug("(done)");
         }else{
-            //alert("HTTP status: "+request.status);
+            show_debug("HTTP status: "+request.status);
         }
-        show_debug("waiting 4 seconds... ");
-        setTimeout(poll, 4000);
     }
 }function newStopPositions()
 {   
