@@ -6,6 +6,7 @@ gem 'factory_girl_rails'
 gem 'simple_form'
 gem 'json'
 gem 'gon'
+gem 'ruby_kml'
 
 
 # Bundle edge Rails instead:
