@@ -18,7 +18,7 @@ try {
 if (!request)
  alert("Error initializing XMLHttpRequest!");
 
-function poll(){
+function pollBuses(){
     pollPath("/buses.json", newpositions);
 }
 
