@@ -58,7 +58,7 @@ module WmataHelper
 	    				r=Route.new name: routeData["Name"], 
 	    				direction: dir,
 	    				routeid: routeData["RouteID"]
-	    				if r.valid?
+	    				if r.valid? and not routeData[dir].nil? and not routeData[dir]["Shape"].nil?
 	    					r.save
 	    					addRoutePoints(r, routeData[dir])
 	    				end
