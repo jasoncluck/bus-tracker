@@ -60,12 +60,26 @@ module WmataHelper
 	    				routeid: routeData["RouteID"]
 	    				if r.valid?
 	    					r.save
-	    					
+	    					addRoutePoints(r, routeData[dir])
 	    				end
 	    			end
 	    		end
 	    	end
  		end
+	end
+
+	def addRoutePoints(route, routeData)
+		#routeData.keys = ["DirectionNum", "DirectionText", "Shape", "Stops", "TripHeadsign"] 
+		routeData["Shape"].each do |point|
+			#Each point is a map...{"Lat"=>38.792758, "Lon"=>-77.049595, "SeqNum"=>1} 
+			p=RoutePoint.new lat: point["Lat"].to_f,
+			lon: point["Lon"].to_f,
+			seqnum: point["SeqNum"].to_i,
+			route: route
+			if p.valid?
+				p.save
+			end
+		end
 	end
 
 	def updateRoutes
