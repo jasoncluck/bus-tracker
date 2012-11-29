@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Listing route_points</h1>
+  <h1>Listing Route Waypooints for <%= @route_points[0].route.routeid %></h1>
 </div>
 
 <table class="table table-bordered table-striped">
@@ -8,10 +8,6 @@
       <th>Seqnum</th>
       <th>Lat</th>
       <th>Lon</th>
-      <th>Route</th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -21,7 +17,6 @@
       <td><%= route_point.seqnum %></td>
       <td><%= route_point.lat %></td>
       <td><%= route_point.lon %></td>
-      <td><%= route_point.route.routeid %></td>
     </tr>
 <% end %>
   </tbody>
