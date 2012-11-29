@@ -5,9 +5,17 @@ class BusesController < ApplicationController
   # GET /buses.json
   def index
     #everytime the site index is accessed update the bus and stop table
-    #updateBusTable
-    updateStopTable
+    #if form element is checked, update the bus table and set bus.draw to true
     @buses = Bus.all
+    bus_checkbox = true #needs to be made a checkbox
+    if bus_checkbox == true
+      updateBusTable
+      @buses.each do |b|
+        b.draw = true
+        b.save
+      end
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @buses }

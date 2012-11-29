@@ -18,23 +18,47 @@ try {
 if (!request)
  alert("Error initializing XMLHttpRequest!");
 
-function poll(){
+function pollBuses(){
     var url = "/buses.json"
-    request.onreadystatechange = newpositions;
+    request.onreadystatechange = newBusPositions
+    request.open("GET", url, true);
+    request.send(null);
+
+    
+}
+
+function pollStops(){
+    //stops
+    var url = "/stops.json"
+    request.onreadystatechange = newStopPositions
     request.open("GET", url, true);
     request.send(null);
 }
 
-function newpositions()
-{
+function newBusPositions()
+{   
     if (request.readyState == 4) {
         if(request.status == 200){
             var positionsJSON = jQuery.parseJSON(request.responseText);
             //updateMarkeres is defined in mapbuses.js
-            updateMarkers(positionsJSON);
+            updateBusMarkers(positionsJSON);
         }else{
             //alert("HTTP status: "+request.status);
         }
-        setTimeout(poll, 10000);
+        setTimeout(pollBuses, 10000);
+    }
+}
+
+function newStopPositions()
+{   
+    if (request.readyState == 4) {
+        if(request.status == 200){
+            var positionsJSON = jQuery.parseJSON(request.responseText);
+            //updateMarkeres is defined in mapBuses.js
+            updateStopMarkers(positionsJSON);
+        }else{
+            //alert("HTTP status: "+request.status);
+        }
+        setTimeout(pollStops, 10000);
     }
 }

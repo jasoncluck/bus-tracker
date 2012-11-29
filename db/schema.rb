@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011005904) do
+ActiveRecord::Schema.define(:version => 20121129183945) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20121011005904) do
     t.integer  "busid"
     t.string   "direction"
     t.datetime "last_update"
+    t.boolean  "draw"
   end
 
   create_table "routes", :force => true do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20121011005904) do
     t.string  "wmataid"
     t.float   "lat"
     t.float   "lon"
+    t.boolean "draw"
   end
 
 end

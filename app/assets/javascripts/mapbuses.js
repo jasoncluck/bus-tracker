@@ -31,18 +31,19 @@ function drawRoute() {
   routePath.setMap(map);
 }
 
-function updateMarkers(buses, stops){
+function updateBusMarkers(buses){
   for(var i=0; i<buses.length; i++)
   {
+    //buses
     bus=buses[i];
-    stop = stops[i]
     col=routeColors[bus.wmataid]
     if(col == undefined){
       col=get_random_color();
       routeColors[bus.wmataid]=col;
     }
-    drawBus(col, bus);
-    //drawStop(col,stop);
+    if(bus.draw == true){
+      drawBus(col, bus);
+    }
     //Thanks google...
     //https://developers.google.com/maps/documentation/javascript/overlays#MarkerAnimations
     /*
@@ -51,6 +52,23 @@ function updateMarkers(buses, stops){
     }, i*20);
   */
   }
+}
+
+function updateStopMarkers(stops){
+  for (var i=0; i<stops.length; i++)
+  {
+      //stops
+      stop = stops[i];
+      col = routeColors[stop.stopid]
+      if(col == undefined){
+        col = get_random_color();
+        routeColors[stop.stopid]=col;
+      }
+      if(stop.draw == true){
+        drawStop(col,stop);
+      }
+  }
+
 }
 
 function drawBus(pinColor, bus){
@@ -123,6 +141,73 @@ function drawBus(pinColor, bus){
   }
 }
 
+function drawStop(pinColor, stop){
+  var myLatlng = new google.maps.LatLng(stop.lat, stop.lon);
+  stopTime=parseISO8601(stop.last_update);
+  //Update marker position if it already exists...
+  if(markers[stop.stopid] != null){
+    if(!markers[stop.stopid].getPosition().equals(myLatlng)){
+      markers[stop.stopid].setPosition(myLatlng);
+      markers[stop.stopid].setAnimation(google.maps.Animation.BOUNCE);
+      //Turn off the bouncing in 3 seconds...
+      setTimeout(function(){
+        var myMarker = markers[stop.stopid];
+        myMarker.setAnimation(null);
+      }, 3000);
+    }
+    if (isStale(stopTime)){
+      markers[stop.stopid].setIcon(new google.maps.MarkerImage('stale.png'),
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34)
+        );
+    }else{
+       markers[stop.stopid].setIcon(new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34)));
+    }
+  }else{
+    //Or create a new marker if it doesnt
+    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
+
+    if(!isStale(stopTime)){ pinImage = new google.maps.MarkerImage('stale.png',
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34)); }
+
+    var marker = new google.maps.Marker({
+       position: myLatlng,
+       map: map,
+       title:stop.name,
+       icon: pinImage,
+       optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
+    });
+    markers[stop.stopid] = marker;
+    marker.setMap(map);
+        //TODO: List when the next buses will be here and what they are
+        var content = "<h3>"+stop.name+": "+stop.stopid+"</h3><br/>"
+  if(stop.last_update != null){
+    content = content+"<div>Last update: "+busTime.toLocaleString()+"</div><br/>"
+  }
+  content = content+"<a href='#' class='btn btn-large'>Watch</a>"
+
+    var infowindow = new google.maps.InfoWindow({
+       content: content
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      if(openinfo != null){
+        openinfo.close();
+      }
+      infowindow.open(map,marker);
+      openinfo=infowindow;
+    });
+  }
+}
+
 function initialize() {
   
 
@@ -163,13 +248,15 @@ function showPosition(position)
   var transitLayer = new google.maps.TransitLayer();
   transitLayer.setMap(map);
 
-
+  
   for(var rIdx=0; rIdx < routes.length; rIdx++)
   {
     $.getScript("routes/busroute"+routes[rIdx]+".json", drawRoute);
   }
-  //Starts a cycle of polling for bus positions
-  poll();
+  //Starts a ````cycle of polling for bus positions
+  pollBuses()
+  setTimeout(function() {pollStops()},4000);
+  
 }
 
 
@@ -178,7 +265,7 @@ function showError(error)
     lat = 38.89;
     lon = -77.03; 
   } 
-window.onload = initialize;
+window.onload = initialize()
 
 
 

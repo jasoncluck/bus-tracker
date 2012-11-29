@@ -69,14 +69,15 @@ module WmataHelper
 		# Routes - Array of Routes for this stop.
 
 	  	posarray.each do |stoppos|
-		  	# #dt=DateTime.strptime(stoppos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
-	  		# s=Stop.where(stopid: stoppos["StopID"]).first
-	  		# if s.nil?
-	  		# 	s=Stop.new stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"] 	#routes: stoppos["Routes"]
-	  		# 	s.save
-	  		# else
-	  		# 	Stop.update s.id, stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]	 #routes: stoppos["Routes"]
-  			# end
+		  	#dt=DateTime.strptime(stoppos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
+	  		s=Stop.where(stopid: stoppos["StopID"]).first
+	  		if s.nil?
+	  			#wmataid = nil
+	  			s=Stop.new stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]
+	  			s.save
+	  		else
+	  			Stop.update s.id, stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]	 #routes: stoppos["Routes"]
+  			end
 		end
 	end
 
