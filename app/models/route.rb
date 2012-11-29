@@ -1,3 +1,5 @@
 class Route < ActiveRecord::Base
-  attr_accessible :direction, :name, :routeid
+  attr_accessible :name, :direction, :routeid
+  
+  validates :name, :direction, :routeid, :presence => true
 end

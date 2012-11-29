@@ -1,11 +1,14 @@
+include WmataHelper
+
 class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
+    updateRoutes
     @routes = Route.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :index, layout: 'nonmap' }
       format.json { render json: @routes }
     end
   end

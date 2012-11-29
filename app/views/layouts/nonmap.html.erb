@@ -15,7 +15,7 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= include_gon %>
+
   <!-- javascript and headers for the map -->
   <!DOCTYPE html>
   <html>
@@ -38,7 +38,6 @@
   
 
   <body onload="initialize()">
-    <div id="map_canvas" style="width:100%; height:100%"></div>
     <!-- navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -67,9 +66,9 @@
       <hr>
     </div>
     <div>
-      <!-- <footer>
+      <footer>
         <p>&copy; Company 2012</p>
-      </footer> -->
+      </footer>
     </div>
   </body>
 </html>

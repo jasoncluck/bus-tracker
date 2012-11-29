@@ -31,6 +31,55 @@ module WmataHelper
 		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?lat=38.878586&lon=-76.989626&radius=500&api_key=#{@@apiKey}")
 	end
 
+	def fetchRoutes
+		# Bus routes
+	    #http://api.wmata.com/Bus.svc/json/JRoutes?api_key=YOUR_API_KEY
+	    #
+	    # Bus route details...
+	    #
+	    logger.info "Fetching, fetching..."
+	    result = fetchUri("http://api.wmata.com/Bus.svc/json/JRoutes?api_key=#{@@apiKey}")
+
+	    # if the hash has 'Error' as a key, we raise an error
+	    logger.info "Got some data..."
+	    if result.has_key? 'Error'
+	    	raise "JSON error"
+	    end
+	    logger.info "No error..."
+	    result['Routes'].each do |route|
+	    	routeId=route['RouteID']
+	    	logger.info "Processing route #{routeId}..."
+	    	routeData = fetchUri("http://api.wmata.com/Bus.svc/json/JRouteDetails?routeId=#{URI.escape(routeId)}&api_key=#{@@apiKey}")
+	    	#d.keys: ["Direction0", "Direction1", "Name", "RouteID"] 
+	    	["Direction0", "Direction1"].each do |dir|
+	    		if routeData.has_key? dir
+	    			existing=Route.where("routeid = ? AND direction = ?", routeData["RouteID"], dir)
+	    			if existing.empty?
+	    				r=Route.new name: routeData["Name"], 
+	    				direction: dir,
+	    				routeid: routeData["RouteID"]
+	    				if r.valid?
+	    					r.save
+	    					
+	    				end
+	    			end
+	    		end
+	    	end
+ 		end
+	end
+
+	def updateRoutes
+		n=Time.zone.now.utc
+		updates=Route.select(:updated_at)
+		if updates.nil? or updates.empty? or updates[0].nil? or ((n - updates[0].updated_at) > 60*60*24)
+			logger.info "Updating routes..."
+			fetchRoutes
+		else
+			seconds_old = (n - updates[0].updated_at);
+			logger.info "Skipping update step because only #{seconds_old.to_f} days since last route update"
+		end
+	end
+
 
 	def updateBusTable
 		# subtractions result in fractions of days...
@@ -114,10 +163,6 @@ module WmataHelper
 	  			Stop.update s.id, stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]	 #routes: stoppos["Routes"]
   			end
 		end
-	end
-
-	def fetchRoutes
-		fetchUri("http://api.wmata.com/Bus.svc/json/JRoutes?api_key=#{@@apiKey}")
 	end
 
 	def fetchDetails(routeId)

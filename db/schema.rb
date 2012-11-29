@@ -28,9 +28,18 @@ ActiveRecord::Schema.define(:version => 20121130020714) do
     t.boolean  "draw"
   end
 
+  create_table "maps", :force => true do |t|
+    t.string   "Buses"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "routes", :force => true do |t|
-    t.integer "routeid"
-    t.string  "name"
+    t.string   "routeid"
+    t.string   "direction"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "stop_route", :force => true do |t|
