@@ -1,12 +1,33 @@
-<%= javascript_include_tag "helpers" %>
-<%= javascript_include_tag "mapbuses" %>
-<%= javascript_include_tag "pollbuses" %>
-<script type="text/javascript">
-    var routes=<%=raw insert_routes %>;
-    var map;
-    var busLocations;
+<div class="page-header">
+  <h1>Buses</h1>
+</div>
 
-</script>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Vehicle ID</th>
+      <th>Route ID</th>
+      <th>Headsign</th>
+      <th>Direction</th>
+      <th>Lat</th>
+      <th>Lon</th>
+      <th>Minutes Late</th>
+      <th>Stale Time</th>
+    </tr>
+  </thead>
 
-<div id="map_canvas" style="width:100%; height:100%"></div>
-
+  <tbody>
+<% @buses.each do |bus| %>
+    <tr>
+      <td><%= bus.busid %></td>
+      <td><%= bus.wmataid %></td>
+      <td><%= bus.headsign %></td>
+      <td><%= bus.direction %></td>
+      <td><%= bus.lat %></td>
+      <td><%= bus.lon %></td>
+      <td><%= bus.dev %></td>
+      <td><%= bus.updated_at %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

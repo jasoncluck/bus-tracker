@@ -1,13 +1,16 @@
 BusTracker::Application.routes.draw do
+  get "map/index"
 
+  root :to => 'map#index'
+
+  resources :buses
   resources :stops
-
   resources :routes do
     resources :route_points
   end
 
-  root :to => 'buses#index'
-  resources :buses
+  
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
