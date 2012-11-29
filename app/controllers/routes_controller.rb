@@ -8,7 +8,7 @@ class RoutesController < ApplicationController
     @routes = Route.all
 
     respond_to do |format|
-      format.html { render :index, layout: 'nonmap' }
+      format.html 
       format.json { render json: @routes }
     end
   end
