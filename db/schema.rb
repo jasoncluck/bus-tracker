@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(:version => 20121130020714) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "route_points", :force => true do |t|
+    t.integer  "seqnum"
+    t.float    "lat"
+    t.float    "lon"
+    t.integer  "route_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "routes", :force => true do |t|
     t.string   "routeid"
     t.string   "direction"

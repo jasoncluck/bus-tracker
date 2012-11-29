@@ -4,7 +4,7 @@ class CreateRoutePoints < ActiveRecord::Migration
       t.integer :seqnum
       t.float :lat
       t.float :lon
-      t.reference :route
+      t.references :route
 
       t.timestamps
     end
