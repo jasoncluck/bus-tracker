@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>WMATA Buses</name>
+    <description>WMATA Bus positions</description>
+    <% @routes.each do |route| %>
+      <Style id="<%= route.id %>">
+      <LineStyle>
+        <color><%= route_color route %></color>
+        <width>4</width>
+      </LineStyle>
+      </Style>
+    <% end %>
+    
+    <% @routes.each do |route| %>
+    <Placemark>
+      <name><%= route.name %></name>
+      <description><%= route.direction %></description>
+      <styleUrl>#<%= route.id %></styleUrl>
+      <LineString>
+        <extrude>0</extrude>
+        <tessellate>0</tessellate>
+        <altitudeMode>clampToGround</altitudeMode>
+        <coordinates>
+        <% route.route_points.each do |route_point| %>
+        <%= route_point.lon %>,<%= route_point.lat %>,<%= @alt %>
+        <% end %>
+        </coordinates>
+      </LineString>
+    </Placemark>
+    <% end %>
+  </Document>
+</kml>
