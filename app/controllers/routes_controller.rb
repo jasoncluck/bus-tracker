@@ -4,11 +4,11 @@ class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
-    updateRoutes
     @routes = Route.all
-
+    @alt=50
     respond_to do |format|
       format.html 
+      format.kml { render kml: @routes }
       format.json { render json: @routes }
     end
   end
@@ -17,9 +17,12 @@ class RoutesController < ApplicationController
   # GET /routes/1.json
   def show
     @route = Route.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
+      format.kml {
+        @alt=50
+        render kml: @route
+      }
       format.json { render json: @route }
     end
   end
