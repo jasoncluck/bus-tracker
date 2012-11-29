@@ -31,6 +31,11 @@ module WmataHelper
 		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?lat=38.878586&lon=-76.989626&radius=500&api_key=#{@@apiKey}")
 	end
 
+	# This takes way too long to do mid-AJAX request cycle.
+	# It downloads about 15 MB of route data.  It's probably best done outside
+	# of rails, from the command line or in a cron job or something.
+	# Route data shouldn't change that much, so for now I've put it in a KML
+	# file that can be served up directly from /public
 	def fetchRoutes
 		# Bus routes
 	    #http://api.wmata.com/Bus.svc/json/JRoutes?api_key=YOUR_API_KEY
