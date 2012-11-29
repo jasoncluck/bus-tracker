@@ -1,4 +1,6 @@
 BusTracker::Application.routes.draw do
+  resources :route_points
+
   resources :routes
 
   root :to => 'buses#index'
