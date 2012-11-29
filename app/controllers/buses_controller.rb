@@ -1,5 +1,5 @@
 include WmataHelper
-
+@bus_checkbox = false
 class BusesController < ApplicationController
   # GET /buses
   # GET /buses.json
@@ -7,14 +7,14 @@ class BusesController < ApplicationController
     #everytime the site index is accessed update the bus and stop table
     #if form element is checked, update the bus table and set bus.draw to true
     @buses = Bus.all
-    bus_checkbox = true #needs to be made a checkbox
-    if bus_checkbox == true
+    if @bus_checkbox == true
       updateBusTable
       @buses.each do |b|
         b.draw = true
         b.save
       end
     end
+    gon.busBool = @buses.first.draw
     
     respond_to do |format|
       format.html # index.html.erb

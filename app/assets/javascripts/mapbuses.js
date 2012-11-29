@@ -254,9 +254,13 @@ function showPosition(position)
     $.getScript("routes/busroute"+routes[rIdx]+".json", drawRoute);
   }
   //Starts a ````cycle of polling for bus positions
-  pollBuses()
-  setTimeout(function() {pollStops()},4000);
-  
+
+  if(gon.busBool == true){
+    pollBuses()
+  }
+  else if(gon.stopBus == true){
+    pollStops()  
+  }
 }
 
 

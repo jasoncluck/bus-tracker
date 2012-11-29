@@ -15,7 +15,7 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-
+  <%= include_gon %>
   <!-- javascript and headers for the map -->
   <!DOCTYPE html>
   <html>
@@ -55,7 +55,15 @@
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+<!-- No login data for now
+             <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+ -->
+            <!-- <div class="pull-right"> 
+              <%= radio_button_tag(@bus_checkbox, "Buses") %>
+              <%= radio_button_tag(@stop_checkbox, "Buses") %>
+            </div> -->
+              
+            <input type="hidden" name="is_private" value="0" />
           </div>
         </div>
       </div> <!-- navbar-inner -->
@@ -65,9 +73,9 @@
         <%= yield %>
       </div>
       <hr>
-      <footer>
+     <!--  <footer>
         <p>&copy; Company 2012</p>
-      </footer>
+      </footer> -->
     </div>
   </body>
 </html>
