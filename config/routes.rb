@@ -1,9 +1,10 @@
 BusTracker::Application.routes.draw do
+
   resources :stops
 
-  resources :route_points
-
-  resources :routes
+  resources :routes do
+    resources :route_points
+  end
 
   root :to => 'buses#index'
   resources :buses
