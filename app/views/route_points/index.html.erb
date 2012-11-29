@@ -1,8 +1,4 @@
 <div class="page-header">
-  <%= link_to new_route_point_path, :class => 'btn btn-primary' do %>
-    <i class="icon-plus icon-white"></i>
-    New Route point
-  <% end %>
   <h1>Listing route_points</h1>
 </div>
 
@@ -25,10 +21,7 @@
       <td><%= route_point.seqnum %></td>
       <td><%= route_point.lat %></td>
       <td><%= route_point.lon %></td>
-      <td><%= route_point.route %></td>
-      <td><%= link_to 'Show', route_point %></td>
-      <td><%= link_to 'Edit', edit_route_point_path(route_point) %></td>
-      <td><%= link_to 'Destroy', route_point, confirm: 'Are you sure?', method: :delete %></td>
+      <td><%= route_point.route.routeid %></td>
     </tr>
 <% end %>
   </tbody>
