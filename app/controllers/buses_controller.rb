@@ -7,8 +7,12 @@ class BusesController < ApplicationController
   def index
     #everytime the site index is accessed update the bus and stop table
     #if form element is checked, update the bus table and set bus.draw to true
-    updateBusTable
     @buses = Bus.all
+    if @buses.empty?
+      updateBusTable
+      @buses = Bus.all
+    end
+  
     respond_to do |format|
       format.html
       format.json { render json: @buses }

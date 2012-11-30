@@ -5,9 +5,9 @@ class MapController < ApplicationController
   def index
   	#everytime the site index is accessed update the bus and stop table
     updateBusTable
+    updateStopTable
     @buses = Bus.all
 
-    gon.busBool = true
     if not @buses.empty? and not @buses.first.nil? and not @buses.first.draw.nil?
       gon.busBool = @buses.first.draw
     end
