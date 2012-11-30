@@ -49,7 +49,7 @@ function newBusPositions()
             show_debug("request came back good at "+myDate);
             var positionsJSON = jQuery.parseJSON(request.responseText);
             //updateMarkeres is defined in mapbuses.js
-            updateMarkers(positionsJSON)
+            updateBusMarkers(positionsJSON)
         }else{
             show_debug("HTTP status: "+request.status);
         }
