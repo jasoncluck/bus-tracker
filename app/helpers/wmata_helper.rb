@@ -56,20 +56,7 @@ module WmataHelper
 	    	logger.info "Processing route #{routeId}..."
 	    	routeData = fetchUri("http://api.wmata.com/Bus.svc/json/JRouteDetails?routeId=#{URI.escape(routeId)}&api_key=#{@@apiKey}")
 	    	#d.keys: ["Direction0", "Direction1", "Name", "RouteID"] 
-	    	["Direction0", "Direction1"].each do |dir|
-	    		if routeData.has_key? dir
-	    			existing=Route.where("routeid = ? AND direction = ?", routeData["RouteID"], dir)
-	    			if existing.empty?
-	    				r=Route.new name: routeData["Name"], 
-	    				direction: dir,
-	    				routeid: routeData["RouteID"]
-	    				if r.valid? and not routeData[dir].nil? and not routeData[dir]["Shape"].nil?
-	    					r.save
-	    					addRoutePoints(r, routeData[dir])
-	    				end
-	    			end
-	    		end
-	    	end
+	    	addRouteData(routeData)
  		end
 	end
 
@@ -129,6 +116,8 @@ module WmataHelper
     					r.save
     					addRoutePoints(r, routeData[dir])
     				end
+    				mn=r.means
+    				r.update_attributes :mean_lat => mn.lat, :mean_lon => mn.lon
     			end
     		end
     	end

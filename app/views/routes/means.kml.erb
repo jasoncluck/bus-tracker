@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
-	<% @means.each do |mean| %>
+	<Document>
+	<% @routes.each do |route| %>
   <Placemark>
-    <name><%= mean.name %></name>
+    <name><%= route.name %></name>
     <description></description>
     <Point>
-      <coordinates><%= mean.lon %>,<%= mean.lat %>,0</coordinates>
+      <coordinates><%= route.mean_lon %>,<%= route.mean_lat %>,0</coordinates>
     </Point>
   </Placemark>
   <% end %>
+</Document>
 </kml>

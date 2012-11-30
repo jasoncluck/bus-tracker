@@ -1,5 +1,5 @@
 class Route < ActiveRecord::Base
-  attr_accessible :name, :direction, :routeid
+  attr_accessible :name, :direction, :routeid, :mean_lat, :mean_lon
   validates :name, :direction, :routeid, :presence => true
 
   has_many :route_points, :dependent => :destroy

@@ -5,13 +5,8 @@ class RoutesController < ApplicationController
   def means
     @routes = Route.all
 
-    @means = []
-    @routes.each do |route|
-      @means << route.mean
-    end
-
     respond_to do |format|
-      format.kml { render kml: @means }
+      format.kml { render kml: @routes }
     end
   end
 
