@@ -22,7 +22,7 @@ if (!request){
 }
 
 function pollBuses(){
-    pollPath("/buses.json", newpositions);
+    pollPath("/buses.json", newBusPositions);
 }
 
 function pollPath(path, callback){
@@ -38,7 +38,7 @@ function pollStops(){
     pollPath("/stops.json", newStopPositions);
 }
 
-function newpositions()
+function newBusPositions()
 {
     if (request.readyState == 4) {
         busy=false;
