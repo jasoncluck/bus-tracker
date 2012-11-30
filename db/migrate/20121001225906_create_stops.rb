@@ -8,11 +8,6 @@ class CreateStops < ActiveRecord::Migration
 			t.float :lon
 		end
 
-		create_table :routes do |r|
-			r.integer :routeid
-			r.string :name
-		end
-
 		create_table :stop_route do |t|
 			t.integer :stopid
 			t.integer :routeid
