@@ -9,9 +9,19 @@ var openinfo;
 
 function drawRoutes() {
   show_debug("Loading routes...");
-  var routesLayer = new google.maps.KmlLayer('routes/136.kml');
-  show_debug("loaded layer...");
-  routesLayer.setMap(map);
+  var routes1 = new google.maps.KmlLayer('http://iancwill.com/1.kmz');
+  routes1.setMap(map);
+  show_debug("loaded 1...");
+  var routes2 = new google.maps.KmlLayer('http://iancwill.com/2.kmz');
+  routes2.setMap(map);
+  show_debug("loaded 2...");
+  var routes3 = new google.maps.KmlLayer('http://iancwill.com/3.kmz');
+  routes3.setMap(map);
+  show_debug("loaded 3...");
+  var routes4 = new google.maps.KmlLayer('http://iancwill.com/4.kmz');
+  routes4.setMap(map);
+  show_debug("loaded 4...");
+
 }
 
 function updateBusMarkers(buses){
@@ -234,6 +244,7 @@ function showPosition(position)
   transitLayer.setMap(map);
 
   //Starts a ````cycle of polling for bus positions
+  drawRoutes();
 
   if(true){
     setInterval(pollBuses, 15000);

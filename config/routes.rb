@@ -10,7 +10,8 @@ BusTracker::Application.routes.draw do
   end
 
   
-
+  match 'means' => 'routes#means'
+  match 'routegroups/:id' => 'routes#group'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
