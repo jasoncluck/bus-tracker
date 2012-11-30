@@ -38,5 +38,5 @@ function isAncient(date){
   }
   var now = Date.now();
   var staleness = (now-date)/1000;
-  return staleness > 10*60;
+  return staleness > 60*60;
 }

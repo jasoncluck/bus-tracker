@@ -2,6 +2,7 @@
 var busy=false;
 var pollCount=0;
 var request = false;
+var buses;
 
 try {
  request = new XMLHttpRequest();
@@ -49,7 +50,8 @@ function newBusPositions()
             show_debug("request came back good at "+myDate);
             var positionsJSON = jQuery.parseJSON(request.responseText);
             //updateMarkeres is defined in mapbuses.js
-            updateMarkers(positionsJSON);
+            buses=positionsJSON;
+            updateBusMarkers()
         }else{
             show_debug("HTTP status: "+request.status);
         }

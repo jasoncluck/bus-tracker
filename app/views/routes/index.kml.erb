@@ -14,8 +14,8 @@
     
     <% @routes.each do |route| %>
     <Placemark>
-      <name><%= route.name %></name>
-      <description><%= route.direction %></description>
+      <name><%= route.routeid %></name>
+      <description><%= route.name %></description>
       <styleUrl>#<%= route.id %></styleUrl>
       <LineString>
         <extrude>0</extrude>

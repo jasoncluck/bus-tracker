@@ -7,24 +7,70 @@ var routeColors = {};
 var markers = {};
 var openinfo;
 
-function drawRoutes() {
-  show_debug("Loading routes...");
-  var routes1 = new google.maps.KmlLayer('http://iancwill.com/1.kmz');
-  routes1.setMap(map);
-  show_debug("loaded 1...");
-  var routes2 = new google.maps.KmlLayer('http://iancwill.com/2.kmz');
-  routes2.setMap(map);
-  show_debug("loaded 2...");
-  var routes3 = new google.maps.KmlLayer('http://iancwill.com/3.kmz');
-  routes3.setMap(map);
-  show_debug("loaded 3...");
-  var routes4 = new google.maps.KmlLayer('http://iancwill.com/4.kmz');
-  routes4.setMap(map);
-  show_debug("loaded 4...");
+var routeKML = [];
 
+var activeRoute=null;
+
+function drawRoutes() {
+  
+  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?fake=9834987',{preserveViewport: true});
+  routeKML[0].setMap(map);
+  /*
+  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz');
+  routeKML[1].setMap(map);
+  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz');
+  routeKML[2].setMap(map);
+  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz');
+  routeKML[3].setMap(map);
+  */
+  show_debug("Loaded route KML...");
+  google.maps.event.addListener(routeKML[0], 'click', function(kmlEvent) {
+    var text = kmlEvent.featureData.name;
+    show_debug("Selected: "+text);
+    activeRoute=text;
+    filterBusMarkers();
+    hideRouteKML();
+  });
 }
 
-function updateBusMarkers(buses){
+function filterBusMarkers()
+{
+  for(var i=0; i<buses.length; i++){
+    bus=buses[i];
+    if(markers[bus.busid] != null){
+      if(shouldHide(bus))
+      {
+        markers[bus.busid].setMap(null);
+      }
+    }
+  }
+}
+
+function shouldHide(bus){
+  return activeRoute != null && bus.wmataid != activeRoute;
+}
+
+function hideRouteKML()
+{
+  for(var i=0; i<routeKML.length; i++){
+    routeKML[i].setMap(null);  
+  }
+}
+
+
+function showRouteKML()
+{
+  for(var i=0; i<routeKML.length; i++){
+    routeKML[i].setMap(map);
+  }
+}
+
+
+function updateBusMarkers(){
+  if(buses == null || buses.length == 0)
+  {
+    return
+  }
   for(var i=0; i<buses.length; i++)
   {
     //buses
@@ -37,7 +83,7 @@ function updateBusMarkers(buses){
         routeColors[bus.wmataid]=col;
       }
       busTime=parseISO8601(bus.last_update);
-      if(isAncient(busTime)){
+      if(isAncient(busTime) || shouldHide(bus)){
         //remove bus
         if(markers[bus.busid] != null){
           markers[bus.busid].setMap(null);
@@ -55,7 +101,7 @@ function updateBusMarkers(buses){
     }, i*20);
   */
   }
-  show_debug("updated "+buses.length+" markers");
+  show_debug("Filter: "+activeRoute+", currently "+buses.length+" buses");
 }
 
 function updateStopMarkers(stops){
@@ -72,7 +118,12 @@ function updateStopMarkers(stops){
         drawStop(col,stop);
       }
   }
+}
 
+function showAll(){
+  activeRoute=null;
+  updateBusMarkers();
+  showRouteKML();
 }
 
 function drawBus(pinColor, bus){
@@ -112,6 +163,7 @@ function updateExistingMarker(pinColor, bus){
     }
     var mkImg = makeMarker(pinColor, bus);
     markers[bus.busid].setIcon(mkImg);
+    markers[bus.busid].setMap(map);
 }
 
 function makeNewMarker(pinColor, bus){
@@ -210,6 +262,7 @@ function drawStop(pinColor, stop){
 
 function initialize() {
   show_debug("initializing...");
+  $("#right_menu_bar").bind("click", function(){showAll()});
   navigator.geolocation.getCurrentPosition(showPosition,showError);
 
   // var mapOptions = {
