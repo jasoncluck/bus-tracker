@@ -28,12 +28,6 @@ ActiveRecord::Schema.define(:version => 20121130020714) do
     t.boolean  "draw"
   end
 
-  create_table "maps", :force => true do |t|
-    t.string   "Buses"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "route_points", :force => true do |t|
     t.integer  "seqnum"
     t.float    "lat"
