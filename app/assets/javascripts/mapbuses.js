@@ -8,29 +8,56 @@ var markers = {};
 var openinfo;
 
 var routeKML = [];
+var routePath=null;
 
 var activeRoute=null;
 
-function drawRoutes() {
+function drawRoutesKML() {
   
-  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?fake=9834987',{preserveViewport: true});
+  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz',{preserveViewport: true});
   routeKML[0].setMap(map);
-  /*
-  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz');
+  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz',{preserveViewport: true});
   routeKML[1].setMap(map);
-  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz');
+  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz',{preserveViewport: true});
   routeKML[2].setMap(map);
-  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz');
+  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz',{preserveViewport: true});
   routeKML[3].setMap(map);
-  */
   show_debug("Loaded route KML...");
-  google.maps.event.addListener(routeKML[0], 'click', function(kmlEvent) {
+
+  for(var i=0; i<routeKML.length; i++){
+  google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
     var text = kmlEvent.featureData.name;
     show_debug("Selected: "+text);
     activeRoute=text;
-    filterBusMarkers();
+    $.getScript("routes/busroute"+activeRoute+".json", drawRoute);
     hideRouteKML();
+    filterBusMarkers();    
   });
+}
+}
+
+function drawRoute() {
+//load the given route and plot it....
+  var routeCoordinates=[];
+  //Sometimes direction0 is null....
+  if(RouteDetails.Direction0 == null)
+  {
+    return;
+  }
+  var shape = RouteDetails.Direction0.Shape;
+  for (var i=0; i<shape.length; i++)
+  {
+    routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
+  }
+  var color = get_random_color();
+  routeColors[RouteDetails.RouteID] = color;
+  routePath = new google.maps.Polyline({
+    path: routeCoordinates,
+    strokeColor: '#'+color,
+    strokeOpacity: 0.9,
+    strokeWeight: 6
+  });
+  routePath.setMap(map);
 }
 
 function filterBusMarkers()
@@ -62,6 +89,15 @@ function showRouteKML()
 {
   for(var i=0; i<routeKML.length; i++){
     routeKML[i].setMap(map);
+  }
+}
+
+function showAll(){
+  activeRoute=null;
+  updateBusMarkers();
+  showRouteKML();
+  if(routePath != null){
+    routePath.setMap(null);
   }
 }
 
@@ -120,11 +156,6 @@ function updateStopMarkers(stops){
   }
 }
 
-function showAll(){
-  activeRoute=null;
-  updateBusMarkers();
-  showRouteKML();
-}
 
 function drawBus(pinColor, bus){
  //Update marker position if it already exists...
@@ -297,7 +328,7 @@ function showPosition(position)
   transitLayer.setMap(map);
 
   //Starts a ````cycle of polling for bus positions
-  drawRoutes();
+  drawRoutesKML();
 
   if(true){
     setInterval(pollBuses, 15000);
