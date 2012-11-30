@@ -2,6 +2,18 @@ include WmataHelper
 
 class RoutesController < ApplicationController
 
+  def means
+    @routes = Route.all
+
+    @means = []
+    @routes.each do |route|
+      @means << route.mean
+    end
+
+    respond_to do |format|
+      format.kml { render kml: @means }
+    end
+  end
 
   # GET /routes
   # GET /routes.json
