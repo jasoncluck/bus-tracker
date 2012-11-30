@@ -9,7 +9,7 @@ var openinfo;
 
 function drawRoutes() {
   show_debug("Loading routes...");
-  var routesLayer = new google.maps.KmlLayer('http://www.searcharoo.net/SearchKml/newyork.kml');//routes2.kmz');
+  var routesLayer = new google.maps.KmlLayer('routes/136.kml');
   show_debug("loaded layer...");
   routesLayer.setMap(map);
 }
@@ -199,6 +199,7 @@ function drawStop(pinColor, stop){
 }
 
 function initialize() {
+  show_debug("initializing...");
   navigator.geolocation.getCurrentPosition(showPosition,showError);
 
   // var mapOptions = {
@@ -234,7 +235,7 @@ function showPosition(position)
 
   //Starts a ````cycle of polling for bus positions
 
-  if(gon.busBool == true){
+  if(true){
     setInterval(pollBuses, 15000);
   }
   else if(gon.stopBus == true){
@@ -248,7 +249,7 @@ function showError(error)
     lat = 38.89;
     lon = -77.03; 
   } 
-window.onload = initialize()
+window.onload = initialize;
 
 
 
