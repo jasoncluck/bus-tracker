@@ -23,7 +23,7 @@
         <altitudeMode>clampToGround</altitudeMode>
         <coordinates>
         <% route.route_points.each do |route_point| %>
-        <%= route_point.lon %>,<%= route_point.lat %>,<%= @alt %>
+        <%= route_point.lon %>,<%= route_point.lat %>,50
         <% end %>
         </coordinates>
       </LineString>
