@@ -7,28 +7,11 @@ var routeColors = {};
 var markers = {};
 var openinfo;
 
-function drawRoute() {
-//load the given route and plot it....
-  var routeCoordinates=[];
-  //Sometimes direction0 is null....
-  if(RouteDetails.Direction0 == null)
-  {
-    return;
-  }
-  var shape = RouteDetails.Direction0.Shape;
-  for (var i=0; i<shape.length; i++)
-  {
-    routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
-  }
-  var color = get_random_color();
-  routeColors[RouteDetails.RouteID] = color;
-  var routePath = new google.maps.Polyline({
-    path: routeCoordinates,
-    strokeColor: '#'+color,
-    strokeOpacity: 0.5,
-    strokeWeight: 2
-  });
-  routePath.setMap(map);
+function drawRoutes() {
+  show_debug("Loading routes...");
+  var routesLayer = new google.maps.KmlLayer('http://www.searcharoo.net/SearchKml/newyork.kml');//routes2.kmz');
+  show_debug("loaded layer...");
+  routesLayer.setMap(map);
 }
 
 function updateBusMarkers(buses){
@@ -249,11 +232,6 @@ function showPosition(position)
   var transitLayer = new google.maps.TransitLayer();
   transitLayer.setMap(map);
 
-  
-  for(var rIdx=0; rIdx < routes.length; rIdx++)
-  {
-    $.getScript("routes/busroute"+routes[rIdx]+".json", drawRoute);
-  }
   //Starts a ````cycle of polling for bus positions
 
   if(gon.busBool == true){
