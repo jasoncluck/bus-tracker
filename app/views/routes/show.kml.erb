@@ -3,7 +3,7 @@
   <Document>
     <name><%= @route.name %></name>
     <description><%= @route.direction %></description>
-    <Style id="yellowLineGreenPoly">
+    <Style id="<%= @route.id %>">
       <LineStyle>
         <color><%= route_color @route %></color>
         <width>4</width>
@@ -12,7 +12,7 @@
     <Placemark>
       <name><%= @route.name %></name>
       <description><%= @route.direction %></description>
-      <styleUrl>#yellowLineGreenPoly</styleUrl>
+      <styleUrl>#<%= @route.id %></styleUrl>
       <LineString>
         <extrude>0</extrude>
         <tessellate>0</tessellate>
