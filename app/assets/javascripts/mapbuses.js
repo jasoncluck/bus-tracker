@@ -9,8 +9,7 @@ var openinfo;
 
 function drawRoutes() {
   show_debug("Loading routes...");
-  var routesLayer = new google.maps.KmlLayer('routes/136.kml');
-  show_debug("loaded layer...");
+  var routesLayer = new google.maps.KmlLayer('http://iancwill.com/routes2.kmz');
   routesLayer.setMap(map);
 }
 
@@ -234,6 +233,7 @@ function showPosition(position)
   transitLayer.setMap(map);
 
   //Starts a ````cycle of polling for bus positions
+  drawRoutes();
 
   if(true){
     setInterval(pollBuses, 15000);
