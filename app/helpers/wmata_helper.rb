@@ -99,6 +99,41 @@ module WmataHelper
 		end
 	end
 
+	def populateRoutes(dir)
+		data = File.read("#{dir}/busroutes.json")
+		result = JSON.parse(data)
+
+	    # if the hash has 'Error' as a key, we raise an error
+	    if result.has_key? 'Error'
+	    	raise "JSON error"
+	    end
+
+	    result['Routes'].each do |route|
+	    	routeId=route['RouteID']
+	    	routeData = File.read("#{dir}/routes/busroute#{routeId}.json")
+	    	routeData['RouteDetails='] = ''
+	    	addRouteData(JSON.parse(routeData))
+	    end
+	end
+
+	def addRouteData(routeData)
+    	#d.keys: ["Direction0", "Direction1", "Name", "RouteID"] 
+    	["Direction0", "Direction1"].each do |dir|
+    		if routeData.has_key? dir
+    			existing=Route.where("routeid = ? AND direction = ?", routeData["RouteID"], dir)
+    			if existing.empty?
+    				r=Route.new name: routeData["Name"], 
+    				direction: dir,
+    				routeid: routeData["RouteID"]
+    				if r.valid? and not routeData[dir].nil? and not routeData[dir]["Shape"].nil?
+    					r.save
+    					addRoutePoints(r, routeData[dir])
+    				end
+    			end
+    		end
+    	end
+	end
+
 
 	def updateBusTable
 		# subtractions result in fractions of days...
@@ -137,7 +172,8 @@ module WmataHelper
 	  			dev: buspos["Deviation"], 
 	  			wmataid: buspos["RouteID"], 
 	  			busid: buspos["VehicleID"], 
-	  			direction: buspos["DirectionText"], 
+	  			direction: buspos["DirectionText"],
+	  			draw: true,
 	  			last_update: dt
 	  		if bus.valid?
 	  			b=Bus.where(busid: buspos["VehicleID"]).first
@@ -153,6 +189,7 @@ module WmataHelper
 	  				wmataid: bus.wmataid,
 	  				busid: bus.busid,
 	  				direction: bus.direction,
+	  				draw: true,
 	  				last_update: bus.last_update
 	  			end
 	  		else
