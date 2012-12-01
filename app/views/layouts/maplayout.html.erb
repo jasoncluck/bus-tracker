@@ -40,13 +40,7 @@
     <!-- end of javascript headers -->
     </head>
   
-
-<<<<<<< HEAD
-  <!-- navbar -->
-=======
-  <body>
     <!-- navbar -->
->>>>>>> Fix navbar collapse
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -61,37 +55,18 @@
           <%= link_to "Bus Tracker", "#", :class => "brand" %>
           <div class="nav-collapse">
             <ul class="nav">
-
               <li><%= link_to_function "Buses", "startPollingBuses()" %></li>
               <li><%= link_to_function "Stops", "startPollingStops()" %></li>
               <li><a href="#about">About</a></li>
               <!-- <li id="right_menu_bar"><a href="#all">All</a></li> -->
-
-            </ul>
-            <p class="navbar-text pull-left" id="menu_status_area">Showing all routes</p>
-            <p class="navbar-text pull-right" id="navbar_right">(idle)</p>
-            
           </div>
         </div>
       </div> <!-- navbar-inner -->
     </div> <!-- navbar-inverse -->
     <div id="map_canvas" style="width:100%; height:100%"></div>
 
-<<<<<<< HEAD
+
   <body>  
     <%= yield %>
-=======
-    <div class="container-fluid">
-      <div class="span12">  
-        <%= yield %>
-      </div>
-      <hr>
-    </div>
-    <div>
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
-    </div>
->>>>>>> Fix navbar collapse
   </body>
 </html>
