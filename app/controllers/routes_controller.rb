@@ -1,4 +1,5 @@
 include WmataHelper
+include RoutesHelper
 
 class RoutesController < ApplicationController
 
@@ -10,6 +11,11 @@ class RoutesController < ApplicationController
         @group_routes << route
       end
     end
+
+    if not map_exists?
+      gen_colors @routes
+    end
+    load_colors
 
     @routes = @group_routes
     logger.info "Selected #{@group_routes.length} routes in group #{params[:id]}"

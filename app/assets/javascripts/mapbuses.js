@@ -3,14 +3,23 @@
 * This is the google API key, required to use their maps API
 * google api:  AIzaSyAAQDOZpCb33qnlU5xcBmf_n8CQ4p_qg6s
 */
-var routeColors = {};
+
+/*
+ * Variables inserted by Rails in map/index.html.erb
+ *
+    var routes=<%=raw insert_routes %>;
+    var routeColors=<%= raw insert_route_colors %>;
+    var map;
+    var busLocations;
+*/
 var markers = {};
 var openinfo;
-
 var routeKML = [];
 var routePath=null;
 
 var activeRoute=null;
+
+
 
 function drawRoutesKML() {
   routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz',{preserveViewport: true});
@@ -35,6 +44,16 @@ function drawRoutesKML() {
   }
 }
 
+function colorForRoute(route_id){
+  color=routeColors[route_id]
+  if(color == undefined){
+    show_debug("Warning, route color for "+bus.wmataid+" not defined, generating random color...")
+    color=get_random_color();
+    routeColors[bus.wmataid]=color;
+  } 
+  return color;
+}
+
 function drawRoute() {
 //load the given route and plot it....
   var routeCoordinates=[];
@@ -48,8 +67,7 @@ function drawRoute() {
   {
     routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
   }
-  var color = get_random_color();
-  routeColors[RouteDetails.RouteID] = color;
+  color = colorForRoute(RouteDetails.RouteID);
   routePath = new google.maps.Polyline({
     path: routeCoordinates,
     strokeColor: '#'+color,
@@ -128,12 +146,7 @@ function updateBusMarkers(){
     //buses
     bus=buses[i];
     
-    if(bus != null){
-      col=routeColors[bus.wmataid]
-      if(col == undefined){
-        col=get_random_color();
-        routeColors[bus.wmataid]=col;
-      }
+    if(bus != null){      
       busTime=parseISO8601(bus.last_update);
       if(isAncient(busTime) || shouldHide(bus)){
         //remove bus
@@ -141,17 +154,9 @@ function updateBusMarkers(){
           markers[bus.busid].setMap(null);
         }
       }else{
-        drawBus(col, bus);  
+        drawBus(bus);
       }
     }
-    
-    //Thanks google...
-    //https://developers.google.com/maps/documentation/javascript/overlays#MarkerAnimations
-    /*
-    setTimeout(function(){
-      drawBus(col, bus)
-    }, i*20);
-  */
   }
 
   show_debug("Filter: " +activeRoute+ ", currently "+buses.length+" buses");  
@@ -162,11 +167,7 @@ function updateStopMarkers(stops){
   {
       //stops
       stop = stops[i];
-      col = routeColors[stop.stopid]
-      if(col == undefined){
-        col = get_random_color();
-        routeColors[stop.stopid]=col;
-      }
+      col = colorForRoute(stop.stopid)
       // if(stop.draw == true){
         drawStop(col,stop);
       // }
@@ -176,31 +177,29 @@ function updateStopMarkers(stops){
 }
 
 
-function drawBus(pinColor, bus){
+function drawBus(bus){
  //Update marker position if it already exists...
  if(markers[bus.busid] != null){
-    updateExistingMarker(pinColor, bus);
+    updateExistingMarker(bus);
   }else{
     //Or create a new marker if it doesnt
-    makeNewMarker(pinColor, bus);
+    makeNewMarker(bus);
   }//end else
 }
 
-function makeMarker(pinColor, bus){
-  busTime=parseISO8601(bus.last_update);
-  if(!isStale(busTime)){ 
-    return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-      new google.maps.Size(21, 34),
-      new google.maps.Point(0,0),
-      new google.maps.Point(10, 34));
-  }
-  return new google.maps.MarkerImage('stale.png',
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34)); 
+function makeMarker(bus){
+  var color = colorForRoute(bus.wmataid);
+  return {
+    path: "m 36.004385,152.26493 c -2.372905,-2.3729 -2.889238,-4.05576 -2.889238,-9.41678 l 0,-6.52753 -5.35017,0 -5.350171,0 0.402743,-32.07591 C 23.215064,72.585086 26.501134,36.37695 29.748786,27.871678 33.729491,17.446613 54.710249,10.172314 81.376135,9.9718121 109.08881,9.76344 131.48745,17.119171 135.63344,27.789956 c 0.57805,1.487766 2.37867,13.536445 4.00138,26.774841 2.41222,19.679533 2.95037,29.318364 2.95037,52.845133 l 0,28.77532 -5.00266,0.36196 -5.00267,0.36196 -0.35182,6.72813 c -0.29678,5.67563 -0.84629,7.1171 -3.51271,9.21451 -2.29289,1.80358 -4.13573,2.2985 -6.71077,1.80226 -5.38976,-1.03865 -7.66971,-4.60282 -7.66971,-11.98982 l 0,-6.34363 -31.781617,0 -31.781627,0 0,6.97715 c 0,6.13552 -0.374121,7.27143 -3.101485,9.41678 -4.114256,3.23627 -8.134806,3.08132 -11.665736,-0.44962 z M 129.9779,77.595812 c 1.42346,-1.423471 -3.0704,-34.870506 -5.27603,-39.268544 -0.95432,-1.902898 -4.17259,-2.05992 -42.219187,-2.05992 l -41.186123,0 -1.074588,2.826379 c -0.591023,1.554507 -1.923732,9.36749 -2.961578,17.362184 -1.037845,7.994693 -2.130727,15.689306 -2.428627,17.099138 -1.189282,5.628347 -0.557184,5.69833 48.362006,5.354427 25.185817,-0.177057 46.238677,-0.768206 46.784127,-1.313664 z m -22.21335,-50.28263 c 2.02464,-0.776929 2.60169,-5.155261 0.68482,-5.196046 -20.950667,-0.445759 -51.255533,0.194558 -52.16314,1.102165 -0.785001,0.785002 -0.675218,1.78227 0.329459,2.992832 1.267174,1.526851 5.305458,1.815534 25.396852,1.815534 13.139552,0 24.727949,-0.321518 25.752009,-0.714485 z",
+    fillColor: "#"+color,
+    fillOpacity: 0.8,
+    scale: 0.2,
+    strokeColor: "#"+color,
+    strokeWeight: 2
+  };
 }
 
-function updateExistingMarker(pinColor, bus){
+function updateExistingMarker(bus){
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
   if(!markers[bus.busid].getPosition().equals(myLatlng)){
       markers[bus.busid].setPosition(myLatlng);
@@ -211,14 +210,14 @@ function updateExistingMarker(pinColor, bus){
         myMarker.setAnimation(null);
       }, 3000);
     }
-    var mkImg = makeMarker(pinColor, bus);
+    var mkImg = makeMarker(bus);
     markers[bus.busid].setIcon(mkImg);
     markers[bus.busid].setMap(map);
 }
 
-function makeNewMarker(pinColor, bus){
+function makeNewMarker(bus){
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
-  var pinImage=makeMarker(pinColor,bus);
+  var pinImage=makeMarker(bus);
   var marker = new google.maps.Marker({
      position: myLatlng,
      map: map,

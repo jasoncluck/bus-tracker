@@ -32,4 +32,9 @@ module MapHelper
 		route_ids=routar.map{|r| r["RouteID"]}
 		"['#{route_ids.join("','")}']"
 	end
+
+	def insert_route_colors
+		json = File.read('public/route_colors.json')
+		return json+";"
+	end
 end

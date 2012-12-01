@@ -4,7 +4,7 @@
     <name><%= @kml_name %>)</name>
     <description><%= @kml_desc %></description>
     <% @routes.each do |route| %>
-      <Style id="<%= route.id %>">
+      <Style id="<%= route.routeid %>_<%= route.direction %>">
       <LineStyle>
         <color>7f<%= route_color route %></color>
         <width>4</width>
@@ -16,7 +16,7 @@
     <Placemark>
       <name><%= route.routeid %></name>
       <description><%= route.name %></description>
-      <styleUrl>#<%= route.id %></styleUrl>
+      <styleUrl>#<%= route.routeid %>_<%= route.direction %></styleUrl>
       <LineString>
         <extrude>0</extrude>
         <tessellate>0</tessellate>
