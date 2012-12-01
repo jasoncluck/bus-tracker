@@ -51,13 +51,17 @@
           <%= link_to "Bus Tracker", "#", :class => "brand" %>
           <div class="nav-collapse">
             <ul class="nav">
+              
+                <li class="btn-group" data-toggle="buttons-radio">
+                  <li><%= link_to_function "Buses", "startPollingBuses()", class: "btn btn-bustracker" %>  </li>
+                  <li><%= link_to_function "Stops", "startPollingStops()", class: "btn btn-bustracker" %></li>
+                </li>
 
-              <li><%= link_to_function "Buses", "startPollingBuses()" %></li>
-              <li><%= link_to_function "Stops", "startPollingStops()" %></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#" id="show_all">Show All</a></li>
+                <li><%= link_to "About", '#', class: 'navbar-text' %></li>
+              <!-- <li><a href="#" id="show_all">Show All</a></li> -->
             </ul>
-            <p class="navbar-text pull-left" id="menu_status_area">Showing all routes</p>
+            
+  <!--           <p class="navbar-text " id="menu_status_area">Showing all routes</p> -->
             <p class="navbar-text pull-right" id="navbar_right">(idle)</p>
             
           </div>

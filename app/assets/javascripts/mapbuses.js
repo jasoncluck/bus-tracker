@@ -361,6 +361,9 @@ function showPosition(position)
   // var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
   // +latlon+"&zoom=14&size=400x300&sensor=false";
   // document.getElementById("map_canvas").innerHTML="<img src='"+img_url+"'>";
+
+  
+
   var mapOptions = {
     center: new google.maps.LatLng(lat, lon),
     zoom: 14,

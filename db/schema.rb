@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130052111) do
+ActiveRecord::Schema.define(:version => 20121201222152) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
@@ -61,6 +61,11 @@ ActiveRecord::Schema.define(:version => 20121130052111) do
     t.float   "lat"
     t.float   "lon"
     t.boolean "draw"
+  end
+
+  create_table "users", :force => true do |t|
+    t.float "lat"
+    t.float "lon"
   end
 
 end
