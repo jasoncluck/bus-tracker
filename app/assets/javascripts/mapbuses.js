@@ -150,10 +150,12 @@ function updateStopMarkers(stops){
         col = get_random_color();
         routeColors[stop.stopid]=col;
       }
-      if(stop.draw == true){
+      // if(stop.draw == true){
         drawStop(col,stop);
-      }
+      // }
   }
+  show_debug("Filter: "+activeRoute+", currently "+buses.length+" stops");
+
 }
 
 
