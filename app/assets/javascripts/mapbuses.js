@@ -18,6 +18,7 @@ var routeKML = [];
 var routePath=null;
 
 var activeRoute=null;
+var filter_buses=false;
 
 function drawRoutesKML() {
   routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?new4plz',{preserveViewport: true});
@@ -34,12 +35,25 @@ function drawRoutesKML() {
   for(var i=0; i<routeKML.length; i++){
     google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
       var routeid=kmlEvent.featureData.name;
-      activeRoute=routeid;
-      $("#show_all").text("Show Only Route "+activeRoute);
-      $("#show_all").unbind("click", showAll);
-      $("#show_all").bind("click", focusRoute);
+      primeRoute(routeid);
     });
   }
+}
+
+function primeAndFocus(routeid)
+{
+  primeRoute(routeid);
+  focusRoute();
+}
+
+// This is called from the KML layer callback for routes, and also from the 
+// info window focus for a bus (the Focus button action, defined in buses/show.html.erb points here)
+function primeRoute(routeid)
+{
+  activeRoute=routeid;
+  $("#show_all").text("Show Only Route "+activeRoute);
+  $("#show_all").unbind("click", showAll);
+  $("#show_all").bind("click", focusRoute);
 }
 
 function focusRoute(){
@@ -48,6 +62,7 @@ function focusRoute(){
         return;
       }
       $.getScript("routes/busroute"+routeid+".json", drawRoute);
+      filter_buses=true;
       hideRouteKML();
       filterBusMarkers();
       $("#show_all").text("Show All");
@@ -57,7 +72,7 @@ function focusRoute(){
 
 function showAll(){
   activeRoute=null;
-  
+  filter_buses=false;
   updateBusMarkers();
   showRouteKML();
   showFilterRoute();
@@ -150,7 +165,7 @@ function showFilterRoute()
 }
 
 function shouldHide(bus){
-  return activeRoute != null && bus.wmataid != activeRoute;
+  return (filter_buses && activeRoute != null) && (bus.wmataid != activeRoute);
 }
 
 function hideRouteKML()
@@ -167,9 +182,6 @@ function showRouteKML()
     routeKML[i].setMap(map);
   }
 }
-
-
-
 
 function updateBusMarkers(){
   if(buses == null || buses.length == 0)
@@ -237,6 +249,9 @@ function makeMarker(bus){
 
 function updateExistingMarker(bus){
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
+  if(markers[bus.busid].getMap() == null){
+    markers[bus.busid].setMap(map);
+  }
   if(!markers[bus.busid].getPosition().equals(myLatlng)){
       markers[bus.busid].setPosition(myLatlng);
       markers[bus.busid].setAnimation(google.maps.Animation.BOUNCE);

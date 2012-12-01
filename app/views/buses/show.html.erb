@@ -12,6 +12,6 @@
  </div>
 <div>Vehicle: <%= @bus.busid %></div><br/>
 
-<a href='#' class='btn btn-large'>Watch</a>
+<a href='#' class='btn btn-large' onClick="primeAndFocus('<%= @bus.wmataid %>')">Show Only <%= @bus.wmataid %></a>
 </p>
 
