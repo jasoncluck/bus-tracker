@@ -137,7 +137,7 @@ function updateBusMarkers(){
     }, i*20);
   */
   }
-  show_debug("Filter: "+activeRoute+", currently "+buses.length+" buses");
+  show_debug("Filter: " +activeRoute+ ", currently "+buses.length+" buses");
 }
 
 function updateStopMarkers(stops){
@@ -331,13 +331,20 @@ function showPosition(position)
 
   //Starts a ````cycle of polling for bus positions
   drawRoutesKML();
+  // setInterval(pollBuses, 15000);
+  // setInterval(pollStops, 15000);
 
-  if(true){
-    setInterval(pollBuses, 15000);
-  }
-  else if(gon.stopBus == true){
-    setInterval(pollStops, 15000);
-  }
+  
+}
+
+function startPollingBuses(){
+  clearInterval(pollStops,15000);
+  setInterval(pollBuses, 15000);
+}
+
+function startPollingStops(){
+  clearInterval(pollBuses,15000);
+  setInterval(pollStops, 15000);
 }
 
 

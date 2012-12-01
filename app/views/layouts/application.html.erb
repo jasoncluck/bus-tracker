@@ -15,7 +15,6 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= include_gon %>
   <!-- javascript and headers for the map -->
   <!DOCTYPE html>
   <html>
@@ -42,19 +41,22 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
+            <p class="navbar-text pull-right" id="navbar_right">Logged in as <a href="#">username</a></p>
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <%= link_to "Bus Tracker", "#", :class => "brand" %>
+          <%= link_to "Bus Tracker", maps_path, :class => "brand" %>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Map</a></li>
               <li><a href="#about">About</a></li>
+              <li>
+                  <% link_to function "Poll Buses", startPollingBuses() %>
+              </li>
               <li><a href="#contact">Contact</a></li>
             </ul>
-            <p class="navbar-text pull-right" id="navbar_right">Logged in as <a href="#">username</a></p>
           </div>
         </div>
       </div> <!-- navbar-inner -->
