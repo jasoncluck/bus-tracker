@@ -48,14 +48,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <%= link_to "Bus Tracker", maps_path, :class => "brand" %>
+          <%= link_to "Bus Tracker", "/", :class => "brand" %>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><%= link_to "Map", "/" %></li>
               <li><a href="#about">About</a></li>
-              <li>
-                  <% link_to function "Poll Buses", startPollingBuses() %>
-              </li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div>

@@ -19,19 +19,18 @@ var routePath=null;
 
 var activeRoute=null;
 
-
-
 function drawRoutesKML() {
-  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?plznew',{preserveViewport: true});
+  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?new4plz',{preserveViewport: true});
   routeKML[0].setMap(map);
-  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz?plznew',{preserveViewport: true});
+  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz?new4plz',{preserveViewport: true});
   routeKML[1].setMap(map);
-  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz?plznew',{preserveViewport: true});
+  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz?new4plz',{preserveViewport: true});
   routeKML[2].setMap(map);
-  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz?plznew',{preserveViewport: true});
+  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz?new4plz',{preserveViewport: true});
   routeKML[3].setMap(map);
   show_debug("Loaded route KML...");
 
+/*
   for(var i=0; i<routeKML.length; i++){
     google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
       var text = kmlEvent.featureData.name;
@@ -39,19 +38,22 @@ function drawRoutesKML() {
       activeRoute=text;
       $.getScript("routes/busroute"+activeRoute+".json", drawRoute);
       hideRouteKML();
-      filterBusMarkers();    
+      filterBusMarkers();  
     });
-  }
+  }*/
 }
 
 function colorForRoute(route_id){
-  color=routeColors[route_id]
+  color_key = route_id.replace(/[a-z].*/, '');
+  color=routeColors[color_key]
   if(color == undefined){
-    show_debug("Warning, route color for "+bus.wmataid+" not defined, generating random color...")
+    show_debug("Warning, route color for "+color_key+" not defined, generating random color...")
     color=get_random_color();
-    routeColors[bus.wmataid]=color;
-  } 
-  return color;
+    routeColors[color_key]=color;
+  }
+  //KML uses BGR rather than RGB colors, so to get them to match
+  // we flip it here (from BGR to RGB)...
+  return color.substring(4,6)+color.substring(2,4)+color.substring(0,2);
 }
 
 function drawRoute() {
