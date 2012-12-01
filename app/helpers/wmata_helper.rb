@@ -10,6 +10,22 @@ require 'json'
 module WmataHelper
 	@@apiKey = '7ksbn5vbbxqanrmgg9jczkag'
 	@@lastUpdate = curTime=DateTime.now()
+	@@update_thread=nil
+	@@update_mutex=Mutex.new
+
+	def insureUpdateThread
+		if @@update_thread.nil? or not @@update_thread.alive?
+			@@update_thread = Thread.new do
+				logger.info "Making new update thread..."
+				while true do
+					logger.info "Doing update..."
+					updateBusTable
+					logger.info "Finished updating buses..."
+					sleep(10)
+				end
+			end
+		end
+	end
 
 	def fetchUri(uristr)
 		uri=URI.parse(uristr)
@@ -167,19 +183,23 @@ module WmataHelper
 	  		if bus.valid?
 	  			b=Bus.where(busid: buspos["VehicleID"]).first
 	  			if b.nil?
-	  				bus.save
+	  				@@update_mutex.synchronize do
+	  					bus.save
+	  				end
 	  			else
 	  				#File.open('api-dump.txt', 'a') {|f| f.write("\tupdating bus with id #{b.id}, datetime #{dt}\n") }
-	  				Bus.update b.id, 
-	  				headsign: bus.headsign, 
-	  				lat: bus.lat,
-	  				lon: bus.lon,
-	  				dev: bus.dev,
-	  				wmataid: bus.wmataid,
-	  				busid: bus.busid,
-	  				direction: bus.direction,
-	  				draw: true,
-	  				last_update: bus.last_update
+	  				@@update_mutex.synchronize do
+	  					Bus.update b.id, 
+	  					headsign: bus.headsign, 
+	  					lat: bus.lat,
+	  					lon: bus.lon,
+	  					dev: bus.dev,
+	  					wmataid: bus.wmataid,
+	  					busid: bus.busid,
+	  					direction: bus.direction,
+	  					draw: true,
+	  					last_update: bus.last_update
+	  				end
 	  			end
 	  		else
 	  			#File.open('api-dump.txt', 'a') {|f| f.write("\tskipped bus #{bus.id}, datetime #{dt} because it was invalid\n") }
@@ -203,7 +223,9 @@ module WmataHelper
 	  		if s.nil?
 	  			#wmataid = nil
 	  			s=Stop.new stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]
-	  			s.save
+	  			@@update_mutex.synchronize do
+	  				s.save
+	  			end
 	  		else
 	  			Stop.update s.id, stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]	 #routes: stoppos["Routes"]
   			end

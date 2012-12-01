@@ -7,11 +7,19 @@ class BusesController < ApplicationController
   def index
     #everytime the site index is accessed update the bus and stop table
     #if form element is checked, update the bus table and set bus.draw to true
-    @buses = Bus.all
-    if @buses.empty?
-      updateBusTable
+    @@update_mutex.synchronize do
       @buses = Bus.all
     end
+    if @buses.empty?
+      updateBusTable
+      @@update_mutex.synchronize do
+        @buses = Bus.all
+      end
+    end
+
+    logger.info "Checking update thread..."
+    insureUpdateThread
+    logger.info "Finished checking update thread..."
   
     respond_to do |format|
       format.html
