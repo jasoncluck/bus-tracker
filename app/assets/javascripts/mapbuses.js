@@ -13,7 +13,6 @@ var routePath=null;
 var activeRoute=null;
 
 function drawRoutesKML() {
-  
   routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz',{preserveViewport: true});
   routeKML[0].setMap(map);
   routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz',{preserveViewport: true});
@@ -25,15 +24,15 @@ function drawRoutesKML() {
   show_debug("Loaded route KML...");
 
   for(var i=0; i<routeKML.length; i++){
-  google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
-    var text = kmlEvent.featureData.name;
-    show_debug("Selected: "+text);
-    activeRoute=text;
-    $.getScript("routes/busroute"+activeRoute+".json", drawRoute);
-    hideRouteKML();
-    filterBusMarkers();    
-  });
-}
+    google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
+      var text = kmlEvent.featureData.name;
+      show_debug("Selected: "+text);
+      activeRoute=text;
+      $.getScript("routes/busroute"+activeRoute+".json", drawRoute);
+      hideRouteKML();
+      filterBusMarkers();    
+    });
+  }
 }
 
 function drawRoute() {
@@ -62,6 +61,10 @@ function drawRoute() {
 
 function filterBusMarkers()
 {
+  if(buses == null){
+    return;
+  }
+  showFilterRoute();
   for(var i=0; i<buses.length; i++){
     bus=buses[i];
     if(markers[bus.busid] != null){
@@ -70,6 +73,17 @@ function filterBusMarkers()
         markers[bus.busid].setMap(null);
       }
     }
+  }
+
+}
+
+function showFilterRoute()
+{
+  if(activeRoute == null)
+  {
+    $("#menu_status_area").text("Showing all routes");
+  }else{
+    $("#menu_status_area").text("Showing route "+activeRoute);
   }
 }
 
@@ -94,8 +108,10 @@ function showRouteKML()
 
 function showAll(){
   activeRoute=null;
+  
   updateBusMarkers();
   showRouteKML();
+  showFilterRoute();
   if(routePath != null){
     routePath.setMap(null);
   }
@@ -154,8 +170,8 @@ function updateStopMarkers(stops){
         drawStop(col,stop);
       // }
   }
-  show_debug("Filter: "+activeRoute+", currently "+buses.length+" stops");
 
+  show_debug("Showing "+buses.length+" stops");
 }
 
 
@@ -295,7 +311,7 @@ function drawStop(pinColor, stop){
 
 function initialize() {
   show_debug("initializing...");
-  $("#right_menu_bar").bind("click", function(){showAll()});
+  $("#show_all").bind("click", function(){showAll()});
   navigator.geolocation.getCurrentPosition(showPosition,showError);
 
   // var mapOptions = {
