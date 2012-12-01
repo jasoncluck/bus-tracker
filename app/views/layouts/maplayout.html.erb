@@ -55,7 +55,7 @@
               <li><%= link_to_function "Buses", "startPollingBuses()" %></li>
               <li><%= link_to_function "Stops", "startPollingStops()" %></li>
               <li><a href="#about">About</a></li>
-              <li id="show_all"><a href="#">Show All</a></li>
+              <li><%= link_to_function "Show All", "showAll()" %></li>
             </ul>
             <p class="navbar-text pull-left" id="menu_status_area">Showing all routes</p>
             <p class="navbar-text pull-right" id="navbar_right">(idle)</p>
@@ -64,11 +64,6 @@
         </div>
       </div> <!-- navbar-inner -->
     </div> <!-- navbar-inverse -->
-    
-
-    <div id="map_canvas" style="width:100%; height:100%"></div>
-
-
   <body>  
     <%= yield %>
   </body>

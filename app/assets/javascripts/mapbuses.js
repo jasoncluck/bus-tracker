@@ -22,13 +22,13 @@ var activeRoute=null;
 
 
 function drawRoutesKML() {
-  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz',{preserveViewport: true});
+  routeKML[0] = new google.maps.KmlLayer('http://iancwill.com/1.kmz?plznew',{preserveViewport: true});
   routeKML[0].setMap(map);
-  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz',{preserveViewport: true});
+  routeKML[1] = new google.maps.KmlLayer('http://iancwill.com/2.kmz?plznew',{preserveViewport: true});
   routeKML[1].setMap(map);
-  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz',{preserveViewport: true});
+  routeKML[2] = new google.maps.KmlLayer('http://iancwill.com/3.kmz?plznew',{preserveViewport: true});
   routeKML[2].setMap(map);
-  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz',{preserveViewport: true});
+  routeKML[3] = new google.maps.KmlLayer('http://iancwill.com/4.kmz?plznew',{preserveViewport: true});
   routeKML[3].setMap(map);
   show_debug("Loaded route KML...");
 
@@ -311,7 +311,6 @@ function drawStop(pinColor, stop){
 
 function initialize() {
   show_debug("initializing...");
-  $("#show_all").bind("click", function(){showAll()});
   navigator.geolocation.getCurrentPosition(showPosition,showError);
 
   // var mapOptions = {
