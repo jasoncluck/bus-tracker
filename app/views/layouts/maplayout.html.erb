@@ -23,7 +23,7 @@
       <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
       <style type="text/css">
         html { height: 100% }
-        body { height: 100%; margin: 0cm; padding-top: 0cm }
+        body { height: 100%; margin: 0cm; padding-top: 1cm }
         #map_canvas { height: 100% }
       </style>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js">
@@ -37,8 +37,7 @@
     </head>
   
 
-  <body>
-    <!-- navbar -->
+  <!-- navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -46,6 +45,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <style type="text/css">
+              body { padding-top: 0cm }
+            </style>
           </a>
           <%= link_to "Bus Tracker", "#", :class => "brand" %>
           <div class="nav-collapse">
@@ -61,16 +63,7 @@
     </div> <!-- navbar-inverse -->
     <div id="map_canvas" style="width:100%; height:100%"></div>
 
-    <div class="container-fluid">
-      <div class="span12">  
-        <%= yield %>
-      </div>
-      <hr>
-    </div>
-    <div>
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
-    </div>
+  <body>  
+    <%= yield %>
   </body>
 </html>
