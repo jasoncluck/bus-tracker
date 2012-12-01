@@ -153,7 +153,8 @@ function updateBusMarkers(){
     }, i*20);
   */
   }
-  show_debug("Filter: " +activeRoute+ ", currently "+buses.length+" buses");
+
+  show_debug("Filter: " +activeRoute+ ", currently "+buses.length+" buses");  
 }
 
 function updateStopMarkers(stops){
