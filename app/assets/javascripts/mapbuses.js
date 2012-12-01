@@ -194,7 +194,8 @@ function updateBusMarkers(){
     }
   }
 
-  show_debug("Showing "+buses.length+" buses");
+  var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+  show_debug("Showing "+buses.length+" buses at "+myDate);
 }
 
 function updateStopMarkers(stops){
@@ -245,9 +246,11 @@ function updateExistingMarker(bus){
         myMarker.setAnimation(null);
       }, 3000);
     }
+    /*
     var mkImg = makeMarker(bus);
     markers[bus.busid].setIcon(mkImg);
     markers[bus.busid].setMap(map);
+    */
 }
 
 function makeNewMarker(bus){
@@ -380,12 +383,12 @@ function showPosition(position)
 }
 
 function startPollingBuses(){
-  clearInterval(pollStops,15000);
-  setInterval(pollBuses, 15000);
+  clearInterval(pollStops);
+  setInterval(pollBuses, 5000);
 }
 
 function startPollingStops(){
-  clearInterval(pollBuses,15000);
+  clearInterval(pollBuses);
   setInterval(pollStops, 15000);
 }
 
