@@ -21,12 +21,20 @@ body {
     margin-right: 8px;
   }
 }
-.btn .btn-inverse {
+
+.btn-group{
+
+  padding-left: 10px;
+  padding-right: 15px;
   
+}
+.btn-inverse {
+  -webkit-transform: scale(.9,.9); /* Safari and Chrome */  
 }
 /* Change the docs' brand */
 body > .navbar .brand {
   padding-right: 10px;
+  padding-top: 13px;
   padding-left: 0;
   margin-left: 20px;
   font-weight: bold;
