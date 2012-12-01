@@ -55,15 +55,15 @@
                 <li class="btn-group" data-toggle="buttons-radio">
                   <li><%= link_to_function "Buses", "startPollingBuses()", class: "btn btn-bustracker" %>  </li>
                   <li><%= link_to_function "Stops", "startPollingStops()", class: "btn btn-bustracker" %></li>
+                      <li><a href="#" id="show_all" class="btn btn-bustracker" >Show All</a></li>
                 </li>
-
                 <li><%= link_to "About", '#', class: 'navbar-text' %></li>
-              <!-- <li><a href="#" id="show_all">Show All</a></li> -->
+              
             </ul>
-            
-  <!--           <p class="navbar-text " id="menu_status_area">Showing all routes</p> -->
-            <p class="navbar-text pull-right" id="navbar_right">(idle)</p>
-            
+            <table cellpadding="5" class="navbar-text pull-right"><tr>
+              <td><p id="menu_status_area">Showing all routes</p></td>
+              <td><p id="navbar_right">(idle)</p></td>
+          </tr></table>
           </div>
         </div>
       </div> <!-- navbar-inner -->
