@@ -30,17 +30,49 @@ function drawRoutesKML() {
   routeKML[3].setMap(map);
   show_debug("Loaded route KML...");
 
-/*
+
   for(var i=0; i<routeKML.length; i++){
     google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
-      var text = kmlEvent.featureData.name;
-      show_debug("Selected: "+text);
-      activeRoute=text;
-      $.getScript("routes/busroute"+activeRoute+".json", drawRoute);
-      hideRouteKML();
-      filterBusMarkers();  
+      var routeid=kmlEvent.featureData.name;
+      activeRoute=routeid;
+      $("#show_all").text("Show Only Route "+activeRoute);
+      $("#show_all").unbind("click", showAll);
+      $("#show_all").bind("click", focusRoute);
     });
-  }*/
+  }
+}
+
+function focusRoute(){
+      var routeid=activeRoute;
+      if(activeRoute == null){
+        return;
+      }
+      $.getScript("routes/busroute"+routeid+".json", drawRoute);
+      hideRouteKML();
+      filterBusMarkers();
+      $("#show_all").text("Show All");
+      $("#show_all").unbind("click", focusRoute);
+      $("#show_all").bind("click", showAll);
+}
+
+function showAll(){
+  activeRoute=null;
+  
+  updateBusMarkers();
+  showRouteKML();
+  showFilterRoute();
+  clearRoutePath();
+}
+
+function clearRoutePath()
+{
+  if(routePath != null)
+  {
+    for(var i=0; i<routePath.length; i++)
+    {
+      routePath[i].setMap(null);
+    }
+  }
 }
 
 function colorForRoute(route_id){
@@ -58,25 +90,35 @@ function colorForRoute(route_id){
 
 function drawRoute() {
 //load the given route and plot it....
-  var routeCoordinates=[];
+  
   //Sometimes direction0 is null....
-  if(RouteDetails.Direction0 == null)
+  clearRoutePath();
+  routePath=[]
+  if(RouteDetails.Direction0 != null)
   {
-    return;
+    routePath.push(drawShape(RouteDetails.Direction0.Shape));
   }
-  var shape = RouteDetails.Direction0.Shape;
+  if(RouteDetails.Direction1 != null)
+  {
+    routePath.push(drawShape(RouteDetails.Direction1.Shape));
+  }
+}
+
+function drawShape(shape){
+  var routeCoordinates=[];
   for (var i=0; i<shape.length; i++)
   {
     routeCoordinates[i] = new google.maps.LatLng(shape[i].Lat, shape[i].Lon);
   }
   color = colorForRoute(RouteDetails.RouteID);
-  routePath = new google.maps.Polyline({
+  var rp = new google.maps.Polyline({
     path: routeCoordinates,
     strokeColor: '#'+color,
     strokeOpacity: 0.9,
     strokeWeight: 6
   });
-  routePath.setMap(map);
+  rp.setMap(map);
+  return rp;
 }
 
 function filterBusMarkers()
@@ -126,16 +168,7 @@ function showRouteKML()
   }
 }
 
-function showAll(){
-  activeRoute=null;
-  
-  updateBusMarkers();
-  showRouteKML();
-  showFilterRoute();
-  if(routePath != null){
-    routePath.setMap(null);
-  }
-}
+
 
 
 function updateBusMarkers(){
@@ -161,7 +194,7 @@ function updateBusMarkers(){
     }
   }
 
-  show_debug("Filter: " +activeRoute+ ", currently "+buses.length+" buses");  
+  show_debug("Showing "+buses.length+" buses");
 }
 
 function updateStopMarkers(stops){
@@ -314,14 +347,6 @@ function drawStop(pinColor, stop){
 function initialize() {
   show_debug("initializing...");
   navigator.geolocation.getCurrentPosition(showPosition,showError);
-
-  // var mapOptions = {
-  //   center: new google.maps.LatLng(lat, lon),
-  //   zoom: 14,
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP
-  // };
-  // map = new google.maps.Map(document.getElementById("map_canvas"),
-  //     mapOptions);
 
 // //We'd like this to be toggleable, it's too much with everything else
 // //    var trafficLayer = new google.maps.TrafficLayer();
