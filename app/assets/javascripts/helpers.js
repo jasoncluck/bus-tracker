@@ -26,8 +26,22 @@ function isStale(date){
 		return true;
 	}
 	var now = Date.now();
-	var staleness = (now-date)/1000;
+  var staleness = (now-date)/1000;
 	return staleness > 120;
+}
+
+/*
+* Returns the staleness, with 1 being super stale and 0 being super fresh
+*/
+function staleness(date)
+{
+  var now = Date.now();
+  var staleness_secs = (now-date)/1000;
+  var max_stale = 5 * 60; //5 minutes in seconds
+  if(staleness_secs > max_stale){
+    return 1.0;
+  }
+  return (staleness_secs / max_stale);
 }
 
 //Returns true if the date is stale
