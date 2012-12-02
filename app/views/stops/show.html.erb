@@ -14,22 +14,14 @@
 <% end %>
 
 <dl>
-	<dt><h2><%= @stop.name %></h2></dt>	
-	<dd><b>Stop id:</b>&nbsp;<%= @stop.stopid %><br/>
+	<dt><%= @stop.name %></dt>	
+	<dd>
+		<b>Stop ID:</b>&nbsp;<%= @stop.stopid %><br/>
 		<b>Location:</b>&nbsp;<%= @stop.lat %>, <%= @stop.lon %><br/>
 		<dl>
 			<dt>Routes</dt>
-	
-		<% @stop.routes.each do |route| %>
-			<dd>
-				<table><tr>
-				<td><%= route.routeid %></td><td><%= route.direction %> </td>
-				<% if not @minimal %>
-				<td><%= link_to "View", route_path(route) %></td>
-				<% end %>
-			</tr></table>
+			<dd>	
+				<%= @stop.routes.map { |route| " #{route.routeid} #{route.direction}" }.join ',' %>
 			</dd>
-		<% end %>
-	</dl>
-	</dd>
+		</dl>
 </dl>
