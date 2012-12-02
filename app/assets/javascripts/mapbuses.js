@@ -13,6 +13,11 @@
     var busLocations;
 */
 var markers = {};
+
+/*
+ * openinfo is used to make sure there's only one open info window at any given time
+ * when opening a new window, if this isn't null, it will be closed and then reassinged
+*/
 var openinfo;
 var routeKML = [];
 var routePath=null;
@@ -235,6 +240,7 @@ function updateStopMarkers(stops){
       //stops
       stop = stops[i];
       var marker = drawStop(stop);
+      setStopInfoWindow(marker, stops[i]);
       stopMarkers.push(marker);
   }
   show_debug("Showing "+buses.length+" stops");
@@ -266,6 +272,19 @@ function drawStop(stop){
   });
   marker.setMap(map);
   return marker;
+}
+
+function setStopInfoWindow(marker, stop){
+  google.maps.event.addListener(marker, 'click', function() {
+    pollPath("/stops/"+stop.id+"?minimal=true", function(){
+      if(openinfo != null){
+        openinfo.close();
+      }
+      var infowindow = new google.maps.InfoWindow({ content: request.responseText });
+      infowindow.open(map,marker);
+      openinfo=infowindow;
+    });
+  }); 
 }
 
 
