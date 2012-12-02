@@ -2,8 +2,8 @@
 @import "bootstrap";
 
 body {
-  padding-top: $navbarHeight + 20px;
-  padding-bottom: 40px;
+  padding-top: $navbarHeight + 30px;
+  padding-bottom: 60px;
 }
 
 @import "responsive";
@@ -29,8 +29,10 @@ body {
   
 }
 .btn-inverse {
-  -webkit-transform: scale(.9,.9); /* Safari and Chrome */  
+  font-weight: bold;
+  -webkit-transform: scale(.8,.8); /* Safari and Chrome */  
 }
+
 /* Change the docs' brand */
 body > .navbar .brand {
   padding-right: 10px;
