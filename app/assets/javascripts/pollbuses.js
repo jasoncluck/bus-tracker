@@ -64,9 +64,6 @@ function newBusPositions()
             var positionsJSON = jQuery.parseJSON(request.responseText);
             //updateMarkeres is defined in mapBuses.js
             updateStopMarkers(positionsJSON);
-        }else{
-            //alert("HTTP status: "+request.status);
         }
-        setTimeout(pollStops, 10000);
     }
 }

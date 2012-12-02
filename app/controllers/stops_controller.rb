@@ -3,11 +3,18 @@ class StopsController < ApplicationController
   # GET /stops.json
   def index
     if params[:route]
-      r=Route.where(routeid: params[:route])
+      route_root = params[:route].dup
+      #Strip out route variations
+      if route_root =~ /[a-z].*/
+        route_root[/[a-z].*/]=''
+      end
+      r=Route.where(routeid: route_root)
+      @stops =[]
       if not r.nil?
-        @stops = r.first.stops(true)
-      else
-        @stops=[]
+        r.each do |route|
+          @stops << route.stops
+          @stops.flatten!
+        end
       end
     else
       @stops = Stop.all
