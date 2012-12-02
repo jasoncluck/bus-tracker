@@ -3,7 +3,7 @@ class MapController < ApplicationController
   def index
   	#everytime the site index is accessed update the bus and stop table
 
-
+    updateStopTable
     @buses = Bus.all
     
     respond_to do |format|
