@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202143121) do
+ActiveRecord::Schema.define(:version => 20121202200939) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20121202143121) do
     t.datetime "updated_at", :null => false
     t.float    "mean_lat"
     t.float    "mean_lon"
+    t.string   "headsign"
   end
 
   create_table "routes_stops", :id => false, :force => true do |t|

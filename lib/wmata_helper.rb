@@ -130,20 +130,37 @@ module WmataHelper
     	#d.keys: ["Direction0", "Direction1", "Name", "RouteID"] 
     	["Direction0", "Direction1"].each do |dir|
     		if routeData.has_key? dir
+    			#d.keys: ["DirectionNum", "DirectionText", "Shape", "Stops", "TripHeadsign"] 
     			existing=Route.where("routeid = ? AND direction = ?", routeData["RouteID"], dir)
     			if existing.empty?
-    				r=Route.new name: routeData["Name"], 
-    				direction: dir,
-    				routeid: routeData["RouteID"]
-    				if r.valid? and not routeData[dir].nil? and not routeData[dir]["Shape"].nil?
-    					r.save
-    					addRoutePoints(r, routeData[dir])
+    				if not routeData[dir].nil? and not routeData[dir]["Shape"].nil?
+    					r=Route.new name: routeData["Name"],
+    					direction: routeData[dir]["DirectionText"],
+    					headsign: routeData[dir]["TripHeadsign"],
+    					routeid: routeData["RouteID"]
+    					if r.valid?
+    						r.save
+    						addRoutePoints(r, routeData[dir])
+    						associateStops(r, routeData[dir]["Stops"])
+    					end
+    					mn=r.mean
+    					r.update_attributes :mean_lat => mn.lat, :mean_lon => mn.lon
     				end
-    				mn=r.means
-    				r.update_attributes :mean_lat => mn.lat, :mean_lon => mn.lon
     			end
     		end
     	end
+	end
+
+	def associateStops(route, stops)
+		# "Stops":[{"Lat", "Lon", "Name", "Routes":["10A"...], "StopID"}, ...]
+		# We want to figure out which route / direction combo matches which stops...
+		stops.each do |stopData|
+			s=Stop.where(stopid: stopData["StopID"])
+			if not s.nil?
+				route.stops << s
+			end
+		end
+		route.save
 	end
 
 
@@ -232,23 +249,15 @@ module WmataHelper
 	  	posarray.each do |stoppos|
 		  	stop=Stop.new stopid: stoppos["StopID"], name: stoppos["Name"], lat: stoppos["Lat"].to_f, lon: stoppos["Lon"].to_f
 		  	# e.g. "Routes":["7A","7Av1","7Av2","7F","7Fv1","7W","7X"],
-		  	stoppos["Routes"].each do |route|
-		  		r=Route.where(routeid: route)
-		  		if r.nil?
-		  			puts "Error, nil route for #{route}"
-		  		else
-		  			stop.routes << r
-		  			#r.stops << stop
-		  			#r.save
-		  		end
-		  	end
+		  	# This is not enough information to correlate stops with route directions, so 
+		  	# the association is built up in addRouteData instead
 		  	if stop.valid?
 		  		s=Stop.where(stopid: stoppos["StopID"]).first
 		  		if s.nil?
 	  			   stop.save
 	  			   updates = updates + 1
 	  			else
-	  			   Stop.update s.id, stopid: stop.stopid, name: stop.name, lat: stop.lat, lon: stop.lon, routes: stop.routes
+	  			   Stop.update s.id, stopid: stop.stopid, name: stop.name, lat: stop.lat, lon: stop.lon
 	  			   updates = updates +1
 	  			end
   			end
