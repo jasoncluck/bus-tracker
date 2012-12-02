@@ -58,9 +58,8 @@
                   <li><%= link_to_function "Buses", "startPollingBuses()", class: "btn btn-inverse" %>  </li>
                   <li><%= link_to_function "Stops", "startPollingStops()", class: "btn btn-inverse" %></li>
                   <li><%= link_to_function "Show All", "startPollingBusesAndStops()", class: "btn btn-inverse" %></li>
-                  <li><%= link_to "About", "#", class: "btn btn-inverse" %></li>
-                </li>
-
+                  <li><a data-toggle="modal" href="#About" class="btn btn-inverse">About</a></li>
+                </li>                                
               </ul>
             
             <table cellpadding="5" class="navbar-text pull-right"><tr>
@@ -75,3 +74,26 @@
     <%= yield %>
   </body>
 </html>
+
+
+<!--modal unit-->
+<div id="About" class="modal hide fade">
+<div class="modal-header">
+  <a class="close" data-dismiss="modal" >&times;</a>
+  <h3><%= "About Bus Tracker" %></h3>
+</div>
+<div class="modal-body">
+     
+  $('#About').on('hide', function () {
+    player.stopVideo();
+  })
+
+    </script>
+
+
+  <!--end About-->
+</div><!--model body-->
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+</div>
+</div><!--model id-->
