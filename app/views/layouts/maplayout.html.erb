@@ -55,7 +55,8 @@
                 <li class="btn-group" data-toggle="buttons-radio">
                   <li><%= link_to_function "Buses", "startPollingBuses()", class: "btn btn-bustracker" %>  </li>
                   <li><%= link_to_function "Stops", "startPollingStops()", class: "btn btn-bustracker" %></li>
-                  <li><a href="#" id="show_all" class="btn btn-inverse" >Show All</a></li>
+                  <!-- The id needs to be show_all here, since javascript uses that id to swap out the click function -->
+                  <li><%= link_to_function "Show All", "showAll()", id: "show_all", class: "btn btn-inverse" %></li>
                 <li><%= link_to "About", '#', class: 'navbar-text' %></li>
               
             </ul>

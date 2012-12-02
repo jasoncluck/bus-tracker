@@ -31,7 +31,6 @@ function drawRoutesKML() {
   routeKML[3].setMap(map);
   show_debug("Loaded route KML...");
 
-
   for(var i=0; i<routeKML.length; i++){
     google.maps.event.addListener(routeKML[i], 'click', function(kmlEvent) {
       var routeid=kmlEvent.featureData.name;
