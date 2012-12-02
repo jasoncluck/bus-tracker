@@ -48,7 +48,7 @@ BusTracker::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( helpers.js )
+  config.assets.precompile += %w( helpers.js buses.js map.js mapbuses.js pollbuses.js route_point.js routes.js stops.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
