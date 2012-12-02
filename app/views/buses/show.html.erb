@@ -1,3 +1,11 @@
+<% if not @minimal %>
+<div class="page-header">
+<%= link_to buses_path, :class => 'btn' do %>
+    <i class="icon-list-alt"></i>
+    Back
+  <% end %>
+</div>
+<% end %>
 <h3><%= @bus.wmataid %> (<%= @bus.direction %>)</h3>
   <p>
 <div>
@@ -16,6 +24,10 @@
  </div>
 <div>Vehicle: <%= @bus.busid %></div><br/>
 </p>
+<!-- Minimal layout mean its being rendered in a google maps bubble, so we want this button-->
+<% if @minimal %>
 <a href='#' class='btn btn-inverse' onClick="primeAndFocus('<%= @bus.wmataid %>')">Show Only <%= @bus.wmataid %></a>
+<% end %>
+  
 </p>
 

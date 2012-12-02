@@ -305,7 +305,7 @@ function makeNewMarker(bus){
   
   google.maps.event.addListener(marker, 'click', function() {
     var busid = bus.id;
-    pollPath("/buses/"+busid+"/", function(){
+    pollPath("/buses/"+busid+"?minimal=true", function(){
       if(openinfo != null){
         openinfo.close();
       }

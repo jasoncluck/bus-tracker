@@ -17,8 +17,9 @@ class BusesController < ApplicationController
   # GET /buses/1.json
   def show
     @bus = Bus.find(params[:id])
+    @minimal=params[:minimal]
     respond_to do |format|
-      format.html { render :show, :layout => false }
+      format.html { render :show, :layout => !@minimal }
       format.json { render json: @bus }
     end
   end
