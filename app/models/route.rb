@@ -3,7 +3,7 @@ class Route < ActiveRecord::Base
   validates :name, :direction, :routeid, :presence => true
 
   has_many :route_points, :dependent => :destroy
-  has_and_belongs_to_many :routes
+  has_and_belongs_to_many :stops
 
   def left_of?( p1, p2, p)
     return ((p2[0] - p1[0])*(p[1] - p1[1]) - (p2[1] - p1[1])*(p[0] - p1[0])) > 0;

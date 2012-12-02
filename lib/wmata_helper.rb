@@ -47,6 +47,13 @@ module WmataHelper
 		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}")
 	end
 
+	def saveStopPositions
+		uristr="http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}"
+		uri=URI.parse(uristr)
+		response = Net::HTTP.get_response uri
+		File.open("stops.json", "w") do |f| f.write( response.body ) end
+	end
+
 	# This takes way too long to do mid-AJAX request cycle.
 	# It downloads about 15 MB of route data.  It's probably best done outside
 	# of rails, from the command line or in a cron job or something.
@@ -224,13 +231,24 @@ module WmataHelper
 		updates=0
 	  	posarray.each do |stoppos|
 		  	stop=Stop.new stopid: stoppos["StopID"], name: stoppos["Name"], lat: stoppos["Lat"].to_f, lon: stoppos["Lon"].to_f
+		  	# e.g. "Routes":["7A","7Av1","7Av2","7F","7Fv1","7W","7X"],
+		  	stoppos["Routes"].each do |route|
+		  		r=Route.where(routeid: route)
+		  		if r.nil?
+		  			puts "Error, nil route for #{route}"
+		  		else
+		  			stop.routes << r
+		  			#r.stops << stop
+		  			#r.save
+		  		end
+		  	end
 		  	if stop.valid?
 		  		s=Stop.where(stopid: stoppos["StopID"]).first
 		  		if s.nil?
 	  			   stop.save
 	  			   updates = updates + 1
 	  			else
-	  			   Stop.update s.id, stopid: stop.stopid, name: stop.name, lat: stop.lat, lon: stop.lon
+	  			   Stop.update s.id, stopid: stop.stopid, name: stop.name, lat: stop.lat, lon: stop.lon, routes: stop.routes
 	  			   updates = updates +1
 	  			end
   			end

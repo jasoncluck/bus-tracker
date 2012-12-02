@@ -1,4 +1,3 @@
-include WmataHelper
 include RoutesHelper
 
 class RoutesController < ApplicationController

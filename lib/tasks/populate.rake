@@ -1,4 +1,4 @@
-require "#{Rails.root}/app/helpers/wmata_helper"
+require "#{Rails.root}/lib/wmata_helper"
 include WmataHelper
 #Run rake populate:all
 #This approach to populating the database with initial values 
@@ -16,6 +16,7 @@ namespace :populate do
 
   desc "Add WMATA stops to database"
   task :stops => :environment do  	
+    updateStopTable
   end
 
 

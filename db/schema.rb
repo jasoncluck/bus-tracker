@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201222152) do
+ActiveRecord::Schema.define(:version => 20121202032227) do
 
   create_table "buses", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(:version => 20121201222152) do
     t.datetime "updated_at", :null => false
     t.float    "mean_lat"
     t.float    "mean_lon"
+  end
+
+  create_table "routes_stops", :id => false, :force => true do |t|
+    t.integer "stop_id",  :null => false
+    t.integer "route_id", :null => false
   end
 
   create_table "stop_route", :force => true do |t|
