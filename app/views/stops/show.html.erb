@@ -1,0 +1,30 @@
+<div class="page-header">
+  <%= link_to stops_path, :class => 'btn' do %>
+    <i class="icon-list-alt"></i>
+    Back
+  <% end %>
+  <%= link_to edit_stop_path(@stop), :class => 'btn btn-primary' do %>
+    <i class="icon-pencil icon-white"></i>
+    Edit
+  <% end %>
+  <h1>Listing stops</h1>
+</div>
+
+<dl>
+	<dt><%= @stop.name %></dt>
+	<dd><%= @stop.stopid %><br/>
+		<%= @stop.lat %>, <%= @stop.lon %><br/>
+		<dl>
+			<dt>Routes</dt>
+	
+		<% @stop.routes.each do |route| %>
+			<dd>
+				<table><tr>
+				<td><%= route.routeid %></td><td><%= route.direction %> </td>
+				<td><%= link_to "View", route_path(route) %></td>
+			</tr></table>
+			</dd>
+		<% end %>
+	</dl>
+	</dd>
+</dl>

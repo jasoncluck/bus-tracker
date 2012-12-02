@@ -1,0 +1,30 @@
+<div class="page-header">
+  <%= link_to new_stop_path, :class => 'btn btn-primary' do %>
+    <i class="icon-plus icon-white"></i>
+    New Stop
+  <% end %>
+  <h1>Listing stops</h1>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Stop ID</th>
+      <th>Name</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% @stops.each do |stop| %>
+    <tr>
+      <td><%= stop.stopid %></td>
+      <td><%= stop.name %></td>
+      <td><%= stop.lat %></td>
+      <td><%= stop.lon %></td>
+      <td><%= link_to 'Show', stop %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
