@@ -1,3 +1,5 @@
+<!-- don't show the header back / edit buttons in the maps info bubble-->
+<% if not @minimal %>
 <div class="page-header">
   <%= link_to stops_path, :class => 'btn' do %>
     <i class="icon-list-alt"></i>
@@ -6,14 +8,15 @@
   <%= link_to edit_stop_path(@stop), :class => 'btn btn-primary' do %>
     <i class="icon-pencil icon-white"></i>
     Edit
-  <% end %>
-  <h1>Listing stops</h1>
+    <% end %>  
+  <h1>Listing stop <%= @stop.stopid %></h1>
 </div>
+<% end %>
 
 <dl>
-	<dt><%= @stop.name %></dt>
-	<dd><%= @stop.stopid %><br/>
-		<%= @stop.lat %>, <%= @stop.lon %><br/>
+	<dt><h2><%= @stop.name %></h2></dt>	
+	<dd><b>Stop id:</b>&nbsp;<%= @stop.stopid %><br/>
+		<b>Location:</b>&nbsp;<%= @stop.lat %>, <%= @stop.lon %><br/>
 		<dl>
 			<dt>Routes</dt>
 	
@@ -21,7 +24,9 @@
 			<dd>
 				<table><tr>
 				<td><%= route.routeid %></td><td><%= route.direction %> </td>
+				<% if not @minimal %>
 				<td><%= link_to "View", route_path(route) %></td>
+				<% end %>
 			</tr></table>
 			</dd>
 		<% end %>

@@ -4,7 +4,11 @@ class StopsController < ApplicationController
   def index
     if params[:route]
       r=Route.where(routeid: params[:route])
-      @stops = r.first.stops(true)
+      if not r.nil?
+        @stops = r.first.stops(true)
+      else
+        @stops=[]
+      end
     else
       @stops = Stop.all
     end
@@ -19,9 +23,9 @@ class StopsController < ApplicationController
   # GET /stops/1.json
   def show
     @stop = Stop.find(params[:id])
-
+    @minimal=params[:minimal]
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :show, :layout => !@minimal }
       format.json { render json: @stop }
     end
   end
