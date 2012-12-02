@@ -6,6 +6,7 @@ gem 'factory_girl_rails'
 gem 'simple_form'
 gem 'json'
 gem 'gon'
+gem 'daemons'
 gem 'ruby_kml', :git => 'https://github.com/schleyfox/ruby_kml'
 
 

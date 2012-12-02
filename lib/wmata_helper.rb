@@ -146,7 +146,7 @@ module WmataHelper
 		n=DateTime.now
 		secs=(n - @@lastUpdate)*24*60*60
 		if secs < 4
-			logger.info "Skipping update step because only #{secs.to_f} seconds since last update"
+			Rails.logger.info "Skipping update step because only #{secs.to_f} seconds since last update"
 			return
 		end
 		# File.open('api-dump.txt', 'a') {|f| f.write("fetching bus positions at #{DateTime.now}...\n") }
@@ -167,7 +167,7 @@ module WmataHelper
 	  	# "TripStartTime"=>"2012-10-09T19:38:00",
 	  	# "VehicleID"=>"7136"} 
 
-	  	
+	  	updates=0
 
 	  	posarray.each do |buspos|
 		  	dt=DateTime.strptime(buspos["DateTime"]+" EST", '%Y-%m-%dT%H:%M:%S %Z')
@@ -184,11 +184,13 @@ module WmataHelper
 	  			b=Bus.where(busid: buspos["VehicleID"]).first
 	  			if b.nil?
 	  				@@update_mutex.synchronize do
+	  					updates = updates +1
 	  					bus.save
 	  				end
 	  			else
 	  				#File.open('api-dump.txt', 'a') {|f| f.write("\tupdating bus with id #{b.id}, datetime #{dt}\n") }
 	  				@@update_mutex.synchronize do
+
 	  					Bus.update b.id, 
 	  					headsign: bus.headsign, 
 	  					lat: bus.lat,
@@ -199,13 +201,15 @@ module WmataHelper
 	  					direction: bus.direction,
 	  					draw: true,
 	  					last_update: bus.last_update
+
+	  					updates = updates +1
 	  				end
 	  			end
 	  		else
 	  			#File.open('api-dump.txt', 'a') {|f| f.write("\tskipped bus #{bus.id}, datetime #{dt} because it was invalid\n") }
 	  		end
-	  		
 		end
+		return updates
 	end
 
 	def updateStopTable
