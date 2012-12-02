@@ -1,8 +1,12 @@
 <h3><%= @bus.wmataid %> (<%= @bus.direction %>)</h3>
   <p>
 <div>
+
   To <%= @bus.headsign %> <br/>
-  As of <%= @bus.last_update.strftime("%l:%M %P on %b %d, %Y" ) %><br/>
+  <p>
+  Information is <%= stale_time @bus %> minutes old </p>
+  <p>
+  As of <%= @bus.last_update.strftime("%l:%M %P on %b %d, %Y" ) %> <br/>
   Running 
   <% if @bus.dev > 0 %>
   <%= @bus.dev %> minutes late
@@ -11,7 +15,7 @@
  <% end %>
  </div>
 <div>Vehicle: <%= @bus.busid %></div><br/>
-
-<a href='#' class='btn btn-large' onClick="primeAndFocus('<%= @bus.wmataid %>')">Show Only <%= @bus.wmataid %></a>
+</p>
+<a href='#' class='btn btn-inverse' onClick="primeAndFocus('<%= @bus.wmataid %>')">Show Only <%= @bus.wmataid %></a>
 </p>
 
