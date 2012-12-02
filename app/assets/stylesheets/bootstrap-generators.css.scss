@@ -37,7 +37,10 @@ body {
   text-align: center;
   background: #222 url(/images/alert-overlay.png) repeat-x;
   display: inline-block;
-  padding: 5px 10px 6px;
+  padding-left:100px;
+  padding-right:100px;
+  padding-top:10px;
+  padding-bottom:5px;
   color: #fff;
   text-decoration: none;
   font-weight: bold;
@@ -49,6 +52,7 @@ body {
   text-shadow: 0 -1px 1px #222;
   border-bottom: 1px solid #222;
 }
+
 /* Change the docs' brand */
 body > .navbar .brand {
   padding-right: 10px;
@@ -64,9 +68,13 @@ body > .navbar .brand {
 }
 
 .jasonsection{
-  float: left;
+  float: right;
+  position: relative;
+  right: -50%;
 }
 
 .iansection{
-  float: right;
+  float: left;
+  position: relative;
+  left: -50%;
 }
