@@ -52,13 +52,6 @@ ActiveRecord::Schema.define(:version => 20121202032227) do
     t.integer "route_id", :null => false
   end
 
-  create_table "stop_route", :force => true do |t|
-    t.integer "stopid"
-    t.integer "routeid"
-    t.string  "direction"
-    t.integer "seqno"
-  end
-
   create_table "stops", :force => true do |t|
     t.integer "stopid"
     t.string  "name"

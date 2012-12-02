@@ -3,6 +3,7 @@ var busy=false;
 var pollCount=0;
 var request = false;
 var buses;
+var stops;
 
 try {
  request = new XMLHttpRequest();
@@ -35,8 +36,8 @@ function pollPath(path, callback){
     show_debug("sent request at "+myDate+"...");
 }
 
-function pollStops(){
-    pollPath("/stops.json", newStopPositions);
+function pollStops(route){
+    pollPath("/stops.json?route="+route, newStopPositions);
 }
 
 function newBusPositions()

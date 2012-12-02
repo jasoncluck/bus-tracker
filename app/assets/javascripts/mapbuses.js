@@ -16,6 +16,7 @@ var markers = {};
 var openinfo;
 var routeKML = [];
 var routePath=null;
+var stopMarkers=[];
 
 var activeRoute=null;
 var filter_buses=false;
@@ -64,6 +65,7 @@ function focusRoute(){
       filter_buses=true;
       hideRouteKML();
       filterBusMarkers();
+      showStops();
       $("#show_all").text("Show All");
       $("#show_all").unbind("click", focusRoute);
       $("#show_all").bind("click", showAll);
@@ -73,6 +75,7 @@ function showAll(){
   activeRoute=null;
   filter_buses=false;
   updateBusMarkers();
+  hideStops();
   showRouteKML();
   showFilterRoute();
   clearRoutePath();
@@ -209,12 +212,26 @@ function updateBusMarkers(){
   show_debug("Showing "+buses.length+" buses at "+myDate);
 }
 
+function showStops(){
+  if(activeRoute == null)
+  {
+    return;
+  }
+  show_debug("Polling stops...");
+  pollStops(activeRoute);
+}
+
+function hideStops(){
+
+}
+
 function updateStopMarkers(stops){
+  show_debug("Got some stops to draw...");
   for (var i=0; i<stops.length; i++)
   {
       //stops
       stop = stops[i];
-      col = colorForRoute(stop.stopid)
+      col = colorForRoute(activeRoute)
       // if(stop.draw == true){
         drawStop(col,stop);
       // }
@@ -314,73 +331,6 @@ function makeNewMarker(bus){
       openinfo=infowindow;
     });
   }); 
-}
-
-function drawStop(pinColor, stop){
-  var myLatlng = new google.maps.LatLng(stop.lat, stop.lon);
-  stopTime=parseISO8601(stop.last_update);
-  //Update marker position if it already exists...
-  if(markers[stop.stopid] != null){
-    if(!markers[stop.stopid].getPosition().equals(myLatlng)){
-      markers[stop.stopid].setPosition(myLatlng);
-      markers[stop.stopid].setAnimation(google.maps.Animation.BOUNCE);
-      //Turn off the bouncing in 3 seconds...
-      setTimeout(function(){
-        var myMarker = markers[stop.stopid];
-        myMarker.setAnimation(null);
-      }, 3000);
-    }
-    if (isStale(stopTime)){
-      markers[stop.stopid].setIcon(new google.maps.MarkerImage('stale.png'),
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34)
-        );
-    }else{
-       markers[stop.stopid].setIcon(new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34)));
-    }
-  }else{
-    //Or create a new marker if it doesnt
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34));
-
-    if(!isStale(stopTime)){ pinImage = new google.maps.MarkerImage('stale.png',
-    new google.maps.Size(21, 34),
-    new google.maps.Point(0,0),
-    new google.maps.Point(10, 34)); }
-
-    var marker = new google.maps.Marker({
-       position: myLatlng,
-       map: map,
-       title:stop.name,
-       icon: pinImage,
-       optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
-    });
-    markers[stop.stopid] = marker;
-    marker.setMap(map);
-        //TODO: List when the next buses will be here and what they are
-        var content = "<h3>"+stop.name+": "+stop.stopid+"</h3><br/>"
-  if(stop.last_update != null){
-    content = content+"<div>Last update: "+busTime.toLocaleString()+"</div><br/>"
-  }
-  content = content+"<a href='#' class='btn btn-large'>Watch</a>"
-
-    var infowindow = new google.maps.InfoWindow({
-       content: content
-    });
-    google.maps.event.addListener(marker, 'click', function() {
-      if(openinfo != null){
-        openinfo.close();
-      }
-      infowindow.open(map,marker);
-      openinfo=infowindow;
-    });
-  }
 }
 
 function initialize() {

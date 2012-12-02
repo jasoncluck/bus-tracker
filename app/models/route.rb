@@ -2,8 +2,9 @@ class Route < ActiveRecord::Base
   attr_accessible :name, :direction, :routeid, :mean_lat, :mean_lon
   validates :name, :direction, :routeid, :presence => true
 
-  has_many :route_points, :dependent => :destroy
   has_and_belongs_to_many :stops
+  has_many :route_points, :dependent => :destroy
+  
 
   def left_of?( p1, p2, p)
     return ((p2[0] - p1[0])*(p[1] - p1[1]) - (p2[1] - p1[1])*(p[0] - p1[0])) > 0;

@@ -2,8 +2,13 @@ class StopsController < ApplicationController
   # GET /stops
   # GET /stops.json
   def index
-    @stops = Stop.all
-
+    if params[:route]
+      r=Route.where(routeid: params[:route])
+      @stops = r.first.stops(true)
+    else
+      @stops = Stop.all
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @stops }
