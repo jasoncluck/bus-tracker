@@ -222,7 +222,10 @@ function showStops(){
 }
 
 function hideStops(){
-
+  for(var i=0; i<stopMarkers.length; i++){
+    stopMarkers[i].setMap(null);
+  }
+  stopMarkers=[];
 }
 
 function updateStopMarkers(stops){
@@ -231,13 +234,38 @@ function updateStopMarkers(stops){
   {
       //stops
       stop = stops[i];
-      col = colorForRoute(activeRoute)
-      // if(stop.draw == true){
-        drawStop(col,stop);
-      // }
+      var marker = drawStop(stop);
+      stopMarkers.push(marker);
   }
-
   show_debug("Showing "+buses.length+" stops");
+}
+
+function makePinMarker(pinColor)
+{
+  return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
+}
+
+/*
+ * We don't have to keep track of as much with stops, since they don't move.  We just draw them when a route
+ * has focus, and hide them when it doesn't
+ */
+function drawStop(stop){
+  col = colorForRoute(activeRoute);
+  var myLatlng = new google.maps.LatLng(stop.lat, stop.lon);
+
+  var marker = new google.maps.Marker({
+     position: myLatlng,
+     map: map,
+     title:stop.name+": ("+stop.stopid+")",
+     icon: makePinMarker(col),
+     title:stop.name,
+     optimized: false // http://stackoverflow.com/questions/8721327/effects-and-animations-with-google-maps-markers/8722970#8722970
+  });
+  marker.setMap(map);
+  return marker;
 }
 
 
