@@ -44,7 +44,7 @@ module WmataHelper
 	end
 	#TODO: do these api queries need to alternate?
 	def fetchStopPositions
-		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?lat=38.878586&lon=-76.989626&radius=500&api_key=#{@@apiKey}")
+		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}")
 	end
 
 	# This takes way too long to do mid-AJAX request cycle.
@@ -221,19 +221,21 @@ module WmataHelper
 		# Name - The name of the BusStop
 		# Routes - Array of Routes for this stop.
 
+		updates=0
 	  	posarray.each do |stoppos|
-		  	#dt=DateTime.strptime(stoppos["DateTime"]+" EDT", '%Y-%m-%dT%H:%M:%S %Z')
-	  		s=Stop.where(stopid: stoppos["StopID"]).first
-	  		if s.nil?
-	  			#wmataid = nil
-	  			s=Stop.new stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]
-	  			@@update_mutex.synchronize do
-	  				s.save
+		  	stop=Stop.new stopid: stoppos["StopID"], name: stoppos["Name"], lat: stoppos["Lat"].to_f, lon: stoppos["Lon"].to_f
+		  	if stop.valid?
+		  		s=Stop.where(stopid: stoppos["StopID"]).first
+		  		if s.nil?
+	  			   stop.save
+	  			   updates = updates + 1
+	  			else
+	  			   Stop.update s.id, stopid: stop.stopid, name: stop.name, lat: stop.lat, lon: stop.lon
+	  			   updates = updates +1
 	  			end
-	  		else
-	  			Stop.update s.id, stopid: stoppos["StopID"], lat: stoppos["Lat"], lon: stoppos["Lon"], name: stoppos["Name"]	 #routes: stoppos["Routes"]
   			end
 		end
+		return updates
 	end
 
 	def fetchDetails(routeId)
