@@ -460,7 +460,7 @@ function showError(error)
     lon = -77.03; 
   } 
 window.onload = initialize;
-
+window.onload = startPollingBuses()
 
 
 
