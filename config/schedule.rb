@@ -1,8 +1,9 @@
+
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
-require ENV["RAILS_ENV_PATH"]
 
 # Example:
 #
@@ -20,12 +21,8 @@ require ENV["RAILS_ENV_PATH"]
 
 # Learn more: http://github.com/javan/whenever
 
-include WmataHelper
 
-every 10.seconds do
-	t1=Time.now
-	n=updateBusTable
-	t2=Time.now
-	puts "Finished updating #{n} buses in #{t2-t1} seconds"
+every 1.minute do
+	rake "pollBuses"
 end
 	

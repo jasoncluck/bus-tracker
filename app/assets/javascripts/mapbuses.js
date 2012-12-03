@@ -191,6 +191,7 @@ function showRouteKML()
 }
 
 function updateBusMarkers(){
+
   if(buses == null || buses.length == 0)
   {
     return
@@ -199,7 +200,6 @@ function updateBusMarkers(){
   {
     //buses
     bus=buses[i];
-    
     if(bus != null){      
       busTime=parseISO8601(bus.last_update);
       if(isAncient(busTime) || shouldHide(bus)){
@@ -383,6 +383,7 @@ function updateIconOpacity(bus)
 }
 
 function makeNewMarker(bus){
+
   var myLatlng = new google.maps.LatLng(bus.lat, bus.lon);
   var pinImage=makeMarker(bus);
   var marker = new google.maps.Marker({
