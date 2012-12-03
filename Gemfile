@@ -7,7 +7,7 @@ gem 'simple_form'
 gem 'json'
 gem 'daemons'
 gem 'ruby_kml', :git => 'https://github.com/schleyfox/ruby_kml'
-
+gem 'whenever'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
