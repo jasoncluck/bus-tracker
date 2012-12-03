@@ -482,10 +482,15 @@ function startPollingStops(){
 
 
 function showError(error)
-  {
-    lat = 38.89;
-    lon = -77.03; 
-  } 
+{
+  showPosition({
+    coords :
+    { 
+      latitude: 38.89,
+      longitude: -77.03 
+    }
+  });
+} 
 window.onload = initialize;
 
 
