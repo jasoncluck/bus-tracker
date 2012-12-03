@@ -8,6 +8,8 @@ gem 'json'
 gem 'daemons'
 gem 'ruby_kml', :git => 'https://github.com/schleyfox/ruby_kml'
 gem 'whenever', :require => false
+gem 'delayed_job_active_record'
+gem 'foreman'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
