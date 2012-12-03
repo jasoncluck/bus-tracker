@@ -16,17 +16,15 @@
 <dl>
 	<dt><%= @stop.name %></dt>	
 	<dd>
-		<dt>Stop ID:</dt><dd><%= @stop.stopid %></dd>
-		<dt>Location:</dt><dd><%= @stop.lat %>, <%= @stop.lon %></dd>
+		<b>Stop ID:</b><%= @stop.stopid %>
+		
 		<dt>Next Buses:</dt>
 		<dd>
 			<div id="bubble_stop_prediction">
 			</div>
 		</dd>
-		<dl>
-			<dt>Routes</dt>
-			<dd>	
-				<%= @stop.routes.map { |route| " #{route.routeid} #{route.direction}" }.join ',' %>
-			</dd>
-		</dl>
+		<b>Routes</b><%= @stop.routes.map { |route| " #{route.routeid} #{route.direction}" }.join ',' %></dd>
+		<dt>Location:</dt><dd><%= @stop.lat %>, <%= @stop.lon %></dd>
+	</dd>
+	
 </dl>

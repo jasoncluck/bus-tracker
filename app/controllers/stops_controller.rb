@@ -1,3 +1,5 @@
+require 'json'
+
 include WmataHelper
 
 class StopsController < ApplicationController
@@ -33,15 +35,18 @@ class StopsController < ApplicationController
   def predict
     @stop=Stop.find(params[:id])
     json=fetchPredictionRaw(@stop.stopid)
-    logger.info "fetched #{json}"
-    render text: json
+    @predictions=JSON.parse(json);
+    @minimal=params[:minimal]
+    respond_to do |format|
+      format.html { render :predict, layout: !@minimal }
+      format.json { render text: json }
+    end
   end
 
   # GET /stops/1
   # GET /stops/1.json
   def show
     @stop = Stop.find(params[:id])
-
     @minimal=params[:minimal]
     respond_to do |format|
       format.html { render :show, :layout => !@minimal }
