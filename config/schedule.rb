@@ -21,7 +21,7 @@
 
 include WmataHelper
 
-every 30.seconds do
+every 10.seconds do
 	updateBusTable
 end
 	
