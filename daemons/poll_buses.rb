@@ -9,11 +9,10 @@ require ENV["RAILS_ENV_PATH"]
 
 include WmataHelper
 
-loop do
 	puts "Updating bus table at #{Time.now}"
 	t1=Time.now
 	n=updateBusTable
 	t2=Time.now
 	puts "Finished updating #{n} buses in #{t2-t1} seconds"
 	sleep(10)
-end
+
