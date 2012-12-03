@@ -245,6 +245,8 @@ module WmataHelper
 		return updates
 	end
 
+	handle_asynchronously :updateBusTable
+
 	def updateStopTable
 		pos=fetchStopPositions
 	  	posarray=pos["Stops"]
