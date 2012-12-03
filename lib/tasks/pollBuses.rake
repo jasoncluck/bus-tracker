@@ -12,3 +12,4 @@ namespace :pollBuses do
     t2=Time.now
     puts "Finished updating #{n} buses in #{t2-t1} seconds"
   end
+end

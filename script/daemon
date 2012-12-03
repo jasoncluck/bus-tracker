@@ -9,3 +9,4 @@ ENV['RAILS_ENV'] = "development"
 script = "#{ENV["APP_ROOT"]}/daemons/#{ARGV[1]}"
 
 Daemons.run(script, dir_mode: :normal, dir: "#{ENV["APP_ROOT"]}/tmp/pids") 
+Rails.logger.auto_flushing = true
