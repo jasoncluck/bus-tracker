@@ -157,7 +157,13 @@ Figure \ref{fig:busSchema} shows the schema that Bus Tracker uses to store infor
 
 \chapter{Implementation Details}
 
+Stops:  11321
+Routes: 352
+Buses:  648
+
 \chapter{Test Cases}
+
+
 
 
 \chapter{Task Breakdown and Timeline}
@@ -213,6 +219,37 @@ Figure \ref{fig:busSchema} shows the schema that Bus Tracker uses to store infor
 \begin{appendices}
 \chapter{User Manual}
 
+The Bus Tracker web application immediately presents an overview of the current state of the WMATA system.  All routes are shown as KML overlays, and current positions of buses on those routes are indicated with bus icons.  This initial state is shown in Figure \ref{fig:busOverview}.
+
+\begin{figure}[ht]
+  \centerline{\includegraphics[width=\textwidth]{bus-tracker-overview.png}}
+  \caption{Overview of WMATA Bus System}
+  \label{fig:busOverview}
+\end{figure}
+
+
+Bus icons move as their position information is updated on WMATA's servers.  These updates do not come from WMATA as frequently as desired, which is a limitation of their system.  Buses typically are updated within a two minute time span, but the delay can sometimes be much longer.  When position updates are received for a bus, its icon bounces a few times to indicate a change in position.  
+
+The age of a bus position can be quickly determined based on the opacity of a bus icon.  A transparent icon has position information that is more than five minutes old.  The more opaque a bus icon is shaded, the more recent its position information.  The exact age of the bus position information can be seen in the bus information window that displays when clicking on a bus icon.  An example is shown in Figure \ref{fig:bus-details}.  It includes route name, direction, headsign, age of position data, vehicle id number, and deviation from the posted schedule.
+
+\begin{figure}[ht]
+  \centerline{\includegraphics[width=\textwidth]{bus-info-bubble.png}}
+  \caption{Bus Detail Window}
+  \label{fig:bus-details}
+\end{figure}
+
+
+Initially all buses and all routes are displayed.  This can be a nice overview, but can also be visually overwhelming.  Bus Tracker allows you to focus in on a route, showing only its path, buses, and also displaying the stops thoses buses serve.  There are two ways to focus on a route.  One is by clicking on the route path, then clicking ``Show Only Route D2'' on the tool bar (where D2 is route clicked).  The second way to focus on a specific route is to click the ``Show Only D2'' button in a bus information window.  This will focus on the route that the bus is serving.
+
+When a specific route is in focus, the stops on that route are also shown.  Clicking on a stop icon brings up a stop information window (Figure \ref{fig:stop-details}).  Stop information windows show the stop's name, its WMATA stop ID (which other applications use to look up bus arrival predictions), a table of predicted bus arrival times, all routes that serve this stop, and the stop coordinates.
+
+\begin{figure}[ht]
+  \centerline{\includegraphics[width=\textwidth]{stop-info-bubble.png}}
+  \caption{Stop Detail Window}
+  \label{fig:stop-details}
+\end{figure}
+
+The bus arrival predictions shown in the stop information window are more accurate than bus position data.  They are provided by WMATA's API, and project bus arrival based on last-known location and average bus speed.
 
 
 \end{appendices}
