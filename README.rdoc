@@ -1,5 +1,50 @@
 == Bus Tracker Intro
 
-The bus tracker shows bus position and route information from WMATA.  It uses rails, but has to do a lot with javascript both for google maps integration and for live updates of bus positions without requiring an entire reload.  This kind of edges us away from the 'rails way.'
+The bus tracker shows bus position and route information from the Washington Metro Area Transit Authority (WMATA).  It uses rails, and a significant body of
+javascript for google maps integration and asynchronous updates of bus positions without requiring an entire reload.
 
-For now it just uses one route - /buses.  Theoretically in the future it could use other URLs for specific things -- different map configurations, or focusing on specific routes.
+
+== Running
+
+To run a server, you need Ruby and Ruby on Rails installed on your system.  Instructions on installing
+these tools can be found here: 
+
+With rails install, run the following steps
+
+1. bundle install
+  This installs all the Ruby gems that bus-tracker depends on
+
+2. bundle exec rake db:migrate
+  This configures the database schema
+
+3. bundle exec rake populate:all
+  This fills the database with information on bus routes, bus stops, and current bus positions.
+  It can take quite awhile to run, as there are many stops and routes in the system, and this all must
+  be pulled from WMATA's servers.
+
+4. rails server
+  This starts the rails web server on localhost:3000.  You can now visit http://localhost:3000 and see
+  the bus-tracker map application
+
+4. script/daemon run poll_buses.rb
+  This starts a daemon process that downloads updates of bus positions and inserts them into the database.
+  This step is required to see buses move on the map.
+
+== Using the Web Application
+
+Bus Tracker shows a map with WMATA bus routes and bus positions.  Bus icon positions are updated as information
+is available from the WMATA servers.  Updates don't occur as frequently as desired; it's typically between 2 and 5
+minutes between updates for a specific bus.  When new position information is retrieved, the bus icon bounces to
+highlight movement.
+
+Bus icon transparency is modulated to indicate recency of display position information.  After data is 5 minutes old,
+buses are displayed with transparent interiors.  When position information is more recent, the fill becomes more opaque.  
+Bus icons are oriented according to the route direction (North, South, East, West).  
+
+A particular route can be focused on by clicking on that route, and clicking "Show Only Route X" in the top tool bar.  Alternately, 
+clicking on a bus shows an information window that also has a button which focuses the view on that bus's route.
+
+When a route is in focus, the stops on that route are displayed.  When clicked on, these stops show an information bubble that lists
+the routes which stop there.  The window is dynamically populated with predictions of wait times for buses to arrive at that stop.
+
+Focus view can be exited by clicking the "Show All" button in the top toolbar.
