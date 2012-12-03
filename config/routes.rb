@@ -12,7 +12,7 @@ BusTracker::Application.routes.draw do
   
   match 'means' => 'routes#means'
   match 'routegroups/:id' => 'routes#group'
-  match 'stops/:id/prediction.json' => 'stops#predict'  
+  match 'stops/:id/prediction/' => 'stops#predict'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

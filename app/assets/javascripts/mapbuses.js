@@ -287,23 +287,13 @@ function setStopInfoWindow(marker, stop){
 }
 
 function updatePrediction(stop_id){
-  url="stops/"+stop_id+"/prediction.json"
+  url="stops/"+stop_id+"/prediction?minimal=true"
   pollPath(url, http_nonsense_wrapper(newStopPrediction));
 }
 
-/*
-* {"Predictions"=>[{"DirectionNum"=>"1", "DirectionText"=>"West to Tenleytown Station", "Minutes"=>98, "RouteID"=>"96", "VehicleID"=>"6501"}], "StopName"=>"..."
-*/
+
 function newStopPrediction(content_text){
-  var prediction = jQuery.parseJSON(content_text);
-  var html="<dl>";
-  for(var i=0; i<prediction.Predictions.length; i++){
-    p=prediction.Predictions[i];
-    html = html + "<dt>"+p.RouteID+" "+p.DirectionText+"</dt>";
-    html = html + "<dd>"+p.Minutes+" minutes</dd>"
-  }
-  html = html + "</dl>"
-  $("#bubble_stop_prediction").html(html);
+  $("#bubble_stop_prediction").html(content_text);
 }
 
 
