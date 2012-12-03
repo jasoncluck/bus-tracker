@@ -3,7 +3,6 @@
 \usepackage{graphicx}
 \usepackage{enumerate}
 \usepackage{listings}
-\usepackage{multicol}
 \usepackage[titletoc]{appendix}
 
 \usepackage{url}
@@ -28,7 +27,10 @@
   }}
   \makeatother
 
-\title{Live Map of the DC Bus System (Bus Tracker): Final Report}
+\bibliography{final-report}
+
+\title{Bus Tracker: Final Report}
+
 \author{Ian Will, Jason Cluck}
 \date{}
 
@@ -40,15 +42,65 @@
 
 \chapter{Introduction and Motivation}
 
-  Public transportation in the District of Columbia is very important to most of its residents and employees.  This project aims to provide users with recent bus data to ensure the most productive transportation.  The project will manifest as a web application named Bus Tracker that can be accessed through any device capable of supporting a web browser.  Some of the useful data that will be provided through this application will be the buses' current location, their expected arrival times, and current headsign.  This information provides more information to transit riders than previous tools, which only provide expected arrival times of a bus at a specific stop.
+  Public transportation in the District of Columbia is critical to many of its residents and employees.  The District's public transporation is managed by the Washington Metro Area Transit Authority (WMATA).  WMATA maintains a system of rail and buses that serve most location in the district.  The WMATA rail system is simpler than the bus network and has many maps that are useful for discovering which rail lines server particular regions.  The bus system serves more locations that rail, but can be significantly more perplexing for a new rider.  There are a large number of routes and no comprehensive map, and buses rarely adhere to posted schedules.
 
-\chapter{Problem Statement}
+\section{Problem Statement}
 
-Lorem ipsum
+The Bus Tracker web application provides an interactive map-based overview of the WMATA bus system.  It uses a web API provided by  WMATA to query current bus locations, predictions of arrival times at stops, and full listings of route and stop locations.  This information is then displayed in a clear and interactive manner that displays high-level overviews with easy drill-down for pertinent details (as encouraged by Edward Tufte \cite{tufte:2006}).
 
 \chapter{Requirements Analysis}
 
-Lorem ipsum
+\section{Use Cases}
+
+The application is intended for use by those considering or planning to travel on the WMATA bus system.  The primary use case is a smart phone user considering how to catch a bus to an intended destination.  Someone in that situation wonders how long they will be waiting for a bus to arrive at the nearest stop.  They may like to consider alternatives to the bus system such as rail, taxi, or alternate bus route depending on how long they will need to wait for a bus.  They may also like to use Google's traffic overlay to estimate how long the bus will be delayed.
+
+The application will help by showing the anticipated time until the next bus arrives, showing where the next arriving bus is going, and showing nearby stops and routes that may be equally suitable for the intended destination.  This person will probably make location information available to the application through their browser.  The web application may use this information to filter routes and buses that are display to improve performance.  It may also use the location to suggest alternate routes with more promptly ariving buses. 
+
+A second use case is someone at their home or desk computer considering when to leave to minimize wait time at a stop without missing a bus.  The concerns in this case will be similar to to the concerns of the smart-phone user, but location data may not be available.  The person may want a reminder when they need to leave in order to catch their bus.
+  
+
+\section{Threshold Requirements}
+Threshold requirements describe the minimal set of functionality for a usable product.  These are the requirements that we plan to accomplish.
+\begin{enumerate}
+\item Display a map of the DC metro region in a web browser
+\item Display the browser's reported location on the map if current location is available from the browser
+\item Display all WMATA bus routes on the map
+\item Display the current locations of all WMATA buses on the map
+\item Visually indicate bus direction along with bus position displays
+\item Display bus routes using different colors to visually differentiate routes
+\item Display bus positions using the same color used for its route
+\item Update bus position markers with current positions at five second intervals
+\item Display bus stop locations on the map
+\item Display the following detail information about a bus stop by clicking on the stop marker
+\begin{enumerate}
+\item Display the anticipated wait time for the next bus for each route that intersects a given stop
+\end{enumerate}
+\item Display the following detail information about a bus by clicking on the bus marker
+\item Display the stop's WMATA id number
+\item Display all bus routes that serve the stop
+\begin{enumerate}
+\item Bus route name (e.g. ``5A'')
+\item Bus headsign (e.g. ``DULLES AIRPORT'')
+\item Bus direction (e.g. ``WEST'')
+\item Positional uncertainty circle around the bus marker
+\end{enumerate}
+\end{enumerate}
+
+
+\section{Objective Requirements}
+Objective requirements describe functionality that would improve the quality or usefulness of the application, but are not strictly necessary for a useful product.  These are things we would like to accomplish, but are unsure if time will allow.
+\begin{enumerate}
+\item Draw DC Circulator bus positions and routes (DC Circulator is not part of the WMATA system)
+\item Provide filtering to limit the displayed buses and routes
+\begin{enumerate}
+\item Filter by only showing routes, stops, and buses matching a route name
+\item Filter by only showing routes, stops, and buses matching a headsign
+\item Filter by only showing routes with stops wihtin some proximity to the device's current location 
+\item Filter by only showing routes with stops wihtin some proximity to an arbitrary location
+\item Combine filters using boolean logic, for example only showing routes with stops near current location and some arbitrary location
+\end{enumerate}
+\item Send a text message or email reminder when a bus is some number of minutes away from a stop
+\end{enumerate}
 
 \chapter{Design}
 
@@ -69,7 +121,7 @@ The Rails design philosophy favors adopting standard conventions for naming, fol
 The fundamental design pattern adopted by Rails is Model-View-Controller (MVC).  The premise behind MVC is to separate user-interface code (the View), data structures (the Model), and the business logic that connects them (the Controller) into separate modules that can be developed, unit tested, and maintained in isolation.  Figure \ref{fig:MVC} shows the MVC separation as used in the Bus Tracker application.
 
 \begin{figure}[ht]
-  \centerline{\includegraphics[scale=0.55]{busTrackerUML.png}}
+  \centerline{\includegraphics[width=\textwidth]{busTrackerUML.png}}
   \caption{MVC control pattern}
   \label{fig:MVC}
 \end{figure}
@@ -136,7 +188,6 @@ Figure \ref{fig:busSchema} shows the schema that Bus Tracker uses to store infor
     \item Fetch stops from WMATA servers [Will]
     \item Store routes in database [Cluck]
     \item Store stops in database [Cluck]
-    \item Layer toggle widget that shows Google traffic overlay, bus markers, and stop markers [Will]
   \end{enumerate}
   \item Tasks to be done by: December 3, 2012
   \begin{enumerate}
@@ -147,13 +198,25 @@ Figure \ref{fig:busSchema} shows the schema that Bus Tracker uses to store infor
         \item Show which routes and directions the use the stop
         \item Show next bus wait time projections for each route that uses the stop
       \end{enumerate}
-    \item Add iOS/Android functionality using mobile web browser [Cluck]
+    \item Show info window when stop marker is clicked [Will]
+    \begin{enumerate}
+      \item Retrieve HTML from Rails stops/:id path
+      \item Use AJAX to update next bus arrival predictions from WMATA
+    \end{enumerate}
+    \item Orient bus markers according to direction traveled
   \end{enumerate}
 \end{description}
+
+\addcontentsline{toc}{chapter}{References}
+\printbibliography
 
 \begin{appendices}
 \chapter{User Manual}
 
+
+
 \end{appendices}
+
+
 \end{document}
 
