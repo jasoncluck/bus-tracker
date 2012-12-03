@@ -2,6 +2,7 @@
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
+require ENV["RAILS_ENV_PATH"]
 
 # Example:
 #
@@ -22,6 +23,9 @@
 include WmataHelper
 
 every 10.seconds do
-	updateBusTable
+	t1=Time.now
+	n=updateBusTable
+	t2=Time.now
+	puts "Finished updating #{n} buses in #{t2-t1} seconds"
 end
 	
