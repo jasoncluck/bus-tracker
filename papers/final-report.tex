@@ -183,10 +183,13 @@ Heroku was chosen as the hosting for the production environment due to its easy 
 \chapter{Test Cases}
 
 \section{Test Overview Page}
+\subsection*{Steps}
 \begin{enumerate}
 \item Run the Rails server \lstBash|rails server|
 \item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
 \item Load root web page (http://localhost:5000)
+\end{enumerate}
+\subsection*{Verification Criteria}
 \begin{enumerate}
 \item Route KML should load, showing bus routes with various colors
 \item Bus icons should display after a brief delay
@@ -194,23 +197,74 @@ Heroku was chosen as the hosting for the production environment due to its easy 
 \item Bus colors should match route colors
 \item After a few minutes, at least a few buses should bounce to indicate new position data
 \end{enumerate}
-\end{enumerate}
 
 \section{Test Bus Information Window}
-
-\section{Test Route Focus}
-
-\section{Test Stop Information Window}
-
-\section{Test Non-Map Interface}
+\subsection*{Steps}
 \begin{enumerate}
 \item Run the Rails server \lstBash|rails server|
 \item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
-\item Load routes page in a browser (http://localhost:3000/routes/)
-\item Load stops page in a browser (http://localhost:3000/stops/)
-\item Load buses page in a browser (http://localhost:3000/buses/)
+\item Load root web page (http://localhost:5000)
+\item Click on a bus icon
+\end{enumerate}
+\subsection*{Verification Criteria}
+\begin{enumerate}
+\item Verify that the information bubble appears 
+\item Verify that the window is attached to the bus
+\item Verify that the window contains destination
+\item Verify that the window contains age of information
+\item Verify that the window contains vehicle id number
+\item Verify that the window contains direction
+\item Verify that the window contains deviation from schedule (minutes late or early)
 \end{enumerate}
 
+\section{Test Route Focus}
+\subsection*{Steps}
+\begin{enumerate}
+\item Run the Rails server \lstBash|rails server|
+\item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
+\item Load root web page (http://localhost:5000)
+\item Click on a bus icon
+\item Click the ``Show Only D2'' button in the info window
+\end{enumerate}
+\subsection*{Verification Criteria}
+\begin{enumerate}
+\item Verify that only the selected route is displayed on the map
+\item Verify that the route's stops are displayed
+\item Verify that the route's buses are still displayed
+\item Wait for bus position updates, verify that they occur within about 2 to 5 minutes
+\end{enumerate}
+
+
+\section{Test Stop Information Window}
+\subsection*{Steps}
+\begin{enumerate}
+\item Run the Rails server \lstBash|rails server|
+\item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
+\item Load root web page (http://localhost:5000)
+\item Click on a bus icon
+\item Click the ``Show Only D2'' button in the info window
+\item Click on one of the stops
+\end{enumerate}
+\subsection*{Verification Criteria}
+\begin{enumerate}
+\item Verify that the stop window is displayed
+\item Verify that after a few seconds, the next bus prediction table appears
+\end{enumerate}
+
+
+\section{Test Non-Map Interface}
+\subsection*{Steps}
+\begin{enumerate}
+\item Run the Rails server \lstBash|rails server|
+\item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
+\item Load routes page in a browser (http://localhost:5000/routes/)
+\item Load stops page in a browser (http://localhost:5000/stops/)
+\item Load buses page in a browser (http://localhost:5000/buses/)
+\end{enumerate}
+\subsection*{Verification Criteria}
+\begin{enumerate}
+\item Each page should show a table listing the elements in the system
+\end{enumerate}
 
 \chapter{Task Breakdown and Timeline}
 \begin{description}
