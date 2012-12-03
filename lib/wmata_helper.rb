@@ -27,10 +27,15 @@ module WmataHelper
 		end
 	end
 
-	def fetchUri(uristr)
+	def fetchRaw(uristr)
+		Rails.logger.info "Fetching #{uristr}..."
 		uri=URI.parse(uristr)
 		response = Net::HTTP.get_response uri
-		result=JSON.parse(response.body)
+		return response.body
+	end
+
+	def fetchUri(uristr)
+		result=JSON.parse(fetchRaw(uristr))
 		# if the hash has 'Error' as a key, we raise an error
 		# File.open('busjson-dump.txt', 'a') {|f| f.write(response.body) }
 		if result.has_key? 'Error'
@@ -47,8 +52,8 @@ module WmataHelper
 		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}")
 	end
 
-	def fetchPrediction(stop_id)
-		stop_json=fetchUri("http://api.wmata.com/NextBusService.svc/json/JPredictions?StopID=#{stop_id}&api_key=#{@@apiKey}")
+	def fetchPredictionRaw(stop_id)
+		return fetchRaw("http://api.wmata.com/NextBusService.svc/json/JPredictions?StopID=#{stop_id}&api_key=#{@@apiKey}")
 	end
 
 	def saveStopPositions
