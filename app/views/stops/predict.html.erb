@@ -1,0 +1,17 @@
+<table border="1">
+
+<!--
+* {"Predictions"=>[{"DirectionNum"=>"1", "DirectionText"=>"West to Tenleytown Station", "Minutes"=>98, "RouteID"=>"96", "VehicleID"=>"6501"}], "StopName"=>"..."
+*-->
+<th>Minutes</th>
+<th>Route</th>
+<th>Direction</th>
+<% @predictions["Predictions"].each do |pred| %>
+<tr>
+	<td><%= pred["Minutes"] %></td>
+	<td><%= pred["RouteID"] %></td>
+	<td><%= pred["DirectionText"] %></td>
+</tr>
+<% end %>
+
+</table>
