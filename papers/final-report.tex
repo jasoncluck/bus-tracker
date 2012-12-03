@@ -159,7 +159,7 @@ Figure \ref{fig:busSchema} shows the schema that Bus Tracker uses to store infor
 
 \chapter{Implementation Details}
 
-Bus Tracker was implemented using the Ruby on Rails web framework, and the Google Maps Javascript API.  The Rails application interfaces with WMATA servers and maintains its own representation of the current state of the WMATA server in its databases.  It poll this periodically and updates its database accordingly.  
+Bus Tracker was implemented using the Ruby on Rails web framework, and the Google Maps Javascript API.  The Rails application interfaces with WMATA servers and maintains its own representation of the current state of the WMATA server in its databases.  It polls this periodically and updates its database accordingly.  
 
 The rails server implements a traditional Create / Retrieve / Update / Destroy (CRUD) interface when /routes/, /stops/ and /buses/ are visited.  The main page, however (/) is is a full page map with icons that are updated using asynchronous javascript (AJAX).  The asyncronous javascript calls interface with the Rails server to retrieve system state using Javascript Object Notation (JSON).  These JSON representations are parsed in the client-side javascript and the map icons are updated accordingly.
 
@@ -170,6 +170,13 @@ Information bubbles appear when icons are clicked.  These are populate with HTML
 Stops:  11321
 Routes: 352
 Buses:  648
+
+\section{Bootstrap}
+
+Twitter's Bootstrap API was used to overwrite the default CSS provided by Rails scaffolding.  Bootstrap has recently emerged as a versatile toolbox of html and css classes.  Bootstrap was used in Bus Tracker to include a collapsible navigation bar that allows for the application to be used on browsers with smaller windows such as mobile devices.  The collapsed navbar provides a list of buttons that can be recessed if the user wants to see more of the map, making it ideal for this application.  Other uses include a Modal unit for the About section which provides a nice javascript enabled window which drops down over the UI.  Utilizing Bootstrap did create some problems with Google Maps but this was resolved by customizing the CSS classes.
+
+\section{Deployment on Heroku}
+
 
 \chapter{Test Cases}
 
