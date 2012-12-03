@@ -47,6 +47,10 @@ module WmataHelper
 		fetchUri("http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}")
 	end
 
+	def fetchPrediction(stop_id)
+		stop_json=fetchUri("http://api.wmata.com/NextBusService.svc/json/JPredictions?StopID=#{stop_id}&api_key=#{@@apiKey}")
+	end
+
 	def saveStopPositions
 		uristr="http://api.wmata.com/Bus.svc/json/JStops?&api_key=#{@@apiKey}"
 		uri=URI.parse(uristr)

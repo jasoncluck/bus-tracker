@@ -5,65 +5,85 @@ var request = false;
 var buses;
 var stops;
 
-try {
- request = new XMLHttpRequest();
-} catch (trymicrosoft) {
- try {
-   request = new ActiveXObject("Msxml2.XMLHTTP");
- } catch (othermicrosoft) {
+function make_request(){
    try {
-     request = new ActiveXObject("Microsoft.XMLHTTP");
-   } catch (failed) {
-     request = false;
-   }  
- }
+       request = new XMLHttpRequest();
+   } catch (trymicrosoft) {
+       try {
+         request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (othermicrosoft) {
+        try {
+           request = new ActiveXObject("Microsoft.XMLHTTP");
+         } catch (failed) {
+           request = false;
+         }  
+     }
+   }
+
+   if (!request){
+    alert("Error initializing XMLHttpRequest!");
+    }
+    return request;
 }
 
-if (!request){
-    alert("Error initializing XMLHttpRequest!");
-}
+request = make_request();
 
 function pollBuses(){
-    pollPath("/buses.json", newBusPositions);
+    pollPath("/buses.json", http_nonsense_wrapper(newBusPositions));
 }
 
 function pollPath(path, callback){
-    request.onreadystatechange = callback;
-    request.open("GET", path, true);
-    request.send(null);
+    poll_path_request(path, callback, request);
+}
+
+function http_nonsense_wrapper(callback){
+    return function(){
+        if (request.readyState == 4) {
+            pollCount = pollCount+1;
+            var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+            var content_text = request.responseText;
+            if(request.status == 200){
+                show_debug("request came back good at "+myDate);
+                callback(content_text);
+            }else{
+                show_debug("HTTP status: "+request.status+" "+request.responseText);
+            }
+            busy=false;
+        }
+    };
+}
+
+function poll_path_request(path, callback, request){    
+    if(busy || request.readyState == 1 || request.readyState == 2 || request.readyState == 3)
+    {
+        setTimeout(function(){
+            poll_path_request(path, callback, request);
+        }, 500);
+        show_debug("Busy, waiting 500 ms...");
+        return;
+    }
     busy=true;
+    show_debug("polling "+path+" with callback "+callback);
+    request.onreadystatechange = callback;
+    request.open("GET", path, true);    
+    request.send(null);
     var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
     show_debug("sent request at "+myDate+"...");
 }
 
 function pollStops(route){
-    pollPath("/stops.json?route="+route, newStopPositions);
+    pollPath("/stops.json?route="+route, http_nonsense_wrapper(newStopMarkers));
 }
 
-function newBusPositions()
+function newStopMarkers(content)
 {
-    if (request.readyState == 4) {
-        busy=false;
-        pollCount = pollCount+1;
-        var myDate = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+    updateStopMarkers(jQuery.parseJSON(content));
+}
 
-        if(request.status == 200){
-            show_debug("request came back good at "+myDate);
-            var positionsJSON = jQuery.parseJSON(request.responseText);
-            //updateMarkeres is defined in mapbuses.js
-            buses=positionsJSON;
-            updateBusMarkers()
-        }else{
-            show_debug("HTTP status: "+request.status);
-        }
-    }
-}function newStopPositions()
-{   
-    if (request.readyState == 4) {
-        if(request.status == 200){
-            var positionsJSON = jQuery.parseJSON(request.responseText);
-            //updateMarkeres is defined in mapBuses.js
-            updateStopMarkers(positionsJSON);
-        }
-    }
+
+function newBusPositions(content)
+{            
+    //updateMarkeres is defined in mapbuses.js
+    buses = jQuery.parseJSON(content);
+    updateBusMarkers();
 }

@@ -16,8 +16,13 @@
 <dl>
 	<dt><%= @stop.name %></dt>	
 	<dd>
-		<b>Stop ID:</b>&nbsp;<%= @stop.stopid %><br/>
-		<b>Location:</b>&nbsp;<%= @stop.lat %>, <%= @stop.lon %><br/>
+		<dt>Stop ID:</dt><dd><%= @stop.stopid %></dd>
+		<dt>Location:</dt><dd><%= @stop.lat %>, <%= @stop.lon %></dd>
+		<dt>Next Buses:</dt>
+		<dd>
+			<div id="bubble_stop_predictions">
+			</div>
+		</dd>
 		<dl>
 			<dt>Routes</dt>
 			<dd>	

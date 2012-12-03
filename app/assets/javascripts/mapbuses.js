@@ -243,7 +243,7 @@ function updateStopMarkers(stops){
       setStopInfoWindow(marker, stops[i]);
       stopMarkers.push(marker);
   }
-  show_debug("Showing "+buses.length+" stops");
+  show_debug("Showing "+stops.length+" stops");
 }
 
 function makePinMarker(pinColor)
@@ -276,15 +276,40 @@ function drawStop(stop){
 
 function setStopInfoWindow(marker, stop){
   google.maps.event.addListener(marker, 'click', function() {
-    pollPath("/stops/"+stop.id+"?minimal=true", function(){
+    pollPath("/stops/"+stop.id+"?minimal=true", http_nonsense_wrapper(function(responseText){    
       if(openinfo != null){
         openinfo.close();
       }
-      var infowindow = new google.maps.InfoWindow({ content: request.responseText });
+      var infowindow = new google.maps.InfoWindow({ content: responseText });
       infowindow.open(map,marker);
       openinfo=infowindow;
-    });
+
+      //When the info window start, also start polling for the next bus to arrive...
+
+      updatePrediction(stop.id);
+      //setInterval(function(){updatePrediction(stop.stopid);}, 5000);
+      }));
   }); 
+}
+
+function updatePrediction(stop_id){
+  url="stops/"+stop_id+"/prediction.json"
+  pollPath(url, http_nonsense_wrapper(newStopPrediction));
+}
+
+/*
+* {"Predictions"=>[{"DirectionNum"=>"1", "DirectionText"=>"West to Tenleytown Station", "Minutes"=>98, "RouteID"=>"96", "VehicleID"=>"6501"}], "StopName"=>"..."
+*/
+function newStopPrediction(content_text){
+  var prediction = jQuery.parseJSON(content_text);
+  var html="<dl>";
+  for(var i=0; i<prediction.Predictions.length; i++){
+    p=prediction.Predictions[i];
+    html = html + "<dt>"+p.RouteID+" "+p.DirectionText+"</dt>";
+    html = html + "<dd>"+p.Minutes+" minutes</dd>"
+  }
+  html = html + "</dl>"
+  $("#bubble_stop_prediction").html(html);
 }
 
 
@@ -369,14 +394,14 @@ function makeNewMarker(bus){
   
   google.maps.event.addListener(marker, 'click', function() {
     var busid = bus.id;
-    pollPath("/buses/"+busid+"?minimal=true", function(){
+    pollPath("/buses/"+busid+"?minimal=true", http_nonsense_wrapper(function(content_text){
       if(openinfo != null){
         openinfo.close();
       }
-      var infowindow = new google.maps.InfoWindow({ content: request.responseText });
+      var infowindow = new google.maps.InfoWindow({ content: content_text });
       infowindow.open(map,marker);
       openinfo=infowindow;
-    });
+    }));
   }); 
 }
 
