@@ -22,13 +22,9 @@ With rails install, run the following steps
   It can take quite awhile to run, as there are many stops and routes in the system, and this all must
   be pulled from WMATA's servers.
 
-4. rails server
-  This starts the rails web server on localhost:3000.  You can now visit http://localhost:3000 and see
-  the bus-tracker map application
-
-4. script/daemon run poll_buses.rb
-  This starts a daemon process that downloads updates of bus positions and inserts them into the database.
-  This step is required to see buses move on the map.
+4. foreman start
+	This starts the server with the web application thread, the clock thread that updates the bus data, and the worker thread that processes this data.  This emulates a production environment.
+ 
 
 == Using the Web Application
 

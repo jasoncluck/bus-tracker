@@ -34,6 +34,13 @@
   \field{year}{2006}
 \endentry
 
+\entry{rails}{misc}{}
+  \field{title}{Ruby on Rails}
+  \verb{url}
+  \verb http://rubyonrails.org
+  \endverb
+\endentry
+
 \lossort
 \endlossort
 
