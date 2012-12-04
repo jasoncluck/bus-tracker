@@ -174,10 +174,10 @@ Buses:  648
 \section{Bootstrap}
 
 Twitter's Bootstrap API was used to overwrite the default CSS provided by Rails scaffolding.  Bootstrap has recently emerged as a versatile toolbox of html and css classes.  Bootstrap was used in Bus Tracker to include a collapsible navigation bar that allows for the application to be used on browsers with smaller windows such as mobile devices.  The collapsed navbar provides a list of buttons that can be recessed if the user wants to see more of the map, making it ideal for this application.  Other uses include a Modal unit for the About section which provides a nice javascript enabled window which drops down over the UI.  Utilizing Bootstrap did create some problems with Google Maps but this was resolved by customizing the CSS classes.
-
+\cite{bootstrap}
 \section{Deployment on Heroku}
 
-Heroku was chosen as the hosting for the production environment due to its easy of deployment with Rails applications and usage with Git.  Although deploying with Heroku was easy at first, there were some things that required work additional work.  The first problem we encountered was how to continually poll for data in the background while not stalling the main application thread.  This was done by using a Heroku Worker in conjunction with the Delayed Job gem.  This gem allows any Active Record object to be added to a priority queue which the Worker handles.  With this solved, there still was the issue of having the code run every 10 seconds (the minimum value before exceeding the threshold).  To fix this, A Heroku Clock Singleton process was added (in the form of an additional Dyno) that kept track of what tasks were ready to be run.  The Clockwork gem combines with the Heroku Clock to specify what tasks the Heroku Clock should run.  An example of a poll would include the Heroku Clock seeing that it needs to run something (as specified by Clockwork), and then adds it to the Delayed Job queue. The Heroku Worker picks up the task from the queue and processes it -- updating all of the bus locations.
+Heroku was chosen as the hosting for the production environment due to its easy of deployment with Rails applications and usage with Git.  Although deploying with Heroku was easy at first, there were some things that required work additional work.  The first problem we encountered was how to continually poll for data in the background while not stalling the main application thread.  This was done by using a Heroku Worker in conjunction with the Delayed Job gem.  This gem allows any Active Record object to be added to a priority queue which the Worker handles.  With this solved, there still was the issue of having the code run every 10 seconds (the minimum value before exceeding the threshold).  To fix this, A Heroku Clock Singleton process was added (in the form of an additional Dyno) that kept track of what tasks were ready to be run.  The Clockwork gem combines with the Heroku Clock to specify what tasks the Heroku Clock should run.  An example of a poll would include the Heroku Clock seeing that it needs to run something (as specified by Clockwork), and then adds it to the Delayed Job queue. The Heroku Worker picks up the task from the queue and processes it -- updating all of the bus locations. \cite{heroku}
 
 
 \chapter{Test Cases}
@@ -186,7 +186,7 @@ Heroku was chosen as the hosting for the production environment due to its easy 
 \begin{enumerate}
 \item Run the Rails server \lstBash|rails server|
 \item Run the update daemon \lstBash|script/daemon run poll_buses.rb|
-\item Load root web page (http://localhost:3000)
+\item Load root web page (http://localhost:5000)
 \begin{enumerate}
 \item Route KML should load, showing bus routes with various colors
 \item Bus icons should display after a brief delay

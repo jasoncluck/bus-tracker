@@ -24,7 +24,8 @@ With rails install, run the following steps
 
 4. foreman start
 	This starts the server with the web application thread, the clock thread that updates the bus data, and the worker thread that processes this data.  This emulates a production environment.
- 
+
+5. Since this application uses the Thin web server, the web application should be available at localhost:5000.
 
 == Using the Web Application
 
