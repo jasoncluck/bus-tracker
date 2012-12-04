@@ -1,5 +1,3 @@
-require 'config/boot'
-require 'config/environment'
 require "#{Rails.root}/lib/wmata_helper"
 include WmataHelper
 
