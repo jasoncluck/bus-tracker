@@ -9,7 +9,11 @@ javascript for google maps integration and asynchronous updates of bus positions
 To run a server, you need Ruby and Ruby on Rails installed on your system.  Instructions on installing
 these tools can be found here: 
 
-With rails install, run the following steps
+1. Install Ruby (1.9.3 or greater) http://www.ruby-lang.org/en/downloads
+2. Install Ruby Gems (1.8.24 or greater) http://rubyforge.org/frs/?group_id=126
+3. Install the rails gem (3.2.8 or greater):  gem install rails
+
+With rails installed, run the following steps
 
 1. bundle install
   This installs all the Ruby gems that bus-tracker depends on
