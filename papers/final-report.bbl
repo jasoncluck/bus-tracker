@@ -41,6 +41,29 @@
   \endverb
 \endentry
 
+\entry{web:googlekml}{online}{}
+  \field{title}{KML Support - Keyhole Markup Language - Google Developers}
+  \verb{url}
+  \verb https://developers.google.com/kml/documentation/mapsSupport
+  \endverb
+  \field{month}{12}
+  \field{year}{2012}
+\endentry
+
+\entry{bootstrap}{misc}{}
+  \field{title}{Twitter Bootstrap}
+  \verb{url}
+  \verb http://twitter.github.com/bootstrap/
+  \endverb
+\endentry
+
+\entry{heroku}{misc}{}
+  \field{title}{Heroku}
+  \verb{url}
+  \verb http://www.heroku.com
+  \endverb
+\endentry
+
 \lossort
 \endlossort
 

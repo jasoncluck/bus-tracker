@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  3 DEC 2012 21:44
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  3 DEC 2012 22:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -318,18 +318,18 @@ File: english.lbx 2011/11/13 v1.7 biblatex localization
 (./final-report.aux)
 \openout1 = `final-report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
-LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
 
 (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -403,12 +403,12 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'final-report.bbl' found.
 
 (./final-report.bbl)
-Package biblatex Info: Reference section=0 on input line 39.
-Package biblatex Info: Reference segment=0 on input line 39.
+Package biblatex Info: Reference section=0 on input line 40.
+Package biblatex Info: Reference segment=0 on input line 40.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 40.
+(Font)              <14.4> on input line 41.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 40.
+(Font)              <7> on input line 41.
  [1
 
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./fina
@@ -419,138 +419,141 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 5.
-)
+ [1
+
+])
 \tf@toc=\write4
 \openout4 = `final-report.toc'.
 
- [1
-
-] (./final-report.lof)
+ [2] (./final-report.lof)
 \tf@lof=\write5
 \openout5 = `final-report.lof'.
 
- [2
+ [3
 
 ]
 Chapter 1.
-[3
+[4
 
 ]
 Chapter 2.
-[4
+[5
 
-] [5] [6]
+] [6] [7]
 Chapter 3.
-<design.png, id=28, 424.58624pt x 330.23375pt>
+<design.png, id=31, 424.58624pt x 330.23375pt>
 File: design.png Graphic file (type png)
  <use design.png>
-Package pdftex.def Info: design.png used on input line 114.
+Package pdftex.def Info: design.png used on input line 115.
 (pdftex.def)             Requested size: 254.75371pt x 198.14177pt.
- [7
+ [8
 
- <./design.png>] <busTrackerUML.png, id=34, 898.35625pt x 366.36874pt>
+ <./design.png>] <busTrackerUML.png, id=37, 898.35625pt x 366.36874pt>
 File: busTrackerUML.png Graphic file (type png)
 
 <use busTrackerUML.png>
-Package pdftex.def Info: busTrackerUML.png used on input line 126.
+Package pdftex.def Info: busTrackerUML.png used on input line 127.
 (pdftex.def)             Requested size: 390.0pt x 159.05046pt.
- [8 <./busTrackerUML.png (PNG copy)>]
-Overfull \hbox (11.53334pt too wide) in paragraph at lines 143--144
+ [9 <./busTrackerUML.png (PNG copy)>]
+Overfull \hbox (11.53334pt too wide) in paragraph at lines 144--145
 \OT1/cmr/m/n/12 Bus Tracker will con-tain in-for-ma-tion re-gard-ing all the bu
 ses served by WMATA.
  []
 
-[9] <bus-entity-rel.png, id=41, 580.1675pt x 569.12625pt>
+[10] <bus-entity-rel.png, id=44, 580.1675pt x 569.12625pt>
 File: bus-entity-rel.png Graphic file (type png)
 
 <use bus-entity-rel.png>
-Package pdftex.def Info: bus-entity-rel.png used on input line 146.
+Package pdftex.def Info: bus-entity-rel.png used on input line 147.
 (pdftex.def)             Requested size: 249.46715pt x 244.71951pt.
- <bus-schema.png, id=42, 503.8825pt x 366.36874pt>
+ <bus-schema.png, id=45, 503.8825pt x 366.36874pt>
 File: bus-schema.png Graphic file (type png)
 
 <use bus-schema.png>
-Package pdftex.def Info: bus-schema.png used on input line 154.
+Package pdftex.def Info: bus-schema.png used on input line 155.
 (pdftex.def)             Requested size: 302.33183pt x 219.82294pt.
- [10 <./bus-entity-rel.png>] [11 <./bus-schema.png>]
+ [11 <./bus-entity-rel.png>] [12 <./bus-schema.png>]
 Chapter 4.
-[12
+[13
 
-] [13]
+] (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+[14] [15] [16]
 Chapter 5.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
 (/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
-) [14
+) [17
 
 ]
-[15]
+[18] [19] [20]
 Chapter 6.
-[16
+[21
 
 ]
-Overfull \hbox (8.02948pt too wide) in paragraph at lines 256--257
+Overfull \hbox (8.02948pt too wide) in paragraph at lines 321--322
 []\OT1/cmr/m/n/12 Use AJAX to up-date next bus ar-rival pre-dic-tions from WMAT
 A 
  []
 
-[17]
-Overfull \hbox (5.37202pt too wide) in paragraph at lines 264--264
+[22]
+Overfull \hbox (5.37202pt too wide) in paragraph at lines 329--329
 []\OT1/cmr/m/n/12 E. Tufte, \OT1/cmr/m/it/12 The Vi-sual Dis-play of Quan-ti-ta
 -tive In-for-ma-tion\OT1/cmr/m/n/12 , Sec-ond. Graph-
  []
 
-[18
+[23
 
 ]
 Appendix A.
-<bus-tracker-overview.png, id=76, 1041.8925pt x 862.22125pt>
+<bus-tracker-overview.png, id=91, 1041.8925pt x 862.22125pt>
 File: bus-tracker-overview.png Graphic file (type png)
 
 <use bus-tracker-overview.png>
-Package pdftex.def Info: bus-tracker-overview.png used on input line 271.
+Package pdftex.def Info: bus-tracker-overview.png used on input line 336.
 (pdftex.def)             Requested size: 390.0pt x 322.74013pt.
 
-<bus-info-bubble.png, id=77, 1041.8925pt x 1130.2225pt>
+<bus-info-bubble.png, id=92, 1041.8925pt x 1130.2225pt>
 File: bus-info-bubble.png Graphic file (type png)
 
 <use bus-info-bubble.png>
-Package pdftex.def Info: bus-info-bubble.png used on input line 282.
+Package pdftex.def Info: bus-info-bubble.png used on input line 347.
 (pdftex.def)             Requested size: 390.0pt x 423.05634pt.
- [19
+ [24
 
 ]
-<stop-info-bubble.png, id=81, 926.46124pt x 619.31375pt>
+<stop-info-bubble.png, id=97, 926.46124pt x 619.31375pt>
 File: stop-info-bubble.png Graphic file (type png)
 
 <use stop-info-bubble.png>
-Package pdftex.def Info: stop-info-bubble.png used on input line 293.
+Package pdftex.def Info: stop-info-bubble.png used on input line 358.
 (pdftex.def)             Requested size: 390.0pt x 260.70535pt.
- [20 <./bus-tracker-overview.png>] [21 <./bus-info-bubble.png>] [22 <./stop-inf
+ [25 <./bus-tracker-overview.png>] [26 <./bus-info-bubble.png>] [27 <./stop-inf
 o-bubble.png>] (./final-report.aux)
 Package logreq Info: Writing requests to 'final-report.run.xml'.
 \openout1 = `final-report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 7724 strings out of 493488
- 124457 string characters out of 3141326
- 275259 words of memory out of 3000000
- 10940 multiletter control sequences out of 15000+200000
- 9623 words of font info for 34 fonts, out of 3000000 for 9000
+ 7784 strings out of 493488
+ 125242 string characters out of 3141326
+ 276774 words of memory out of 3000000
+ 10998 multiletter control sequences out of 15000+200000
+ 9930 words of font info for 35 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,6n,50p,1236b,1067s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,6n,46p,1653b,1050s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
 /usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
 sr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></us
 r/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on final-report.pdf (23 pages, 1333526 bytes).
+Output written on final-report.pdf (28 pages, 1344377 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 125 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

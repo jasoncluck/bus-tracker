@@ -6,15 +6,13 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.1}{\ignorespaces API integration overview}}{7}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces API integration overview}}{8}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces MVC control pattern}}{8}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces MVC control pattern}}{9}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Model relationship diagram}}{10}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Model relationship diagram}}{11}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Schema for WMATA API}}{11}
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Schema for WMATA API}}{12}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
@@ -22,8 +20,10 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Overview of WMATA Bus System}}{20}
+\addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Bus Detail Window}}{21}
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Overview of WMATA Bus System}}{25}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {A.3}{\ignorespaces Stop Detail Window}}{22}
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Bus Detail Window}}{26}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Stop Detail Window}}{27}
