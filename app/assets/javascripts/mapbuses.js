@@ -352,7 +352,7 @@ function makeMarker(bus){
     path: path,
     fillColor: "#"+color,
     fillOpacity: getIconOpacity(bus),
-    scale: 0.15,
+    scale: 0.10,
     strokeColor: "#"+color,
     strokeWeight: 2
   };
