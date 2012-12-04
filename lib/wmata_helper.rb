@@ -177,14 +177,8 @@ module WmataHelper
 		# subtractions result in fractions of days...
 		# convert to seconds...
 		n=DateTime.now
-		secs=(n - @@lastUpdate)*24*60*60
-		if secs < 4
-			Rails.logger.info "Skipping update step because only #{secs.to_f} seconds since last update"
-			return
-		end
 		# File.open('api-dump.txt', 'a') {|f| f.write("fetching bus positions at #{DateTime.now}...\n") }
 		pos=fetchBusPositions
-		@@lastUpdate=DateTime.now
 	  	posarray=pos["BusPositions"]
 	  	# File.open('api-dump.txt', 'a') {|f| f.write("fetched #{posarray.length} finished at #{DateTime.now}...\n") }
 	  	#{"DateTime"=>"2012-10-09T21:05:22",
@@ -245,7 +239,7 @@ module WmataHelper
 		return updates
 	end
 
-	handle_asynchronously :updateBusTable
+	#handle_asynchronously :updateBusTable
 
 	def updateStopTable
 		pos=fetchStopPositions
